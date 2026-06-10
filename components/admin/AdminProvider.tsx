@@ -139,7 +139,7 @@ export function AdminProvider({ children }: { children: ReactNode }) {
       alert("저장되지 않은 변경사항이 있어요. 먼저 저장하거나 취소한 뒤 삭제해주세요.");
       return;
     }
-    if (!confirm("이 항목을 삭제할까요? 되돌릴 수 없습니다.")) return;
+    // window.confirm 은 여러 번 뜨면 브라우저가 차단해 false 를 반환하므로 사용하지 않음.
     try {
       const res = await fetch("/api/list", {
         method: "POST",
