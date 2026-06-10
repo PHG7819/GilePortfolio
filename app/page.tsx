@@ -1,6 +1,5 @@
 import { unstable_noStore as noStore } from "next/cache";
 import { getContentMap, type ContentMap } from "@/lib/content";
-import { dbHostMasked } from "@/db";
 import { EditableText } from "@/components/admin/EditableText";
 import { EditableImage } from "@/components/admin/EditableImage";
 import { AdminBar } from "@/components/admin/AdminBar";
@@ -95,7 +94,6 @@ export default async function Page() {
 
   return (
     <>
-      <div id="__diag" style={{ display: "none" }} data-dbhost={dbHostMasked()} data-demo-order={String(cardOrder.length)} />
       <SideNav
         items={[
           { href: "#demo", k: "nav.demo", value: navDemo },

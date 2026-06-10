@@ -4,7 +4,7 @@
 // 각 항목의 텍스트/이미지는 "<list-item-prefix>.<id>.*" 키로 content/update 에 저장됩니다.
 import { NextRequest, NextResponse } from "next/server";
 import { eq } from "drizzle-orm";
-import { db, dbHostMasked } from "@/db";
+import { db } from "@/db";
 import { contentBlocks } from "@/db/schema";
 import { isAdminRequest } from "@/lib/admin-auth";
 
@@ -47,38 +47,6 @@ async function writeOrder(list: string, order: string[]) {
     .onConflictDoUpdate({ target: contentBlocks.key, set: { value, updatedAt: new Date() } });
 }
 
-// GET /api/list  — 진단용(읽기 전용).
-export async function GET() {
-  try {
-    const result: Record<string, string[]> = {};
-    for (const list of Object.keys(LISTS)) {
-      result[list] = await readOrder(list);
-    }
-    // 페이지(getContentMap, 전체 행 select)가 보는 값과 직접 비교
-    const allRows = await db.select().from(contentBlocks);
-    const map: Record<string, string> = {};
-    for (const r of allRows) map[r.key] = r.value;
-    return NextResponse.json(
-      {
-        ok: true,
-        orders: result,
-        diag: {
-          totalRows: allRows.length,
-          demoOrderRaw_viaMap: map["demo.cards.order"] ?? null,
-          allKeys: allRows.map((r) => r.key),
-          lastDelete: map["_debug.lastdelete"] ?? null,
-          dbHost: dbHostMasked(),
-          dbEnvKeys: Object.keys(process.env).filter((k) => /^(DATABASE|POSTGRES|PG|NEON)/i.test(k)).sort(),
-        },
-      },
-      { headers: { "Cache-Control": "no-store" } },
-    );
-  } catch (err) {
-    const message = err instanceof Error ? err.message : String(err);
-    return NextResponse.json({ ok: false, error: message }, { status: 500 });
-  }
-}
-
 export async function POST(req: NextRequest) {
   if (!isAdminRequest()) {
     return NextResponse.json({ ok: false, error: "관리자 권한이 필요합니다." }, { status: 403 });
@@ -114,15 +82,8 @@ export async function POST(req: NextRequest) {
       if (typeof id !== "string" || !id) {
         return NextResponse.json({ ok: false, error: "삭제할 항목 id 가 필요합니다." }, { status: 400 });
       }
-      const after = order.filter((x) => x !== id);
-      await writeOrder(list, after);
-      // 진단: 마지막 삭제 시도 내용을 별도 행에 기록(공개 GET 으로 확인 가능)
-      const dbg = JSON.stringify({ list, id, before: order, after, removed: order.length - after.length, at: new Date().toISOString() });
-      await db
-        .insert(contentBlocks)
-        .values({ key: "_debug.lastdelete", value: dbg, updatedAt: new Date() })
-        .onConflictDoUpdate({ target: contentBlocks.key, set: { value: dbg, updatedAt: new Date() } });
-      return NextResponse.json({ ok: true, received: { list, id }, before: order, after, removed: order.length - after.length });
+      await writeOrder(list, order.filter((x) => x !== id));
+      return NextResponse.json({ ok: true });
     }
 
     return NextResponse.json({ ok: false, error: "알 수 없는 action 입니다." }, { status: 400 });
