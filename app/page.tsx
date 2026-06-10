@@ -89,10 +89,10 @@ export default async function Page() {
     <>
       <SideNav
         items={[
-          { href: "#demo", label: navDemo },
-          { href: "#projects", label: navProjects },
-          { href: "#learning", label: navLearning },
-          { href: "#about", label: navAbout },
+          { href: "#demo", k: "nav.demo", value: navDemo },
+          { href: "#projects", k: "nav.projects", value: navProjects },
+          { href: "#learning", k: "nav.learning", value: navLearning },
+          { href: "#about", k: "nav.about", value: navAbout },
         ]}
       />
       <header className="site-header">
