@@ -17,10 +17,14 @@ function c(map: ContentMap, key: string, fallback: string) {
 function readOrder(map: ContentMap, list: string, def: string[]): string[] {
   try {
     const parsed = JSON.parse(map[`${list}.order`] ?? "");
-    return Array.isArray(parsed) && parsed.length ? parsed.map(String) : def;
+    if (Array.isArray(parsed)) {
+      const arr = parsed.map((x) => String(x)).filter((s) => s.length > 0 && s !== "null" && s !== "undefined");
+      if (arr.length) return arr;
+    }
   } catch {
-    return def;
+    /* fallthrough */
   }
+  return def;
 }
 
 // ── 플레이스홀더 이미지(data URI) ─────────────────────────

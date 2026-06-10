@@ -27,7 +27,11 @@ async function readOrder(list: string): Promise<string[]> {
   if (!rows.length) return [...LISTS[list]];
   try {
     const parsed = JSON.parse(rows[0].value);
-    if (Array.isArray(parsed) && parsed.every((x) => typeof x === "string")) return parsed;
+    if (Array.isArray(parsed)) {
+      // 페이지와 동일하게: 모두 문자열로 강제 변환 + 빈 값 제거 (null/숫자 섞여도 안전)
+      const arr = parsed.map((x) => String(x)).filter((s) => s.length > 0 && s !== "null" && s !== "undefined");
+      if (arr.length) return arr;
+    }
   } catch {
     /* fallthrough */
   }
