@@ -84,6 +84,7 @@ export default async function Page() {
   const navProjects = c(map, "nav.projects", "Projects");
   const navLearning = c(map, "nav.learning", "Learning");
   const navAbout = c(map, "nav.about", "About");
+  const navSkills = c(map, "nav.skills", "Skills");
 
   return (
     <>
@@ -93,6 +94,7 @@ export default async function Page() {
           { href: "#projects", k: "nav.projects", value: navProjects },
           { href: "#learning", k: "nav.learning", value: navLearning },
           { href: "#about", k: "nav.about", value: navAbout },
+          { href: "#skills", k: "nav.skills", value: navSkills },
         ]}
       />
       <header className="site-header">
@@ -274,7 +276,7 @@ export default async function Page() {
         </div>
 
         {/* Skills */}
-        <section className="paper-section">
+        <section id="skills" className="paper-section">
           <div className="wrap">
             <p className="section-kicker"><EditableText k="skills.kicker" value={c(map, "skills.kicker", "Skills")} inline /></p>
             <h2><EditableText k="skills.title" value={c(map, "skills.title", "핵심 역량")} inline /></h2>

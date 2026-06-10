@@ -83,7 +83,7 @@ export function PortfolioClient() {
     }
 
     /* 휠 스냅 스크롤 */
-    const snapSections = ["#demo", "#projects", "#learning", "#about"]
+    const snapSections = ["#demo", "#projects", "#learning", "#about", "#skills"]
       .map((s) => document.querySelector<HTMLElement>(s)).filter(Boolean) as HTMLElement[];
     let targetSnapIndex: number | null = null;
     const wheelStepSize = 72;
