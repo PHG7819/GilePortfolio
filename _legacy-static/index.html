@@ -1,0 +1,1164 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Portfolio</title>
+  <meta name="description" content="단일 페이지 포트폴리오 템플릿 — 원본 사운드 포트폴리오 디자인 구조 복제판">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ===== 디자인 토큰 (원본과 동일) ===== */
+    :root {
+      --navy: #000816;
+      --navy-2: #0a1422;
+      --green: #063613;
+      --green-2: #063613;
+      --paper: #d9d9d9;
+      --card: #f2f2f2;
+      --text: #f5f7fb;
+      --ink: #151b28;
+      --muted: #98a3b3;
+      --soft: #cfd4dc;
+      --line: rgba(255, 255, 255, .12);
+    }
+
+    * { box-sizing: border-box; }
+    html {
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    html::-webkit-scrollbar,
+    body::-webkit-scrollbar { display: none; }
+
+    body {
+      margin: 0;
+      background: #000816;
+      color: var(--text);
+      font-family: "Inter", "Pretendard", "Noto Sans KR", "Malgun Gothic", Arial, sans-serif;
+      line-height: 1.6;
+      letter-spacing: 0;
+      zoom: 1.2;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ===== 헤더 (스크롤 시 블러) ===== */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(0, 8, 22, .98);
+      backdrop-filter: blur(0);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      transition: background .22s ease, backdrop-filter .22s ease, border-color .22s ease;
+    }
+    .site-header.is-scrolled {
+      background: rgba(0, 8, 22, .6);
+      backdrop-filter: blur(40px);
+      border-bottom-color: rgba(255,255,255,.12);
+    }
+    .nav-wrap {
+      max-width: 1180px;
+      height: 64px;
+      margin: 0 auto;
+      padding: 0 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      font-weight: 600;
+      color: #fff;
+    }
+    .logo-text { font-size: 20px; font-weight: 800; letter-spacing: .04em; }
+    .logo-text b { color: #5fd08a; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      color: #c7ced8;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+    .nav-links a {
+      transition: font-size .32s ease, color .32s ease, text-shadow .32s ease;
+    }
+    .nav-links a.is-active {
+      color: #fff;
+      font-size: 15px;
+      text-shadow: 0 4px 4px rgba(0, 0, 0, .35);
+    }
+
+    .header-meta { display: flex; align-items: center; gap: 10px; }
+    .date-pill {
+      min-width: 118px;
+      height: 34px;
+      padding: 0 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 8px;
+      color: #d6dde8;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .visitor-pill {
+      min-width: 96px;
+      color: #cdebd8;
+      border-color: rgba(95,208,138,.45);
+      background: rgba(6,54,19,.35);
+    }
+
+    /* ===== 섹션 공통 ===== */
+    section { padding: 88px 28px; }
+    .dark-section { background: var(--navy); }
+    .paper-section { background: var(--paper); color: var(--ink); }
+    .green-section { background: var(--green); color: #fff; }
+    .wrap { max-width: 1180px; margin: 0 auto; }
+
+    .section-kicker {
+      margin: 0 0 8px;
+      color: #7d8997;
+      font-size: 20px;
+      font-weight: 400;
+      text-align: center;
+      text-transform: uppercase;
+    }
+    .paper-section .section-kicker { color: #6f7885; }
+    .green-section .section-kicker { color: rgba(255,255,255,.68); }
+
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { margin-bottom: 32px; text-align: center; font-size: 36px; line-height: 1.08; font-weight: 600; }
+    h2 { margin-bottom: 34px; text-align: center; font-size: 36px; line-height: 1.15; font-weight: 600; }
+
+    /* ===== 갤러리 그리드 + 카드 ===== */
+    .reel-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .video-card {
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+      min-width: 0;
+      background: #07111e;
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 4px;
+      cursor: pointer;
+      transition: transform .22s ease, border-color .22s ease;
+    }
+    .video-card > * { position: relative; z-index: 2; }
+    .video-card:hover,
+    .video-card:focus-visible {
+      border-color: rgba(255,255,255,.24);
+      transform: translateY(-2px);
+      outline: 0;
+    }
+
+    /* featured 카드 — 네온 테두리 회전 */
+    .video-card.is-featured { border-color: transparent; box-shadow: 0 0 18px rgba(6, 54, 19, .22); }
+    .video-card.is-featured::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      padding: 2px;
+      border-radius: inherit;
+      background: conic-gradient(
+        from 0deg,
+        rgba(217, 217, 217, 0),
+        rgba(217, 217, 217, .22),
+        rgba(6, 54, 19, .55),
+        rgba(217, 217, 217, .86),
+        rgba(6, 54, 19, .34),
+        rgba(217, 217, 217, 0)
+      );
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+      animation: neonBorderSpin 5.8s linear infinite reverse;
+    }
+    .video-card.is-featured .video-meta::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      border-bottom-right-radius: inherit;
+      border-bottom-left-radius: inherit;
+      background:
+        linear-gradient(116deg, rgba(6, 54, 19, 0) 0 58%, rgba(6, 54, 19, .2) 63%, rgba(6, 54, 19, .52) 66%, rgba(6, 54, 19, 0) 72%),
+        linear-gradient(90deg, rgba(255,255,255,.2) 0%, rgba(255,255,255,.1) 48%, rgba(255,255,255,0) 100%);
+      pointer-events: none;
+    }
+    @keyframes neonBorderSpin { to { transform: rotate(1turn); } }
+
+    .video-frame { position: relative; aspect-ratio: 16 / 9; background: #111; }
+    .video-frame img,
+    .video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .video-frame img { object-fit: cover; transition: filter .22s ease, opacity .22s ease, transform .22s ease; }
+    .video-card:hover .video-frame img,
+    .video-card:focus-visible .video-frame img { filter: grayscale(.35) blur(2px); opacity: .58; transform: scale(1.03); }
+    .video-frame::after {
+      content: ""; position: absolute; inset: 0;
+      background: rgba(178, 184, 192, .22); opacity: 0; transition: opacity .22s ease;
+    }
+    .video-card:hover .video-frame::after,
+    .video-card:focus-visible .video-frame::after { opacity: 1; }
+
+    .video-meta { position: relative; overflow: hidden; padding: 12px 12px 14px; }
+    .video-meta > * { position: relative; z-index: 1; }
+    .video-meta strong {
+      display: block; overflow: hidden; color: #fff; font-size: 14px; line-height: 1.35;
+      text-overflow: ellipsis; white-space: nowrap;
+    }
+    .video-meta span { color: #9ca8b8; font-size: 12px; }
+
+    .card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+    .card-tags span {
+      display: inline-flex; align-items: center; min-height: 24px; padding: 0 8px;
+      color: #dce6ef; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.12);
+      border-radius: 999px; font-size: 11px; font-weight: 400;
+    }
+
+    .center-action { display: flex; justify-content: center; margin-top: 46px; }
+    #demo .wrap { position: relative; }
+    #demo .center-action { position: absolute; top: 30px; right: 0; z-index: 3; margin-top: 0; }
+    @media (max-width: 900px) {
+      #demo .center-action { position: static; justify-content: center; margin-top: 32px; }
+    }
+    .center-action .button { height: 50px; min-width: 220px; font-size: 16px; font-weight: 400; }
+
+    /* ===== 버튼 ===== */
+    .button {
+      min-width: 188px; height: 62px;
+      display: inline-flex; align-items: center; justify-content: center; gap: 16px;
+      border-radius: 12px; border: 1px solid rgba(255, 255, 255, .14); color: #fff;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, .13), rgba(255, 255, 255, 0) 46%),
+        linear-gradient(135deg, #0a4a1b, var(--green-2));
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .2),
+        inset 0 -10px 18px rgba(0, 0, 0, .18),
+        0 12px 26px rgba(6, 54, 19, .22);
+      font-size: 16px; font-weight: 400; cursor: pointer;
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+    .button:hover,
+    .button:focus-visible {
+      border-color: rgba(255, 255, 255, .24);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .26),
+        inset 0 -10px 18px rgba(0, 0, 0, .14),
+        0 16px 32px rgba(6, 54, 19, .3);
+      transform: translateY(-1px); outline: 0;
+    }
+    .button::after { content: "→"; font-size: 24px; line-height: 1; }
+    .button.no-arrow::after { content: none; }
+
+    /* ===== 모달 (reel-showcase) — 헤더 아래로 슬라이드업 ===== */
+    .reel-showcase {
+      position: sticky;
+      top: 64px;
+      z-index: 18;
+      display: none;
+      padding: 0 8px;
+      overflow: hidden;
+      background: rgba(0, 8, 22, .86);
+      border-bottom: 1px solid rgba(255,255,255,.12);
+      box-shadow: 0 18px 50px rgba(0,0,0,.22);
+      transform: translateY(52px);
+      opacity: 0;
+      backdrop-filter: blur(0);
+      transition: background .22s ease, backdrop-filter .22s ease, border-color .22s ease;
+    }
+    .reel-showcase.is-scrolled {
+      background: rgba(0, 8, 22, .62);
+      backdrop-filter: blur(6px);
+      border-bottom-color: rgba(255,255,255,.12);
+    }
+    .reel-showcase.is-open,
+    .reel-showcase.is-closing { display: block; }
+    .reel-showcase.is-open { animation: reelSlideUp .36s ease forwards; }
+    .reel-showcase.is-closing { animation: reelSlideDown .28s ease forwards; }
+    @keyframes reelSlideUp {
+      from { transform: translateY(52px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes reelSlideDown {
+      from { transform: translateY(0); opacity: 1; }
+      to { transform: translateY(52px); opacity: 0; }
+    }
+
+    .reel-panel {
+      position: relative;
+      max-width: 1650px;
+      margin: 0 auto;
+      padding: 28px 0;
+      display: grid;
+      grid-template-columns: 7fr 3fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+    .reel-panel-frame {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      min-height: 300px;
+      background: #000;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .reel-panel-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .reel-panel-copy {
+      padding: 30px 44px 30px 0;
+      display: flex;
+      flex-direction: column;
+      color: #d7dee8;
+      overflow-y: auto;
+    }
+    .reel-panel-copy h3 { margin-bottom: 14px; color: #fff; font-size: 24px; line-height: 1.28; }
+    .reel-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+    .reel-tags span {
+      display: inline-flex; align-items: center; min-height: 28px; padding: 0 10px;
+      color: #dce6ef; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.12);
+      border-radius: 999px; font-size: 12px; font-weight: 400;
+    }
+    .reel-panel-copy p {
+      margin-bottom: 0; color: #aeb8c6; font-size: 15px;
+      word-break: keep-all; white-space: pre-line;
+    }
+    .reel-escape-button {
+      min-width: 160px; height: 42px;
+      align-self: flex-end; margin-top: auto;
+      border: 1px solid rgba(217,217,217,.48); border-radius: 8px;
+      color: #06101c; background: #d9d9d9;
+      font-size: 16px; font-weight: 400; cursor: pointer;
+      transition: opacity .2s ease, transform .2s ease;
+    }
+    .reel-escape-button:hover,
+    .reel-escape-button:focus-visible { opacity: .88; transform: translateY(-1px); }
+    .reel-close {
+      position: absolute; top: 24px; right: 0; z-index: 2;
+      width: 38px; height: 38px;
+      border: 1px solid rgba(255,255,255,.2); border-radius: 50%;
+      color: #fff; background: rgba(0,0,0,.45);
+      font-size: 24px; line-height: 1; cursor: pointer;
+    }
+
+    /* ===== 경력 기술서 팝업 (career-showcase) — 전체화면 오버레이 ===== */
+    .career-showcase {
+      position: fixed;
+      inset: 64px 0 0;
+      z-index: 1200;
+      display: none;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 0 22px 96px;
+      overflow-y: auto;
+      background: rgba(0, 8, 22, .88);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      color: var(--ink);
+      opacity: 0;
+      pointer-events: none;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      overscroll-behavior: contain;
+    }
+    .career-showcase::-webkit-scrollbar { display: none; }
+    .career-showcase.is-open { display: flex; animation: careerOverlayIn .28s ease forwards; }
+    .career-showcase.is-closing { display: flex; animation: careerOverlayOut .24s ease forwards; }
+    @keyframes careerOverlayIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes careerOverlayOut { from { opacity: 1; } to { opacity: 0; } }
+
+    .career-panel {
+      position: relative;
+      width: min(1420px, calc(100vw - 44px));
+      min-height: calc(100vh - 64px);
+      padding: 44px 44px 96px;
+      overflow: visible;
+      background: rgba(217, 217, 217, .96);
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 14px;
+      box-shadow: 0 28px 80px rgba(0,0,0,.46);
+      transform: translateY(18px);
+      transition: transform .28s ease;
+      flex: 0 0 auto;
+      pointer-events: auto;
+    }
+    .career-showcase.is-open .career-panel { transform: translateY(0); }
+
+    .career-close {
+      position: sticky; top: 0; z-index: 8;
+      float: right;
+      min-width: 160px; height: 42px;
+      margin: 0 0 10px 18px; padding: 0 22px;
+      border: 1px solid rgba(217,217,217,.48); border-radius: 8px;
+      color: #06101c; background: #d9d9d9;
+      box-shadow: 0 12px 28px rgba(0,0,0,.12);
+      font-size: 16px; font-weight: 400; line-height: 1; cursor: pointer;
+      transition: opacity .2s ease, transform .2s ease;
+    }
+    .career-close:hover, .career-close:focus-visible { opacity: .88; transform: translateY(-1px); outline: 0; }
+
+    .career-panel-head { clear: both; margin-bottom: 24px; text-align: center; }
+    .career-panel-head .section-kicker { margin-bottom: 8px; color: #6f7885; font-size: 20px; font-weight: 400; }
+    .career-panel-head h2 { color: #151b28; font-size: 36px; line-height: 1.15; font-weight: 600; }
+
+    .career-document { display: grid; gap: 18px; padding-bottom: 26px; }
+
+    .career-image-row { display: grid; gap: 18px; }
+    .career-image-row.cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .career-image-row.cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .career-image-row img { width: 100%; height: 222px; object-fit: cover; background: #bfc3c8; display: block; }
+    .career-image-row img:first-child { border-top-left-radius: 34px; }
+    .career-image-row img:last-child { border-top-right-radius: 34px; }
+
+    .career-resume-card, .career-info-card {
+      display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 48px; padding: 40px;
+      background: rgba(255,255,255,.92); border: 0; border-radius: 18px; box-shadow: 0 14px 34px rgba(0,0,0,.06);
+    }
+    .career-resume-card { border-radius: 0 0 34px 34px; }
+    .career-resume-card--warhaven { grid-template-columns: 230px minmax(0, 1fr) minmax(300px, 382px); align-items: start; }
+    .career-resume-meta strong { display: block; margin-bottom: 10px; color: #063613; font-size: 18px; line-height: 1.35; font-weight: 600; }
+    .career-resume-meta span { display: block; color: #48515f; font-size: 15px; font-weight: 600; }
+    .career-resume-card h3, .career-info-card h3 { margin: 0 0 10px; color: #0d1623; font-size: 24px; line-height: 1.25; font-weight: 600; }
+    .career-resume-card p, .career-info-card p { margin: 0 0 14px; color: #4b5563; font-size: 16px; line-height: 1.6; word-break: keep-all; }
+    .career-resume-card h4 { margin: 16px 0 4px; color: #0d1623; font-size: 18px; line-height: 1.35; font-weight: 600; }
+    .career-resume-card ul, .career-info-card ul { margin: 0; padding-left: 20px; color: #4b5563; font-size: 16px; line-height: 1.6; word-break: keep-all; }
+    .career-resume-card li + li, .career-info-card li + li { margin-top: 8px; }
+
+    /* warhaven 노션 카드 (스크린샷 우측 카드) */
+    .career-warhaven-card {
+      width: min(100%, 382px); display: block; overflow: hidden;
+      align-self: start; justify-self: end; color: #fff;
+      background: #07111e; border: 1px solid rgba(255,255,255,.14); border-radius: 4px;
+      box-shadow: 0 18px 36px rgba(0,0,0,.28);
+      transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease; isolation: isolate;
+    }
+    .career-warhaven-card:hover, .career-warhaven-card:focus-visible {
+      border-color: rgba(255,255,255,.28); box-shadow: 0 22px 42px rgba(0,0,0,.34); transform: translateY(-2px); outline: 0;
+    }
+    .career-warhaven-card-frame { position: relative; display: block; aspect-ratio: 16 / 9; overflow: hidden; background: #111; }
+    .career-warhaven-card-frame > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .career-warhaven-card-notion { position: absolute; right: 8px; bottom: 8px; z-index: 2; width: 72px; height: 72px; display: grid; place-items: center; }
+    .career-warhaven-card-notion img { position: static; width: 52px; height: 52px; object-fit: contain; opacity: .94; }
+    .career-warhaven-card-meta { display: block; padding: 12px 14px 14px; background: #07111e; }
+    .career-warhaven-card-meta strong { display: block; margin-bottom: 10px; color: #fff; font-size: 14px; line-height: 1.25; font-weight: 800; }
+    .career-warhaven-card-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .career-warhaven-card-tags span {
+      display: inline-flex; align-items: center; min-height: 24px; padding: 0 9px;
+      color: #dce6ef; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.12);
+      border-radius: 999px; font-size: 11px; font-weight: 700; line-height: 1;
+    }
+
+    .career-bottom-grid { display: grid; grid-template-columns: 1.05fr 1.05fr 1.05fr .62fr; gap: 18px; padding-bottom: 28px; }
+    .career-mini-card { min-height: 180px; padding: 28px 34px; background: rgba(255,255,255,.92); border-radius: 18px; box-shadow: 0 14px 34px rgba(0,0,0,.05); }
+    .career-mini-card h3 { margin: 0 0 18px; color: #0d1623; font-size: 24px; line-height: 1.25; font-weight: 600; }
+    .career-mini-card p { margin: 0; color: #4b5563; font-size: 16px; line-height: 1.6; word-break: keep-all; }
+
+    /* ===== Projects (paper) ===== */
+    .project-layout {
+      display: grid;
+      grid-template-columns: minmax(0, .94fr) minmax(0, 1fr);
+      gap: 44px;
+      align-items: center;
+    }
+    .project-collage { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+    .project-collage .wide { grid-column: 1 / -1; aspect-ratio: 16 / 7.5; object-fit: cover; }
+    .project-collage img { width: 100%; height: 100%; min-height: 110px; object-fit: cover; border-radius: 2px; }
+    .project-copy > p { margin-bottom: 28px; color: #25303c; font-size: 17px; font-weight: 400; word-break: keep-all; }
+    .feature-item { display: grid; grid-template-columns: 58px minmax(0, 1fr); gap: 18px; margin-bottom: 24px; }
+    .feature-icon { width: 52px; height: 52px; object-fit: contain; }
+    .feature-item h3 { margin-bottom: 4px; font-size: 27px; line-height: 1.12; font-weight: 600; }
+    .feature-item p { margin: 0; color: #48515f; font-size: 15px; word-break: keep-all; }
+
+    /* ===== Learning (paper) ===== */
+    .learning-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .learning-head { display: block; margin-bottom: 34px; }
+    .learning-title .section-kicker,
+    .learning-title h2 { text-align: center; margin-inline: auto; }
+    .learning-title h2 { margin-bottom: 0; }
+    .learning-card {
+      display: flex; flex-direction: column; align-items: flex-start; min-height: 230px;
+      padding: 34px; color: #1d2631; background: #d9d9d9; border-radius: 12px;
+    }
+    .learning-image-frame { width: 100%; aspect-ratio: 16 / 9; margin-bottom: 20px; display: grid; place-items: center; overflow: hidden; }
+    .learning-image { width: 100%; height: 100%; object-fit: contain; object-position: center; }
+    .learning-card p { color: #283342; font-size: 15px; font-weight: 400; word-break: keep-all; }
+    .learning-card .button { min-width: 146px; height: 46px; align-self: flex-end; margin-top: auto; font-size: 16px; font-weight: 400; border-radius: 8px; }
+    .learning-card .button::after { font-size: 17px; }
+    .learning-card strong { display: block; margin-top: 8px; color: #0d1623; font-size: 18px; font-weight: 600; }
+
+    /* ===== About (dark) — profile + portrait ===== */
+    /* zoom:1.2 환경에서 About 섹션이 한 화면을 채우도록 높이 확보 */
+    #about { min-height: 80vh; display: flex; align-items: center; }
+    .profile { display: grid; grid-template-columns: minmax(0, .95fr) minmax(360px, .85fr); gap: 0 76px; align-items: stretch; }
+    .profile-head { grid-column: 1 / -1; margin-bottom: 0; }
+    .profile h2, .profile .section-kicker { text-align: center; }
+    .profile-copy { align-self: stretch; }
+    .profile p { color: #c7d0dc; font-size: 15px; word-break: keep-all; }
+    .portrait {
+      min-height: 100%;
+      border-radius: 32% 0 32% 0;
+      background:
+        linear-gradient(135deg, rgba(6,16,28,.05), rgba(6,16,28,.3)),
+        linear-gradient(135deg, #1b2a3d, #0a1726);
+      filter: saturate(.85);
+      display: grid; place-items: center; color: rgba(255,255,255,.5); font-size: 14px;
+    }
+
+    /* ===== Stack band ===== */
+    .stack-band { padding: 26px 28px; background: var(--green); border-top: 1px solid rgba(255,255,255,.08); border-bottom: 1px solid rgba(255,255,255,.08); }
+    .stack-row { max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 30px; align-items: center; }
+    .stack-title span { display: block; color: rgba(255,255,255,.62); font-size: 12px; font-weight: 800; }
+    .stack-title strong { display: block; color: #fff; font-size: 21px; }
+    .stack-list { display: flex; justify-content: flex-end; gap: clamp(18px, 4vw, 50px); color: #fff; font-size: 12px; font-weight: 800; text-align: center; }
+    .stack-list span { --stack-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='76' height='76'%3E%3Ccircle cx='38' cy='38' r='32' fill='none' stroke='%23ffffff' stroke-width='3' opacity='0.65'/%3E%3C/svg%3E"); }
+    .stack-list span::before { content: ""; display: block; width: 76px; height: 76px; margin: 0 auto 8px; background: var(--stack-icon) center / contain no-repeat; }
+
+    /* ===== Skills (green/paper) ===== */
+    .skills-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+    .skill-card {
+      min-height: 206px; padding: 30px 24px; text-align: center;
+      border: 1px solid #cfd1d4; background: transparent; color: var(--ink);
+      transition: background-color .22s ease, border-color .22s ease, color .22s ease;
+    }
+    .skill-card:hover, .skill-card:focus-within { color: #fff; background: var(--green); border-color: var(--green); }
+    .skill-card h3 { margin-bottom: 16px; font-size: 24px; line-height: 1.2; font-weight: 600; }
+    .skill-card p { color: #535c69; font-size: 16px; font-weight: 400; word-break: keep-all; white-space: pre-line; transition: color .22s ease; }
+    .skill-card:hover p, .skill-card:focus-within p { color: rgba(255,255,255,.78); }
+
+    /* ===== Footer ===== */
+    .footer { padding: 25px 28px; background: var(--navy); }
+    .footer-grid { max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: 1.45fr .72fr .8fr 1.9fr; gap: 72px; color: #b8c1ce; align-items: start; }
+    .footer h3 { color: #fff; font-size: 24px; line-height: 1.1; margin-bottom: 26px; }
+    .footer p, .footer a { color: #a5afbd; font-size: 16px; line-height: 1.45; }
+    .footer-brand-name { display: block; margin-top: 11px; color: #fff; font-size: 30px; font-weight: 600; line-height: 1.1; }
+    .footer-contact { margin-top: 24px; margin-bottom: 0; }
+    .footer-links { display: grid; gap: 13px; }
+    .social-row { display: flex; align-items: center; gap: 15px; margin-top: 24px; }
+    .social-row a { flex-shrink: 0; }
+    .social-row img { width: 40px; height: 40px; object-fit: contain; opacity: .78; flex-shrink: 0; transition: opacity .25s ease, transform .25s ease; }
+    .social-row a:hover img, .social-row a:focus-visible img { opacity: 1; transform: translateY(-2px); }
+    .contact-form { display: grid; grid-template-columns: minmax(0, 1fr) 102px; gap: 0; overflow: hidden; background: #1d2533; border-radius: 14px; max-width: 60%; }
+    .contact-form input { width: 100%; min-height: 43px; padding: 0 24px; color: #fff; background: transparent; border: 0; font-size: 18px; }
+    .contact-form button { min-height: 43px; color: #fff; background: var(--green-2); border: 0; border-radius: 10px; margin: 5px; font-weight: 400; font-size: 16px; }
+
+    /* ===== 반응형 ===== */
+    @media (max-width: 900px) {
+      .nav-links, .date-pill { display: none; }
+      section { padding: 64px 20px; }
+      .reel-grid, .project-layout, .learning-grid, .profile, .stack-row, .skills-grid, .footer-grid { grid-template-columns: 1fr; }
+      .stack-list { flex-wrap: wrap; justify-content: flex-start; }
+      .project-collage { grid-template-columns: repeat(2, 1fr); }
+      .project-collage .wide { grid-column: 1 / -1; }
+      .portrait { min-height: 420px; }
+      .profile-head { margin-bottom: 24px; }
+      .contact-form { grid-template-columns: 1fr; max-width: 100%; }
+      .reel-panel { grid-template-columns: 1fr; gap: 16px; }
+      .reel-panel-frame { min-height: 0; }
+      .reel-panel-copy { padding: 0 48px 24px 0; }
+      #about { min-height: 0; }
+      .career-resume-card, .career-resume-card--warhaven, .career-info-card,
+      .career-image-row.cols-3, .career-image-row.cols-4, .career-bottom-grid { grid-template-columns: 1fr; }
+      .career-warhaven-card { width: min(100%, 382px); justify-self: stretch; }
+      .career-panel { width: calc(100vw - 28px); padding: 24px 18px 80px; }
+      .career-showcase { padding: 0 14px 80px; }
+      .career-close { min-width: 142px; }
+      .career-image-row img { height: 200px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="nav-wrap">
+      <a class="logo" href="#top" aria-label="Home">
+        <span class="logo-text">PORTFOLIO<b>.</b></span>
+      </a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#demo">Demo Reel</a>
+        <a href="#projects">Projects</a>
+        <a href="#learning">Learning</a>
+        <a href="#about">About</a>
+      </nav>
+      <div class="header-meta">
+        <span class="date-pill" id="today-date"></span>
+        <span class="date-pill visitor-pill" id="today-visitors" title="오늘 방문자 수 (서울 자정 기준 초기화)">Today --</span>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- ===== 모달 (헤더 바로 아래로 슬라이드업) — 카드 클릭 시 열림 ===== -->
+    <section class="reel-showcase" id="reel-showcase" aria-hidden="true">
+      <div class="reel-panel">
+        <button class="reel-close" type="button" aria-label="닫기">×</button>
+        <div class="reel-panel-frame" id="reel-panel-frame"></div>
+        <div class="reel-panel-copy">
+          <h3 id="reel-panel-title"></h3>
+          <div class="reel-tags" id="reel-panel-tags" aria-label="Tags"></div>
+          <p id="reel-panel-description"></p>
+          <button class="reel-escape-button" type="button">ESC 눌러 닫기</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Demo Reel (대표 작업물 갤러리) ===== -->
+    <section id="demo" class="dark-section">
+      <div class="wrap">
+        <p class="section-kicker">Demo Reel</p>
+        <h1>Portfolio</h1>
+        <div class="reel-grid">
+          <!-- 카드 데이터: data-video(YouTube ID) / data-title / data-tags / data-description / data-link(선택) -->
+          <article class="video-card is-featured" tabindex="0" role="button" data-video="dQw4w9WgXcQ" data-tags="2026.06,Tag A,Tag B,Tag C" data-title="대표 작업물 01" data-description="- 작업 개요를 여기에 적으세요.&#10;- 사용한 도구나 접근 방식을 설명하세요.">
+            <div class="video-frame"><img src="https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg" alt="대표 작업물 01"></div>
+            <div class="video-meta"><strong>대표 작업물 01</strong><div class="card-tags"><span>2026.06</span><span>Tag A</span><span>Tag B</span><span>Tag C</span></div></div>
+          </article>
+          <article class="video-card is-featured" tabindex="0" role="button" data-video="dQw4w9WgXcQ" data-tags="2026.05,Tag A,Tag B" data-title="대표 작업물 02" data-description="- 작업 개요를 여기에 적으세요.&#10;- 두 번째 줄 설명.">
+            <div class="video-frame"><img src="https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg" alt="대표 작업물 02"></div>
+            <div class="video-meta"><strong>대표 작업물 02</strong><div class="card-tags"><span>2026.05</span><span>Tag A</span><span>Tag B</span></div></div>
+          </article>
+          <article class="video-card is-featured" tabindex="0" role="button" data-video="dQw4w9WgXcQ" data-tags="2026.04,Tag A,Tag B" data-title="대표 작업물 03" data-description="- 작업 개요를 여기에 적으세요.">
+            <div class="video-frame"><img src="https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg" alt="대표 작업물 03"></div>
+            <div class="video-meta"><strong>대표 작업물 03</strong><div class="card-tags"><span>2026.04</span><span>Tag A</span><span>Tag B</span></div></div>
+          </article>
+          <article class="video-card is-featured" tabindex="0" role="button" data-video="dQw4w9WgXcQ" data-tags="2026.03,Tag A,Tag B" data-title="대표 작업물 04" data-description="- 작업 개요를 여기에 적으세요.">
+            <div class="video-frame"><img src="https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg" alt="대표 작업물 04"></div>
+            <div class="video-meta"><strong>대표 작업물 04</strong><div class="card-tags"><span>2026.03</span><span>Tag A</span><span>Tag B</span></div></div>
+          </article>
+          <article class="video-card is-featured" tabindex="0" role="button" data-video="dQw4w9WgXcQ" data-tags="2026.02,Tag A,Tag B" data-title="대표 작업물 05" data-description="- 작업 개요를 여기에 적으세요.">
+            <div class="video-frame"><img src="https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg" alt="대표 작업물 05"></div>
+            <div class="video-meta"><strong>대표 작업물 05</strong><div class="card-tags"><span>2026.02</span><span>Tag A</span><span>Tag B</span></div></div>
+          </article>
+          <article class="video-card is-featured" tabindex="0" role="button" data-video="dQw4w9WgXcQ" data-tags="2026.01,Tag A,Tag B" data-title="대표 작업물 06" data-description="- 작업 개요를 여기에 적으세요.">
+            <div class="video-frame"><img src="https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg" alt="대표 작업물 06"></div>
+            <div class="video-meta"><strong>대표 작업물 06</strong><div class="card-tags"><span>2026.01</span><span>Tag A</span><span>Tag B</span></div></div>
+          </article>
+        </div>
+        <div class="center-action"><a class="button no-arrow" href="#projects">더 많은 작업물 보기</a></div>
+      </div>
+    </section>
+
+    <!-- ===== Projects ===== -->
+    <section id="projects" class="paper-section">
+      <div class="wrap">
+        <p class="section-kicker">Projects</p>
+        <h2>주요 프로젝트</h2>
+        <div class="project-layout">
+          <div class="project-collage">
+            <img class="wide" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='300'%3E%3Crect width='100%25' height='100%25' fill='%23c2c5ca'/%3E%3Ctext x='50%25' y='50%25' fill='%237b8290' font-family='sans-serif' font-size='22' text-anchor='middle' dominant-baseline='middle'%3EPROJECT IMAGE%3C/text%3E%3C/svg%3E" alt="프로젝트 대표 이미지">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='160'%3E%3Crect width='100%25' height='100%25' fill='%23cacdd2'/%3E%3C/svg%3E" alt="">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='160'%3E%3Crect width='100%25' height='100%25' fill='%23cacdd2'/%3E%3C/svg%3E" alt="">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='160'%3E%3Crect width='100%25' height='100%25' fill='%23cacdd2'/%3E%3C/svg%3E" alt="">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='160'%3E%3Crect width='100%25' height='100%25' fill='%23cacdd2'/%3E%3C/svg%3E" alt="">
+          </div>
+          <div class="project-copy">
+            <p>대표 프로젝트에 대한 한두 문단 소개를 적으세요. 역할, 기여, 사용 기술, 성과 등을 담습니다.</p>
+            <div class="feature-item">
+              <img class="feature-icon" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='52' height='52'%3E%3Crect width='100%25' height='100%25' rx='12' fill='%237d8997'/%3E%3C/svg%3E" alt="">
+              <div><h3>역량 1</h3><p>이 역량에 대한 짧은 설명을 적으세요.</p></div>
+            </div>
+            <div class="feature-item">
+              <img class="feature-icon" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='52' height='52'%3E%3Crect width='100%25' height='100%25' rx='12' fill='%237d8997'/%3E%3C/svg%3E" alt="">
+              <div><h3>역량 2</h3><p>이 역량에 대한 짧은 설명을 적으세요.</p></div>
+            </div>
+            <div class="feature-item">
+              <img class="feature-icon" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='52' height='52'%3E%3Crect width='100%25' height='100%25' rx='12' fill='%237d8997'/%3E%3C/svg%3E" alt="">
+              <div><h3>역량 3</h3><p>이 역량에 대한 짧은 설명을 적으세요.</p></div>
+            </div>
+            <button class="button career-trigger" type="button">경력 기술서 보기</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Learning ===== -->
+    <section id="learning" class="green-section">
+      <div class="wrap">
+        <div class="learning-head">
+          <div class="learning-title">
+            <p class="section-kicker">Learning</p>
+            <h2>What I keep studying</h2>
+          </div>
+        </div>
+        <div class="learning-grid">
+          <article class="learning-card">
+            <div class="learning-image-frame">
+              <img class="learning-image" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225'%3E%3Crect width='100%25' height='100%25' fill='%23c2c5ca'/%3E%3C/svg%3E" alt="">
+            </div>
+            <p>학습/연구 주제에 대한 요약을 적으세요.</p>
+            <strong>연구 주제 01</strong>
+            <a class="button" href="#" target="_blank" rel="noopener noreferrer">Read More</a>
+          </article>
+          <article class="learning-card">
+            <div class="learning-image-frame">
+              <img class="learning-image" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225'%3E%3Crect width='100%25' height='100%25' fill='%23c2c5ca'/%3E%3C/svg%3E" alt="">
+            </div>
+            <p>학습/연구 주제에 대한 요약을 적으세요.</p>
+            <strong>연구 주제 02</strong>
+            <a class="button" href="#" target="_blank" rel="noopener noreferrer">Read More</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== About ===== -->
+    <section id="about" class="dark-section">
+      <div class="wrap profile">
+        <div class="profile-head">
+          <p class="section-kicker">About</p>
+          <h2>Your Name</h2>
+        </div>
+        <div class="profile-copy">
+          <p>한두 문단으로 본인을 소개하세요. 전문 분야, 강점, 지향점 등을 담습니다.</p>
+          <p>두 번째 문단입니다. 어떤 일을 하는 사람인지, 어떤 환경/문제에 흥미를 느끼는지 적어보세요. 단순 실행을 넘어 어떤 가치를 만들고 싶은지를 담으면 좋습니다.</p>
+          <p>세 번째 문단입니다. 특히 관심 있는 세부 분야나, 그것을 통해 만들어내고자 하는 결과(완성도·몰입감·효율 등)를 구체적으로 설명하세요.</p>
+          <p>네 번째 문단입니다. 현재 소속과 진행 중인 일을 요약하세요. 어떤 프로젝트에서 어떤 역할을 맡고 있는지 적습니다.</p>
+          <p>다섯 번째 문단입니다. 과거 경력에서의 주요 경험과 배운 점을 정리하세요.</p>
+          <p>여섯 번째 문단입니다. 협업·커뮤니케이션·멘토링 등 사람과 관련된 강점이나 가치관을 적어 마무리하세요.</p>
+        </div>
+        <div class="portrait">PORTRAIT</div>
+      </div>
+    </section>
+
+    <!-- ===== Stack band ===== -->
+    <div class="stack-band">
+      <div class="stack-row">
+        <div class="stack-title"><span>TOOLS</span><strong>주요 사용 도구</strong></div>
+        <div class="stack-list">
+          <span>Tool 1</span><span>Tool 2</span><span>Tool 3</span><span>Tool 4</span><span>Tool 5</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== Skills ===== -->
+    <section class="paper-section">
+      <div class="wrap">
+        <p class="section-kicker">Skills</p>
+        <h2>핵심 역량</h2>
+        <div class="skills-grid">
+          <div class="skill-card" tabindex="0" data-ko-title="역량 1" data-ko-text="마우스를 올리면 보이는 한국어 설명입니다.">
+            <h3>Skill 1</h3><p>이 역량에 대한 영문/요약 설명입니다.</p>
+          </div>
+          <div class="skill-card" tabindex="0" data-ko-title="역량 2" data-ko-text="마우스를 올리면 보이는 한국어 설명입니다.">
+            <h3>Skill 2</h3><p>이 역량에 대한 영문/요약 설명입니다.</p>
+          </div>
+          <div class="skill-card" tabindex="0" data-ko-title="역량 3" data-ko-text="마우스를 올리면 보이는 한국어 설명입니다.">
+            <h3>Skill 3</h3><p>이 역량에 대한 영문/요약 설명입니다.</p>
+          </div>
+          <div class="skill-card" tabindex="0" data-ko-title="역량 4" data-ko-text="마우스를 올리면 보이는 한국어 설명입니다.">
+            <h3>Skill 4</h3><p>이 역량에 대한 영문/요약 설명입니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 경력 기술서 팝업 (career-trigger 버튼으로 열림) ===== -->
+    <section class="career-showcase" id="career-showcase" aria-hidden="true">
+      <div class="career-panel">
+        <button class="career-close" type="button" aria-label="경력 기술서 닫기">ESC 눌러 닫기</button>
+        <div class="career-panel-head">
+          <p class="section-kicker">Career Profile</p>
+          <h2>경력 기술서</h2>
+        </div>
+
+        <div class="career-document">
+          <!-- 상단 대표 이미지 3장 -->
+          <div class="career-image-row cols-3">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='540' height='300'%3E%3Crect width='100%25' height='100%25' fill='%23a9adb3'/%3E%3C/svg%3E" alt="대표 프로젝트 1" loading="lazy">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='540' height='300'%3E%3Crect width='100%25' height='100%25' fill='%23a9adb3'/%3E%3C/svg%3E" alt="대표 프로젝트 2" loading="lazy">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='540' height='300'%3E%3Crect width='100%25' height='100%25' fill='%23a9adb3'/%3E%3C/svg%3E" alt="대표 프로젝트 3" loading="lazy">
+          </div>
+
+          <!-- 대표 경력 카드 (좌: 기간/회사, 중: 내용, 우: 외부 포트폴리오 카드) -->
+          <article class="career-resume-card career-resume-card--warhaven">
+            <div class="career-resume-meta">
+              <strong>2022.01 - 재직 중</strong>
+              <span>회사명</span>
+            </div>
+            <div>
+              <h3>대표 프로젝트 / 직무 제목</h3>
+              <p>이 시기에 담당한 핵심 업무를 한두 문장으로 요약하세요.</p>
+              <h4>&lt;프로젝트 A&gt;</h4>
+              <ul>
+                <li>핵심 기여 내용 1</li>
+                <li>핵심 기여 내용 2</li>
+                <li>핵심 기여 내용 3</li>
+              </ul>
+              <h4>&lt;프로젝트 B&gt;</h4>
+              <ul>
+                <li>핵심 기여 내용 1</li>
+              </ul>
+            </div>
+            <a class="career-warhaven-card" href="#" target="_blank" rel="noopener noreferrer">
+              <span class="career-warhaven-card-frame">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='382' height='215'%3E%3Crect width='100%25' height='100%25' fill='%231a2740'/%3E%3C/svg%3E" alt="프로젝트 기술 포트폴리오" loading="lazy">
+                <span class="career-warhaven-card-notion" aria-hidden="true"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='52' height='52'%3E%3Crect width='100%25' height='100%25' rx='10' fill='%23ffffff'/%3E%3Ctext x='50%25' y='54%25' fill='%23111' font-family='sans-serif' font-size='30' font-weight='700' text-anchor='middle' dominant-baseline='middle'%3EN%3C/text%3E%3C/svg%3E" alt=""></span>
+              </span>
+              <span class="career-warhaven-card-meta">
+                <strong>프로젝트 기술 포트폴리오</strong>
+                <span class="career-warhaven-card-tags">
+                  <span>2022~2024</span>
+                  <span>Implementation</span>
+                  <span>Tone &amp; manner</span>
+                  <span>Combat</span>
+                </span>
+              </span>
+            </a>
+          </article>
+
+          <!-- 추가 이미지 행 -->
+          <div class="career-image-row cols-4">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='240'%3E%3Crect width='100%25' height='100%25' fill='%23a9adb3'/%3E%3C/svg%3E" alt="" loading="lazy">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='240'%3E%3Crect width='100%25' height='100%25' fill='%23a9adb3'/%3E%3C/svg%3E" alt="" loading="lazy">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='240'%3E%3Crect width='100%25' height='100%25' fill='%23a9adb3'/%3E%3C/svg%3E" alt="" loading="lazy">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='240'%3E%3Crect width='100%25' height='100%25' fill='%23a9adb3'/%3E%3C/svg%3E" alt="" loading="lazy">
+          </div>
+
+          <!-- 이전 경력 카드 -->
+          <article class="career-info-card">
+            <div class="career-resume-meta">
+              <strong>2017.04 - 2022.01</strong>
+              <span>이전 회사명</span>
+            </div>
+            <div>
+              <h3>이전 직무 제목</h3>
+              <p>담당 업무 요약을 적으세요.</p>
+              <ul>
+                <li>핵심 기여 내용 1</li>
+                <li>핵심 기여 내용 2</li>
+                <li>핵심 기여 내용 3</li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- 하단 미니 카드 그리드 -->
+          <div class="career-bottom-grid">
+            <article class="career-mini-card"><h3>Education</h3><p>학력 / 전공을 적으세요.</p></article>
+            <article class="career-mini-card"><h3>Certifications</h3><p>자격증 / 수상 내역을 적으세요.</p></article>
+            <article class="career-mini-card"><h3>Tools</h3><p>주요 사용 도구를 적으세요.</p></article>
+            <article class="career-mini-card"><h3>Etc.</h3><p>기타 정보를 적으세요.</p></article>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div>
+        <a class="logo footer-brand" href="#top" aria-label="Home"><span class="logo-text" style="color:#fff;font-size:30px;">PORTFOLIO<b style="color:#5fd08a;">.</b></span></a>
+        <span class="footer-brand-name">Your Name</span>
+        <p class="footer-contact">your@email.com<br>Phone : 010-0000-0000</p>
+        <div class="social-row">
+          <a href="#" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect width='40' height='40' rx='11' fill='%23b8c1ce'/%3E%3Ctext x='50%25' y='55%25' fill='%23151b28' font-family='sans-serif' font-size='15' font-weight='700' text-anchor='middle' dominant-baseline='middle'%3EIG%3C/text%3E%3C/svg%3E" alt="Instagram"></a>
+          <a href="#" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect width='40' height='40' rx='11' fill='%23b8c1ce'/%3E%3Ctext x='50%25' y='56%25' fill='%23151b28' font-family='sans-serif' font-size='14' font-weight='700' text-anchor='middle' dominant-baseline='middle'%3Ein%3C/text%3E%3C/svg%3E" alt="LinkedIn"></a>
+          <a href="#" aria-label="YouTube" target="_blank" rel="noopener noreferrer"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect width='40' height='40' rx='11' fill='%23b8c1ce'/%3E%3Ctext x='51%25' y='55%25' fill='%23151b28' font-family='sans-serif' font-size='16' text-anchor='middle' dominant-baseline='middle'%3E%E2%96%B6%3C/text%3E%3C/svg%3E" alt="YouTube"></a>
+          <a href="#" aria-label="Notion" target="_blank" rel="noopener noreferrer"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect width='40' height='40' rx='11' fill='%23b8c1ce'/%3E%3Ctext x='50%25' y='55%25' fill='%23151b28' font-family='sans-serif' font-size='17' font-weight='700' text-anchor='middle' dominant-baseline='middle'%3EN%3C/text%3E%3C/svg%3E" alt="Notion"></a>
+        </div>
+      </div>
+      <div>
+        <h3>Quick Links</h3>
+        <div class="footer-links">
+          <a href="#demo">DEMO REEL</a>
+          <a href="#projects">PROJECTS</a>
+          <a href="#learning">LEARNING</a>
+          <a href="#about">ABOUT</a>
+        </div>
+      </div>
+      <div>
+        <h3>Resources</h3>
+        <div class="footer-links">
+          <a href="#">포트폴리오</a>
+          <a href="#projects">경력기술서</a>
+        </div>
+      </div>
+      <div>
+        <h3>Contact</h3>
+        <form class="contact-form" action="mailto:your@email.com" method="post" enctype="text/plain">
+          <input type="email" name="email" placeholder="name@domain.com" aria-label="Email address">
+          <button type="submit">Send</button>
+        </form>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const header = document.querySelector(".site-header");
+    const dateEl = document.querySelector("#today-date");
+    const reelShowcase = document.querySelector("#reel-showcase");
+
+    /* 스크롤 시 헤더/모달 블러 상태 동기화 */
+    function syncHeaderState() {
+      const isScrolled = window.scrollY > 12;
+      header.classList.toggle("is-scrolled", isScrolled);
+      reelShowcase.classList.toggle("is-scrolled", isScrolled);
+    }
+
+    /* ===== 방문자 카운터 설정 =====
+       GitHub Pages는 정적 사이트라 서버가 없으므로 무료 카운터 API(Abacus)를 사용합니다.
+       ▸ SITE_KEY 는 다른 사이트와 겹치지 않게 본인만의 고유값으로 꼭 바꾸세요 (예: 깃허브 아이디).
+       ▸ 날짜를 키로 쓰기 때문에 "서울 자정"마다 카운트가 0부터 다시 시작합니다(=오늘 방문자). */
+    const SITE_KEY = "jeonhoon528-portfolio"; // ← 본인 고유값으로 변경하세요
+
+    /* 서울(Asia/Seoul) 기준 날짜 유틸 */
+    function getSeoulParts() {
+      const parts = new Intl.DateTimeFormat("ko-KR", {
+        timeZone: "Asia/Seoul",
+        year: "numeric", month: "2-digit", day: "2-digit", weekday: "long"
+      }).formatToParts(new Date());
+      const pick = (type) => parts.find((p) => p.type === type)?.value || "";
+      return { year: pick("year"), month: pick("month"), day: pick("day"), weekday: pick("weekday") };
+    }
+    function getSeoulDateKey() {
+      // "2026-06-10" 형태 (en-CA 로케일이 YYYY-MM-DD 를 반환)
+      return new Intl.DateTimeFormat("en-CA", {
+        timeZone: "Asia/Seoul", year: "numeric", month: "2-digit", day: "2-digit"
+      }).format(new Date());
+    }
+
+    /* 우측 상단 날짜 표시 — "2026년 06월 10일 화요일" (서울 기준 자동) */
+    function syncDate() {
+      const { year, month, day, weekday } = getSeoulParts();
+      dateEl.textContent = `${year}년 ${month}월 ${day}일 ${weekday}`;
+    }
+
+    /* 오늘 방문자 수 표시 — "Today 숫자" */
+    async function syncVisitors() {
+      const el = document.querySelector("#today-visitors");
+      if (!el) return;
+      const dateKey = getSeoulDateKey();
+      const ns = `portfolio-${SITE_KEY}`;          // 네임스페이스
+      const key = `today-${dateKey}`;               // 날짜별 카운터 키
+      const base = "https://abacus.jasoncameron.dev";
+      const storageKey = `visited-${dateKey}`;
+      const already = localStorage.getItem(storageKey);
+
+      try {
+        // 같은 브라우저가 오늘 처음이면 hit(+1), 아니면 get(증가 없이 조회)
+        let res = await fetch(`${base}/${already ? "get" : "hit"}/${ns}/${key}`);
+        // 조회인데 키가 아직 없으면(get 404) hit 으로 한 번 생성
+        if (already && !res.ok) res = await fetch(`${base}/hit/${ns}/${key}`);
+        const data = await res.json();
+        if (!already) localStorage.setItem(storageKey, "1");
+        el.textContent = `Today ${data.value ?? 0}`;
+      } catch (e) {
+        el.textContent = "Today -"; // 네트워크 실패 시 표시
+      }
+    }
+
+    syncHeaderState();
+    syncDate();
+    syncVisitors();
+    // 자정을 넘겨 날짜가 바뀌는 경우를 대비해 1분마다 날짜 갱신
+    setInterval(syncDate, 60 * 1000);
+    window.addEventListener("scroll", syncHeaderState, { passive: true });
+
+    /* 네비게이션 활성 표시 */
+    const navLinks = Array.from(document.querySelectorAll(".nav-links a[href^='#']"));
+    const navSections = navLinks.map((l) => document.querySelector(l.getAttribute("href"))).filter(Boolean);
+
+    function syncActiveNav() {
+      if (!navLinks.length || !navSections.length) return;
+      const current = navSections.reduce((active, section) => {
+        const distance = Math.abs(section.getBoundingClientRect().top - 96);
+        if (!active || distance < active.distance) return { id: section.id, distance };
+        return active;
+      }, null);
+      navLinks.forEach((link) => {
+        link.classList.toggle("is-active", link.getAttribute("href") === `#${current?.id}`);
+      });
+    }
+    syncActiveNav();
+    window.addEventListener("scroll", syncActiveNav, { passive: true });
+
+    /* 마우스 휠 섹션 스냅 스크롤 */
+    const snapSections = ["#demo", "#projects", "#learning", "#about"]
+      .map((s) => document.querySelector(s)).filter(Boolean);
+    let targetSnapIndex = null;
+    const wheelStepSize = 72;
+    const maxStepPerWheel = 2;
+    let wheelBuffer = 0;
+
+    function getCurrentSnapIndex() {
+      return snapSections.reduce((active, section, index) => {
+        const distance = Math.abs(section.getBoundingClientRect().top - 72);
+        if (!active || distance < active.distance) return { index, distance };
+        return active;
+      }, null)?.index ?? 0;
+    }
+
+    function animateScrollTo(targetTop, duration = 140) {
+      if (animateScrollTo.frameId) cancelAnimationFrame(animateScrollTo.frameId);
+      const startTop = window.scrollY;
+      const distance = targetTop - startTop;
+      const startTime = performance.now();
+      const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
+      function step(now) {
+        const progress = Math.min((now - startTime) / duration, 1);
+        window.scrollTo(0, startTop + distance * easeOutCubic(progress));
+        if (progress < 1) animateScrollTo.frameId = requestAnimationFrame(step);
+      }
+      animateScrollTo.frameId = requestAnimationFrame(step);
+    }
+
+    function scrollToSnapSection(index) {
+      targetSnapIndex = Math.max(0, Math.min(index, snapSections.length - 1));
+      const target = snapSections[targetSnapIndex];
+      if (!target) return;
+      const headerHeight = header?.offsetHeight || 64;
+      const targetTop = target.getBoundingClientRect().top + window.scrollY - headerHeight;
+      animateScrollTo(Math.max(0, targetTop));
+      window.setTimeout(() => { targetSnapIndex = null; syncActiveNav(); }, 160);
+    }
+
+    window.addEventListener("wheel", (event) => {
+      if (!snapSections.length) return;
+      if (event.target.closest(".reel-showcase, .career-showcase")) return; // 모달 내부 스크롤은 통과
+      if (Math.abs(event.deltaY) < 10) { event.preventDefault(); return; }
+      wheelBuffer += event.deltaY;
+      const rawSteps = Math.trunc(wheelBuffer / wheelStepSize);
+      const clampedSteps = Math.max(-maxStepPerWheel, Math.min(maxStepPerWheel, rawSteps));
+      if (clampedSteps === 0) { event.preventDefault(); return; }
+      wheelBuffer = 0;
+      const currentIndex = targetSnapIndex ?? getCurrentSnapIndex();
+      const nextIndex = currentIndex + clampedSteps;
+      if (nextIndex < 0 || nextIndex >= snapSections.length) return;
+      event.preventDefault();
+      scrollToSnapSection(nextIndex);
+    }, { passive: false });
+
+    /* ===== 모달 열기/닫기 ===== */
+    const reelFrame = document.querySelector("#reel-panel-frame");
+    const reelTitle = document.querySelector("#reel-panel-title");
+    const reelTags = document.querySelector("#reel-panel-tags");
+    const reelDescription = document.querySelector("#reel-panel-description");
+    const reelClose = document.querySelector(".reel-close");
+    const reelEscapeButton = document.querySelector(".reel-escape-button");
+
+    function openReel(card) {
+      const videoId = card.dataset.video;
+      reelTitle.textContent = card.dataset.title || "";
+
+      // 태그 칩 구성 (data-tags 우선, 없으면 카드 내부 태그 텍스트)
+      reelTags.innerHTML = "";
+      const fallbackTags = card.querySelector(".card-tags")?.textContent || card.querySelector(".video-meta span")?.textContent || "";
+      (card.dataset.tags || fallbackTags).split(",").map((t) => t.trim()).filter(Boolean).forEach((tag) => {
+        const el = document.createElement("span");
+        el.textContent = tag;
+        reelTags.appendChild(el);
+      });
+
+      // 설명 + 선택적 학습 링크
+      reelDescription.textContent = card.dataset.description || "";
+      if (card.dataset.link) {
+        const link = document.createElement("a");
+        link.href = card.dataset.link;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.textContent = card.dataset.link;
+        reelDescription.appendChild(document.createTextNode("\n참고 링크: "));
+        reelDescription.appendChild(link);
+      }
+
+      // 클릭 시에만 iframe 로드
+      reelFrame.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" title="${card.dataset.title || "Demo reel"}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
+      reelShowcase.classList.remove("is-closing");
+      reelShowcase.classList.add("is-open");
+      reelShowcase.setAttribute("aria-hidden", "false");
+      reelShowcase.scrollIntoView({ behavior: "smooth", block: "start" });
+      reelClose.focus();
+    }
+
+    function closeReel() {
+      if (!reelShowcase.classList.contains("is-open")) return;
+      reelShowcase.classList.remove("is-open");
+      reelShowcase.classList.add("is-closing");
+      reelShowcase.setAttribute("aria-hidden", "true");
+    }
+
+    // 닫는 애니메이션 끝나면 iframe 제거(영상/소리 정지)
+    reelShowcase.addEventListener("animationend", () => {
+      if (reelShowcase.classList.contains("is-closing")) {
+        reelShowcase.classList.remove("is-closing");
+        reelFrame.innerHTML = "";
+      }
+    });
+
+    document.querySelectorAll(".video-card[data-video]").forEach((card) => {
+      card.addEventListener("click", () => openReel(card));
+      card.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") { event.preventDefault(); openReel(card); }
+      });
+    });
+
+    reelClose.addEventListener("click", closeReel);
+    reelEscapeButton.addEventListener("click", closeReel);
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && reelShowcase.classList.contains("is-open")) closeReel();
+    });
+
+    /* ===== 경력 기술서 팝업 열기/닫기 ===== */
+    const careerShowcase = document.querySelector("#career-showcase");
+    const careerTrigger = document.querySelector(".career-trigger");
+    const careerClose = careerShowcase?.querySelector(".career-close");
+
+    function openCareer() {
+      careerShowcase.style.display = "flex";
+      careerShowcase.classList.remove("is-closing");
+      careerShowcase.classList.add("is-open");
+      careerShowcase.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden"; // 배경 스크롤 잠금
+      careerClose?.focus();
+    }
+    function closeCareer() {
+      if (!careerShowcase.classList.contains("is-open")) return;
+      careerShowcase.classList.remove("is-open");
+      careerShowcase.classList.add("is-closing");
+      careerShowcase.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+    careerShowcase.addEventListener("animationend", () => {
+      if (careerShowcase.classList.contains("is-closing")) {
+        careerShowcase.classList.remove("is-closing");
+        careerShowcase.style.display = "none";
+      }
+    });
+    careerTrigger?.addEventListener("click", openCareer);
+    careerClose?.addEventListener("click", closeCareer);
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && careerShowcase.classList.contains("is-open")) closeCareer();
+    });
+
+    /* ===== 스킬 카드 hover 시 한국어 ↔ 영문 전환 ===== */
+    document.querySelectorAll(".skill-card").forEach((card) => {
+      const title = card.querySelector("h3");
+      const body = card.querySelector("p");
+      const originalTitle = title.textContent;
+      const originalBody = body.textContent;
+      const showKorean = () => { title.textContent = card.dataset.koTitle || originalTitle; body.textContent = card.dataset.koText || originalBody; };
+      const showEnglish = () => { title.textContent = originalTitle; body.textContent = originalBody; };
+      card.addEventListener("mouseenter", showKorean);
+      card.addEventListener("focusin", showKorean);
+      card.addEventListener("mouseleave", showEnglish);
+      card.addEventListener("focusout", showEnglish);
+    });
+  </script>
+</body>
+</html>
