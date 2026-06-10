@@ -130,7 +130,7 @@ export default async function Page() {
               <h3 id="reel-panel-title" />
               <div className="reel-tags" id="reel-panel-tags" aria-label="Tags" />
               <p id="reel-panel-description" />
-              <button className="reel-escape-button" type="button">ESC 눌러 닫기</button>
+              <button className="reel-escape-button" type="button"><span className="btn-label">ESC 눌러 닫기</span></button>
             </div>
           </div>
         </section>
@@ -300,7 +300,7 @@ export default async function Page() {
         {/* 경력 기술서 팝업 */}
         <section className="career-showcase" id="career-showcase" aria-hidden="true">
           <div className="career-panel">
-            <button className="career-close" type="button" aria-label="경력 기술서 닫기">ESC 눌러 닫기</button>
+            <button className="career-close" type="button" aria-label="경력 기술서 닫기"><span className="btn-label">ESC 눌러 닫기</span></button>
             <div className="career-panel-head">
               <p className="section-kicker"><EditableText k="career.kicker" value={c(map, "career.kicker", "Career Profile")} inline /></p>
               <h2><EditableText k="career.heading" value={c(map, "career.heading", "경력 기술서")} inline /></h2>

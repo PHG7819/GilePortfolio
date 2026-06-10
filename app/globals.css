@@ -739,7 +739,10 @@ html[data-edit="1"] .video-card { cursor: default; }
 .skill-card:hover p,
 .footer-brand:hover .logo-text,
 .footer-brand-name:hover,
-.footer-contact:hover {
+.footer-contact:hover,
+.career-close:hover .btn-label,
+.reel-escape-button:hover .btn-label,
+.career-warhaven-card:hover .career-warhaven-card-meta strong {
   background-image: var(--rainbow);
   background-size: 200% auto;
   -webkit-background-clip: text;
@@ -760,6 +763,8 @@ html[data-edit="1"] .video-card { cursor: default; }
   100% { color: #ff9aa2; }
 }
 .video-card:hover .card-tags span,
-.video-card:focus-visible .card-tags span {
+.video-card:focus-visible .card-tags span,
+.career-warhaven-card:hover .career-warhaven-card-tags span,
+.career-warhaven-card:focus-visible .career-warhaven-card-tags span {
   animation: pastelCycle 2.4s linear infinite;
 }
