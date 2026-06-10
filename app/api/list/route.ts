@@ -66,6 +66,7 @@ export async function GET() {
           totalRows: allRows.length,
           demoOrderRaw_viaMap: map["demo.cards.order"] ?? null,
           allKeys: allRows.map((r) => r.key),
+          lastDelete: map["_debug.lastdelete"] ?? null,
         },
       },
       { headers: { "Cache-Control": "no-store" } },
@@ -113,7 +114,12 @@ export async function POST(req: NextRequest) {
       }
       const after = order.filter((x) => x !== id);
       await writeOrder(list, after);
-      // 진단: 받은 id 와 before/after 를 응답에 포함
+      // 진단: 마지막 삭제 시도 내용을 별도 행에 기록(공개 GET 으로 확인 가능)
+      const dbg = JSON.stringify({ list, id, before: order, after, removed: order.length - after.length, at: new Date().toISOString() });
+      await db
+        .insert(contentBlocks)
+        .values({ key: "_debug.lastdelete", value: dbg, updatedAt: new Date() })
+        .onConflictDoUpdate({ target: contentBlocks.key, set: { value: dbg, updatedAt: new Date() } });
       return NextResponse.json({ ok: true, received: { list, id }, before: order, after, removed: order.length - after.length });
     }
 
