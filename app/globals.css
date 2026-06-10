@@ -1,3 +1,14 @@
+/* ===== Paperlogy 폰트 (본문 영역 전용) ===== */
+@font-face { font-family: "Paperlogy"; font-weight: 400; font-style: normal; font-display: swap; src: url("/fonts/Paperlogy-4Regular.ttf") format("truetype"); }
+@font-face { font-family: "Paperlogy"; font-weight: 500; font-style: normal; font-display: swap; src: url("/fonts/Paperlogy-5Medium.ttf") format("truetype"); }
+@font-face { font-family: "Paperlogy"; font-weight: 600; font-style: normal; font-display: swap; src: url("/fonts/Paperlogy-6SemiBold.ttf") format("truetype"); }
+@font-face { font-family: "Paperlogy"; font-weight: 700; font-style: normal; font-display: swap; src: url("/fonts/Paperlogy-7Bold.ttf") format("truetype"); }
+@font-face { font-family: "Paperlogy"; font-weight: 800; font-style: normal; font-display: swap; src: url("/fonts/Paperlogy-8ExtraBold.ttf") format("truetype"); }
+@font-face { font-family: "Paperlogy"; font-weight: 900; font-style: normal; font-display: swap; src: url("/fonts/Paperlogy-9Black.ttf") format("truetype"); }
+
+/* 본문(main) 영역만 Paperlogy 사용 — 헤더/푸터/왼쪽 사이드바는 제외 */
+main { font-family: "Paperlogy", "Pretendard", "Noto Sans KR", "Malgun Gothic", Arial, sans-serif; }
+
 /* ===== 디자인 토큰 (원본과 동일) ===== */
 :root {
   --navy: #000816;
@@ -60,14 +71,16 @@ img { display: block; max-width: 100%; }
   justify-content: space-between;
   gap: 24px;
 }
+.nav-left { display: flex; align-items: center; gap: 40px; }
 .logo {
   display: inline-flex;
   align-items: center;
-  gap: 9px;
+  gap: 12px;
   font-weight: 600;
   color: #fff;
 }
-.logo-text { font-size: 20px; font-weight: 800; letter-spacing: .04em; }
+.logo-mark { height: 36px; width: auto; display: block; border: 0; background: transparent; }
+.logo-text { font-size: 21px; font-weight: 700; letter-spacing: .01em; }
 .logo-text b { color: #5fd08a; }
 
 .nav-links {

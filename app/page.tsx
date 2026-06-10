@@ -99,16 +99,19 @@ export default async function Page() {
       />
       <header className="site-header">
         <div className="nav-wrap">
-          <a className="logo" href="#top" aria-label="Home">
-            <span className="logo-text">PORTFOLIO<b>.</b></span>
-          </a>
-          <nav className="nav-links" aria-label="Main navigation">
-            <a href="#demo"><EditableText k="nav.demo" value={navDemo} inline /></a>
-            <a href="#projects"><EditableText k="nav.projects" value={navProjects} inline /></a>
-            <a href="#learning"><EditableText k="nav.learning" value={navLearning} inline /></a>
-            <a href="#about"><EditableText k="nav.about" value={navAbout} inline /></a>
-            <a href="#skills"><EditableText k="nav.skills" value={navSkills} inline /></a>
-          </nav>
+          <div className="nav-left">
+            <a className="logo" href="#top" aria-label="gile.devlog">
+              <img className="logo-mark" src="/tistory-logo.png" alt="" />
+              <span className="logo-text">gile.devlog</span>
+            </a>
+            <nav className="nav-links" aria-label="Main navigation">
+              <a href="#demo"><EditableText k="nav.demo" value={navDemo} inline /></a>
+              <a href="#projects"><EditableText k="nav.projects" value={navProjects} inline /></a>
+              <a href="#learning"><EditableText k="nav.learning" value={navLearning} inline /></a>
+              <a href="#about"><EditableText k="nav.about" value={navAbout} inline /></a>
+              <a href="#skills"><EditableText k="nav.skills" value={navSkills} inline /></a>
+            </nav>
+          </div>
           <div className="header-meta">
             <span className="date-pill" id="today-date" />
             <span className="date-pill visitor-pill" id="today-visitors" title="오늘 방문자 수 (서울 자정 기준 초기화)">Today --</span>

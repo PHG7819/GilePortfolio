@@ -3,8 +3,9 @@ import "./globals.css";
 import { AdminProvider } from "@/components/admin/AdminProvider";
 
 export const metadata: Metadata = {
-  title: "Portfolio",
-  description: "웹 포트폴리오 — 관리자 로그인으로 내용 편집 가능",
+  title: "gile.devlog",
+  description: "gile.devlog — 포트폴리오",
+  icons: { icon: "/tistory-logo.png" },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
