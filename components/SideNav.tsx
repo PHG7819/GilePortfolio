@@ -19,11 +19,18 @@ export function SideNav({ items }: { items: { href: string; k: string; value: st
 
     function onScroll() {
       if (!sections.length) return;
-      let active = 0;
+      // 화면 상단 기준선(96px)에 가장 가까운 섹션을 활성으로.
+      // (마지막 섹션이 화면 맨 위까지 못 올라오는 경우에도 올바르게 동작)
+      let bestIdx = 0;
+      let bestDist = Infinity;
       sections.forEach((s, i) => {
-        if (s.getBoundingClientRect().top <= 90) active = i;
+        const dist = Math.abs(s.getBoundingClientRect().top - 96);
+        if (dist < bestDist) {
+          bestDist = dist;
+          bestIdx = i;
+        }
       });
-      links.forEach((l, i) => l.classList.toggle("is-active", i === active));
+      links.forEach((l, i) => l.classList.toggle("is-active", i === bestIdx));
     }
 
     onScroll();
