@@ -395,8 +395,9 @@ export default async function Page() {
       <footer className="footer">
         <div className="footer-grid">
           <div>
-            <a className="logo footer-brand" href="#top" aria-label="Home">
-              <span className="logo-text" style={{ color: "#fff", fontSize: "30px" }}>PORTFOLIO<b style={{ color: "#5fd08a" }}>.</b></span>
+            <a className="logo footer-brand" href="#top" aria-label="gile.devlog">
+              <img className="logo-mark" src="/tistory-logo.png" alt="" style={{ height: "44px" }} />
+              <span className="logo-text" style={{ color: "#fff", fontSize: "26px" }}>gile.devlog</span>
             </a>
             <span className="footer-brand-name"><EditableText k="footer.name" value={c(map, "footer.name", "Your Name")} inline /></span>
             <p className="footer-contact"><EditableText k="footer.contact" value={c(map, "footer.contact", "your@email.com\nPhone : 010-0000-0000")} multiline /></p>
