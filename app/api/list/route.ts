@@ -43,15 +43,27 @@ async function writeOrder(list: string, order: string[]) {
     .onConflictDoUpdate({ target: contentBlocks.key, set: { value, updatedAt: new Date() } });
 }
 
-// GET /api/list  — 진단용(읽기 전용). 현재 저장된 모든 리스트 순서를 반환.
+// GET /api/list  — 진단용(읽기 전용).
 export async function GET() {
   try {
     const result: Record<string, string[]> = {};
     for (const list of Object.keys(LISTS)) {
       result[list] = await readOrder(list);
     }
+    // 페이지(getContentMap, 전체 행 select)가 보는 값과 직접 비교
+    const allRows = await db.select().from(contentBlocks);
+    const map: Record<string, string> = {};
+    for (const r of allRows) map[r.key] = r.value;
     return NextResponse.json(
-      { ok: true, orders: result },
+      {
+        ok: true,
+        orders: result,
+        diag: {
+          totalRows: allRows.length,
+          demoOrderRaw_viaMap: map["demo.cards.order"] ?? null,
+          allKeys: allRows.map((r) => r.key),
+        },
+      },
       { headers: { "Cache-Control": "no-store" } },
     );
   } catch (err) {
