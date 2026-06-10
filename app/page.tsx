@@ -107,6 +107,7 @@ export default async function Page() {
             <a href="#projects"><EditableText k="nav.projects" value={navProjects} inline /></a>
             <a href="#learning"><EditableText k="nav.learning" value={navLearning} inline /></a>
             <a href="#about"><EditableText k="nav.about" value={navAbout} inline /></a>
+            <a href="#skills"><EditableText k="nav.skills" value={navSkills} inline /></a>
           </nav>
           <div className="header-meta">
             <span className="date-pill" id="today-date" />
