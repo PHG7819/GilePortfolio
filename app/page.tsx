@@ -4,6 +4,7 @@ import { EditableImage } from "@/components/admin/EditableImage";
 import { AdminBar } from "@/components/admin/AdminBar";
 import { AddItemButton, DeleteItemButton } from "@/components/admin/CardControls";
 import { PortfolioClient } from "@/components/PortfolioClient";
+import { SideNav } from "@/components/SideNav";
 
 // DB 값이 매 요청마다 반영되도록 정적 캐시 비활성화.
 export const dynamic = "force-dynamic";
@@ -78,18 +79,32 @@ export default async function Page() {
     r2: { period: "2017.04 - 2022.01", company: "이전 회사명", title: "이전 직무 제목", summary: "담당 업무 요약을 적으세요.\n- 핵심 기여 내용 1\n- 핵심 기여 내용 2" },
   };
 
+  // 내비게이션 라벨 (헤더·왼쪽 사이드바·푸터가 공유)
+  const navDemo = c(map, "nav.demo", "Demo Reel");
+  const navProjects = c(map, "nav.projects", "Projects");
+  const navLearning = c(map, "nav.learning", "Learning");
+  const navAbout = c(map, "nav.about", "About");
+
   return (
     <>
+      <SideNav
+        items={[
+          { href: "#demo", label: navDemo },
+          { href: "#projects", label: navProjects },
+          { href: "#learning", label: navLearning },
+          { href: "#about", label: navAbout },
+        ]}
+      />
       <header className="site-header">
         <div className="nav-wrap">
           <a className="logo" href="#top" aria-label="Home">
             <span className="logo-text">PORTFOLIO<b>.</b></span>
           </a>
           <nav className="nav-links" aria-label="Main navigation">
-            <a href="#demo">Demo Reel</a>
-            <a href="#projects">Projects</a>
-            <a href="#learning">Learning</a>
-            <a href="#about">About</a>
+            <a href="#demo"><EditableText k="nav.demo" value={navDemo} inline /></a>
+            <a href="#projects"><EditableText k="nav.projects" value={navProjects} inline /></a>
+            <a href="#learning"><EditableText k="nav.learning" value={navLearning} inline /></a>
+            <a href="#about"><EditableText k="nav.about" value={navAbout} inline /></a>
           </nav>
           <div className="header-meta">
             <span className="date-pill" id="today-date" />
@@ -387,19 +402,19 @@ export default async function Page() {
             </div>
           </div>
           <div>
-            <h3>Quick Links</h3>
+            <h3><EditableText k="footer.quickTitle" value={c(map, "footer.quickTitle", "Quick Links")} inline /></h3>
             <div className="footer-links">
-              <a href="#demo">DEMO REEL</a>
-              <a href="#projects">PROJECTS</a>
-              <a href="#learning">LEARNING</a>
-              <a href="#about">ABOUT</a>
+              <a href="#demo"><EditableText k="footer.link.demo" value={c(map, "footer.link.demo", "DEMO REEL")} inline /></a>
+              <a href="#projects"><EditableText k="footer.link.projects" value={c(map, "footer.link.projects", "PROJECTS")} inline /></a>
+              <a href="#learning"><EditableText k="footer.link.learning" value={c(map, "footer.link.learning", "LEARNING")} inline /></a>
+              <a href="#about"><EditableText k="footer.link.about" value={c(map, "footer.link.about", "ABOUT")} inline /></a>
             </div>
           </div>
           <div>
-            <h3>Resources</h3>
+            <h3><EditableText k="footer.resTitle" value={c(map, "footer.resTitle", "Resources")} inline /></h3>
             <div className="footer-links">
-              <a href="#">포트폴리오</a>
-              <a href="#projects">경력기술서</a>
+              <a href="#"><EditableText k="footer.res1" value={c(map, "footer.res1", "포트폴리오")} inline /></a>
+              <a href="#projects"><EditableText k="footer.res2" value={c(map, "footer.res2", "경력기술서")} inline /></a>
             </div>
           </div>
           <div>
