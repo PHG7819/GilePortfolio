@@ -43,6 +43,23 @@ async function writeOrder(list: string, order: string[]) {
     .onConflictDoUpdate({ target: contentBlocks.key, set: { value, updatedAt: new Date() } });
 }
 
+// GET /api/list  — 진단용(읽기 전용). 현재 저장된 모든 리스트 순서를 반환.
+export async function GET() {
+  try {
+    const result: Record<string, string[]> = {};
+    for (const list of Object.keys(LISTS)) {
+      result[list] = await readOrder(list);
+    }
+    return NextResponse.json(
+      { ok: true, orders: result },
+      { headers: { "Cache-Control": "no-store" } },
+    );
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    return NextResponse.json({ ok: false, error: message }, { status: 500 });
+  }
+}
+
 export async function POST(req: NextRequest) {
   if (!isAdminRequest()) {
     return NextResponse.json({ ok: false, error: "관리자 권한이 필요합니다." }, { status: 403 });
