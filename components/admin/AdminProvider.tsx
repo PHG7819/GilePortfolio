@@ -3,6 +3,7 @@
 // 모든 EditableText 와 AdminBar 가 이 컨텍스트를 사용합니다.
 
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
+import { useRouter } from "next/navigation";
 
 interface AdminContextValue {
   isAdmin: boolean;
@@ -36,6 +37,7 @@ export function useAdmin() {
 }
 
 export function AdminProvider({ children }: { children: ReactNode }) {
+  const router = useRouter();
   const [isAdmin, setIsAdmin] = useState(false);
   const [isEditMode, setEditModeState] = useState(false);
   const [pendingChanges, setPendingChanges] = useState<Map<string, string>>(() => new Map());
@@ -105,7 +107,7 @@ export function AdminProvider({ children }: { children: ReactNode }) {
       }
       setPendingChanges(new Map());
       setEditMode(false);
-      window.location.reload(); // 서버에서 새 데이터를 받아오기 위해 새로고침.
+      router.refresh(); // 서버에서 새 데이터를 받아오기 위해 새로고침.
     } catch (err) {
       setLastError(err instanceof Error ? err.message : String(err));
     } finally {
@@ -126,7 +128,7 @@ export function AdminProvider({ children }: { children: ReactNode }) {
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok || !data.ok) throw new Error(data.error ?? `HTTP ${res.status}`);
-      window.location.reload();
+      router.refresh();
     } catch (err) {
       setLastError(err instanceof Error ? err.message : String(err));
     }
@@ -146,7 +148,7 @@ export function AdminProvider({ children }: { children: ReactNode }) {
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok || !data.ok) throw new Error(data.error ?? `HTTP ${res.status}`);
-      window.location.reload();
+      router.refresh();
     } catch (err) {
       setLastError(err instanceof Error ? err.message : String(err));
     }
