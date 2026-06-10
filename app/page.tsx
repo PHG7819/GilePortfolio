@@ -176,7 +176,7 @@ export default async function Page() {
               ))}
             </div>
             <AddItemButton list="demo.cards" label="+ 작업물 카드 추가" />
-            <div className="center-action"><a className="button no-arrow" href="#projects"><EditableText k="demo.cta" value={c(map, "demo.cta", "더 많은 작업물 보기")} inline /></a></div>
+            <div className="center-action"><a className="button no-arrow" href="#projects"><span className="btn-label"><EditableText k="demo.cta" value={c(map, "demo.cta", "더 많은 작업물 보기")} inline /></span></a></div>
           </div>
         </section>
 
@@ -206,7 +206,7 @@ export default async function Page() {
                   </div>
                 ))}
                 <AddItemButton list="projects.feats" label="+ 역량 추가" />
-                <button className="button career-trigger" type="button"><EditableText k="projects.careerBtn" value={c(map, "projects.careerBtn", "경력 기술서 보기")} inline /></button>
+                <button className="button career-trigger" type="button"><span className="btn-label"><EditableText k="projects.careerBtn" value={c(map, "projects.careerBtn", "경력 기술서 보기")} inline /></span></button>
               </div>
             </div>
           </div>
@@ -229,7 +229,7 @@ export default async function Page() {
                   </div>
                   <p><EditableText k={`learning.card${id}.desc`} value={c(map, `learning.card${id}.desc`, "학습/연구 주제에 대한 요약을 적으세요.")} multiline /></p>
                   <strong><EditableText k={`learning.card${id}.title`} value={c(map, `learning.card${id}.title`, `연구 주제 0${idx + 1}`)} inline /></strong>
-                  <a className="button" href="#" target="_blank" rel="noopener noreferrer">Read More</a>
+                  <a className="button" href="#" target="_blank" rel="noopener noreferrer"><span className="btn-label">Read More</span></a>
                   <DeleteItemButton list="learning.cards" id={id} label="이 카드 삭제" />
                 </article>
               ))}
