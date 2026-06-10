@@ -20,14 +20,18 @@ export function DeleteItemButton({ list, id, label = "이 항목 삭제" }: { li
   const { isEditMode, deleteItem } = useAdmin();
   const [armed, setArmed] = useState(false);
   if (!isEditMode) return null;
-  // 한 번 누르면 "정말 삭제?"로 바뀌고, 한 번 더 누르면 실제 삭제 (실수 방지, 브라우저 확인창 미사용)
+  // 한 번 누르면 "정말 삭제?"로 바뀌고, 한 번 더 누르면 실제 삭제. (마우스 이동과 무관, 2.5초 뒤 자동 해제)
+  function handle() {
+    if (armed) {
+      setArmed(false);
+      deleteItem(list, id);
+    } else {
+      setArmed(true);
+      setTimeout(() => setArmed(false), 2500);
+    }
+  }
   return (
-    <button
-      type="button"
-      className={`card-del-btn${armed ? " is-armed" : ""}`}
-      onClick={() => (armed ? deleteItem(list, id) : setArmed(true))}
-      onMouseLeave={() => setArmed(false)}
-    >
+    <button type="button" className={`card-del-btn${armed ? " is-armed" : ""}`} onClick={handle}>
       {armed ? "정말 삭제? (한 번 더 클릭)" : label}
     </button>
   );

@@ -135,11 +135,7 @@ export function AdminProvider({ children }: { children: ReactNode }) {
   }, [pendingChanges.size]);
 
   const deleteItem = useCallback(async (list: string, id: string) => {
-    if (pendingChanges.size > 0) {
-      alert("저장되지 않은 변경사항이 있어요. 먼저 저장하거나 취소한 뒤 삭제해주세요.");
-      return;
-    }
-    // window.confirm 은 여러 번 뜨면 브라우저가 차단해 false 를 반환하므로 사용하지 않음.
+    // 삭제는 항상 진행(가드/confirm 없음). 저장 안 된 텍스트 편집이 있으면 함께 폐기될 수 있음.
     try {
       const res = await fetch("/api/list", {
         method: "POST",
@@ -148,11 +144,12 @@ export function AdminProvider({ children }: { children: ReactNode }) {
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok || !data.ok) throw new Error(data.error ?? `HTTP ${res.status}`);
+      setPendingChanges(new Map());
       router.refresh();
     } catch (err) {
       setLastError(err instanceof Error ? err.message : String(err));
     }
-  }, [pendingChanges.size]);
+  }, [router]);
 
   const login = useCallback(async (password: string): Promise<{ ok: boolean; error?: string }> => {
     try {
