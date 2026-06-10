@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { createPortal } from "react-dom";
 import { useAdmin } from "./AdminProvider";
 
 export function AdminLoginDialog({ onClose }: { onClose: () => void }) {
@@ -20,7 +21,9 @@ export function AdminLoginDialog({ onClose }: { onClose: () => void }) {
     else setError(res.error ?? "로그인에 실패했습니다.");
   }
 
-  return (
+  if (typeof document === "undefined") return null;
+
+  return createPortal(
     <div className="admin-modal-overlay" onClick={onClose}>
       <form className="admin-login" onClick={(e) => e.stopPropagation()} onSubmit={submit}>
         <h3>관리자 로그인</h3>
@@ -42,6 +45,7 @@ export function AdminLoginDialog({ onClose }: { onClose: () => void }) {
           </button>
         </div>
       </form>
-    </div>
+    </div>,
+    document.body,
   );
 }
