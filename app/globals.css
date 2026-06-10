@@ -733,7 +733,13 @@ html[data-edit="1"] .video-card { cursor: default; }
 .side-nav a:hover .side-nav-label,
 .button:hover .btn-label,
 .video-card:hover .video-meta strong,
-.video-card:focus-visible .video-meta strong {
+.video-card:focus-visible .video-meta strong,
+.site-header .logo:hover .logo-text,
+.skill-card:hover h3,
+.skill-card:hover p,
+.footer-brand:hover .logo-text,
+.footer-brand-name:hover,
+.footer-contact:hover {
   background-image: var(--rainbow);
   background-size: 200% auto;
   -webkit-background-clip: text;
@@ -743,3 +749,17 @@ html[data-edit="1"] .video-card { cursor: default; }
   animation: rainbowShift 1.1s linear infinite;
 }
 .btn-label { position: relative; z-index: 2; }
+
+/* 태그 칩 — 알약 배경 유지를 위해 글자 색만 파스텔로 순환 */
+@keyframes pastelCycle {
+  0%   { color: #ff9aa2; }
+  20%  { color: #ffb683; }
+  40%  { color: #5ec9a0; }
+  60%  { color: #6ab0ff; }
+  80%  { color: #b79cff; }
+  100% { color: #ff9aa2; }
+}
+.video-card:hover .card-tags span,
+.video-card:focus-visible .card-tags span {
+  animation: pastelCycle 2.4s linear infinite;
+}
