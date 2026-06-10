@@ -281,8 +281,8 @@ export default async function Page() {
           <div className="career-panel">
             <button className="career-close" type="button" aria-label="경력 기술서 닫기">ESC 눌러 닫기</button>
             <div className="career-panel-head">
-              <p className="section-kicker">Career Profile</p>
-              <h2>경력 기술서</h2>
+              <p className="section-kicker"><EditableText k="career.kicker" value={c(map, "career.kicker", "Career Profile")} inline /></p>
+              <h2><EditableText k="career.heading" value={c(map, "career.heading", "경력 기술서")} inline /></h2>
             </div>
 
             <div className="career-document">
@@ -300,15 +300,15 @@ export default async function Page() {
                 <div>
                   <h3><EditableText k="career.r1.title" value={c(map, "career.r1.title", "대표 프로젝트 / 직무 제목")} inline /></h3>
                   <p><EditableText k="career.r1.summary" value={c(map, "career.r1.summary", "이 시기에 담당한 핵심 업무를 한두 문장으로 요약하세요.")} multiline /></p>
-                  <h4>{"<프로젝트 A>"}</h4>
+                  <h4><EditableText k="career.r1.h4a" value={c(map, "career.r1.h4a", "<프로젝트 A>")} inline /></h4>
                   <ul>
-                    <li>핵심 기여 내용 1</li>
-                    <li>핵심 기여 내용 2</li>
-                    <li>핵심 기여 내용 3</li>
+                    <li><EditableText k="career.r1.a1" value={c(map, "career.r1.a1", "핵심 기여 내용 1")} inline /></li>
+                    <li><EditableText k="career.r1.a2" value={c(map, "career.r1.a2", "핵심 기여 내용 2")} inline /></li>
+                    <li><EditableText k="career.r1.a3" value={c(map, "career.r1.a3", "핵심 기여 내용 3")} inline /></li>
                   </ul>
-                  <h4>{"<프로젝트 B>"}</h4>
+                  <h4><EditableText k="career.r1.h4b" value={c(map, "career.r1.h4b", "<프로젝트 B>")} inline /></h4>
                   <ul>
-                    <li>핵심 기여 내용 1</li>
+                    <li><EditableText k="career.r1.b1" value={c(map, "career.r1.b1", "핵심 기여 내용 1")} inline /></li>
                   </ul>
                 </div>
                 <a className="career-warhaven-card" href="#" target="_blank" rel="noopener noreferrer">
@@ -317,12 +317,14 @@ export default async function Page() {
                     <span className="career-warhaven-card-notion" aria-hidden="true"><img src={IMG_NBADGE} alt="" /></span>
                   </span>
                   <span className="career-warhaven-card-meta">
-                    <strong>프로젝트 기술 포트폴리오</strong>
+                    <strong><EditableText k="career.notion.title" value={c(map, "career.notion.title", "프로젝트 기술 포트폴리오")} inline /></strong>
                     <span className="career-warhaven-card-tags">
-                      <span>2022~2024</span>
-                      <span>Implementation</span>
-                      <span>Tone &amp; manner</span>
-                      <span>Combat</span>
+                      {c(map, "career.notion.tags", "2022~2024,Implementation,Tone & manner,Combat").split(",").map((t, i) => (
+                        <span key={i}>{t.trim()}</span>
+                      ))}
+                    </span>
+                    <span className="career-edit-only">
+                      <EditableText k="career.notion.tags" value={c(map, "career.notion.tags", "2022~2024,Implementation,Tone & manner,Combat")} inline placeholder="태그 (콤마로 구분)" />
                     </span>
                   </span>
                 </a>

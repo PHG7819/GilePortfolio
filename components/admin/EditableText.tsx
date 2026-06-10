@@ -35,6 +35,11 @@ export function EditableText({ k, value, multiline = false, inline = false, clas
   }
 
   const onChange = (v: string) => registerChange(field, v);
+  // 입력칸이 <a>/카드 안에 있을 때 클릭이 링크 이동·모달로 새지 않도록 차단.
+  const stop = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+  };
 
   if (multiline) {
     return (
@@ -43,6 +48,7 @@ export function EditableText({ k, value, multiline = false, inline = false, clas
         value={current}
         placeholder={placeholder}
         onChange={(e) => onChange(e.target.value)}
+        onClick={stop}
         rows={Math.max(2, current.split("\n").length)}
         style={{ display: "block", width: "100%", resize: "vertical" }}
       />
@@ -57,6 +63,7 @@ export function EditableText({ k, value, multiline = false, inline = false, clas
         value={current}
         placeholder={placeholder}
         onChange={(e) => onChange(e.target.value)}
+        onClick={stop}
         size={Math.max(approxDisplayWidth(current) + 2, 4)}
         style={{ display: "inline-block", maxWidth: "100%", verticalAlign: "baseline" }}
       />
@@ -70,6 +77,7 @@ export function EditableText({ k, value, multiline = false, inline = false, clas
       value={current}
       placeholder={placeholder}
       onChange={(e) => onChange(e.target.value)}
+      onClick={stop}
       style={{ display: "block", width: "100%" }}
     />
   );

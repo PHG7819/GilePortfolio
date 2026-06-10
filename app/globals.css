@@ -623,6 +623,10 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 36px; line-height: 1.15
 }
 .edit-field:focus { border-color: #5fd08a; background: rgba(95,208,138,.16); }
 
+/* 편집 모드에서만 보이는 보조 입력(예: 노션 카드 태그) */
+.career-edit-only { display: none; margin-top: 8px; }
+html[data-edit="1"] .career-edit-only { display: block; }
+
 /* 카드 편집 전용 필드 — 평소 숨김, 편집 모드에서만 표시 */
 .card-edit-fields { display: none; }
 html[data-edit="1"] .card-edit-fields {
