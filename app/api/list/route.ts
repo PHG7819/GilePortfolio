@@ -111,8 +111,10 @@ export async function POST(req: NextRequest) {
       if (typeof id !== "string" || !id) {
         return NextResponse.json({ ok: false, error: "삭제할 항목 id 가 필요합니다." }, { status: 400 });
       }
-      await writeOrder(list, order.filter((x) => x !== id));
-      return NextResponse.json({ ok: true });
+      const after = order.filter((x) => x !== id);
+      await writeOrder(list, after);
+      // 진단: 받은 id 와 before/after 를 응답에 포함
+      return NextResponse.json({ ok: true, received: { list, id }, before: order, after, removed: order.length - after.length });
     }
 
     return NextResponse.json({ ok: false, error: "알 수 없는 action 입니다." }, { status: 400 });

@@ -3,7 +3,6 @@
 // 모든 EditableText 와 AdminBar 가 이 컨텍스트를 사용합니다.
 
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
-import { useRouter } from "next/navigation";
 
 interface AdminContextValue {
   isAdmin: boolean;
@@ -37,7 +36,6 @@ export function useAdmin() {
 }
 
 export function AdminProvider({ children }: { children: ReactNode }) {
-  const router = useRouter();
   const [isAdmin, setIsAdmin] = useState(false);
   const [isEditMode, setEditModeState] = useState(false);
   const [pendingChanges, setPendingChanges] = useState<Map<string, string>>(() => new Map());
@@ -107,7 +105,7 @@ export function AdminProvider({ children }: { children: ReactNode }) {
       }
       setPendingChanges(new Map());
       setEditMode(false);
-      router.refresh(); // 서버에서 새 데이터를 받아오기 위해 새로고침.
+      window.location.reload(); // 서버에서 새 데이터를 받아오기 위해 새로고침.
     } catch (err) {
       setLastError(err instanceof Error ? err.message : String(err));
     } finally {
@@ -116,10 +114,6 @@ export function AdminProvider({ children }: { children: ReactNode }) {
   }, [pendingChanges, setEditMode]);
 
   const addItem = useCallback(async (list: string) => {
-    if (pendingChanges.size > 0) {
-      alert("저장되지 않은 변경사항이 있어요. 먼저 저장하거나 취소한 뒤 추가해주세요.");
-      return;
-    }
     try {
       const res = await fetch("/api/list", {
         method: "POST",
@@ -128,11 +122,11 @@ export function AdminProvider({ children }: { children: ReactNode }) {
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok || !data.ok) throw new Error(data.error ?? `HTTP ${res.status}`);
-      router.refresh();
+      window.location.reload();
     } catch (err) {
       setLastError(err instanceof Error ? err.message : String(err));
     }
-  }, [pendingChanges.size]);
+  }, []);
 
   const deleteItem = useCallback(async (list: string, id: string) => {
     // 삭제는 항상 진행(가드/confirm 없음). 저장 안 된 텍스트 편집이 있으면 함께 폐기될 수 있음.
@@ -144,12 +138,11 @@ export function AdminProvider({ children }: { children: ReactNode }) {
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok || !data.ok) throw new Error(data.error ?? `HTTP ${res.status}`);
-      setPendingChanges(new Map());
-      router.refresh();
+      window.location.reload();
     } catch (err) {
       setLastError(err instanceof Error ? err.message : String(err));
     }
-  }, [router]);
+  }, []);
 
   const login = useCallback(async (password: string): Promise<{ ok: boolean; error?: string }> => {
     try {
