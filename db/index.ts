@@ -28,6 +28,18 @@ function createDb() {
   return drizzle(sql, { schema });
 }
 
+// 진단용: 현재 사용 중인 DB 호스트(일부 마스킹)
+export function dbHostMasked(): string {
+  const url = resolveDatabaseUrl();
+  if (!url) return "(none)";
+  try {
+    const h = new URL(url).host;
+    return h.length > 10 ? h.slice(0, 6) + "…" + h.slice(-8) : h;
+  } catch {
+    return "(parse-fail)";
+  }
+}
+
 type DB = ReturnType<typeof createDb>;
 let _db: DB | null = null;
 

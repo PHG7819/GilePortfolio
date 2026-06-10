@@ -1,4 +1,6 @@
+import { unstable_noStore as noStore } from "next/cache";
 import { getContentMap, type ContentMap } from "@/lib/content";
+import { dbHostMasked } from "@/db";
 import { EditableText } from "@/components/admin/EditableText";
 import { EditableImage } from "@/components/admin/EditableImage";
 import { AdminBar } from "@/components/admin/AdminBar";
@@ -48,6 +50,7 @@ const soc = (label: string) =>
   `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect width='40' height='40' rx='11' fill='%23b8c1ce'/%3E%3Ctext x='50%25' y='55%25' fill='%23151b28' font-family='sans-serif' font-size='14' font-weight='700' text-anchor='middle' dominant-baseline='middle'%3E${label}%3C/text%3E%3C/svg%3E`;
 
 export default async function Page() {
+  noStore(); // 모든 캐싱 비활성화 — 항상 최신 DB 반영
   const map = await getContentMap();
 
   // 데모 카드 — 순서는 "demo.cards.order"(JSON 배열), 각 카드는 id 기반 키로 저장.
@@ -92,6 +95,7 @@ export default async function Page() {
 
   return (
     <>
+      <div id="__diag" style={{ display: "none" }} data-dbhost={dbHostMasked()} data-demo-order={String(cardOrder.length)} />
       <SideNav
         items={[
           { href: "#demo", k: "nav.demo", value: navDemo },

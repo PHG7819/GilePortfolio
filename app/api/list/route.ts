@@ -4,7 +4,7 @@
 // 각 항목의 텍스트/이미지는 "<list-item-prefix>.<id>.*" 키로 content/update 에 저장됩니다.
 import { NextRequest, NextResponse } from "next/server";
 import { eq } from "drizzle-orm";
-import { db } from "@/db";
+import { db, dbHostMasked } from "@/db";
 import { contentBlocks } from "@/db/schema";
 import { isAdminRequest } from "@/lib/admin-auth";
 
@@ -67,6 +67,8 @@ export async function GET() {
           demoOrderRaw_viaMap: map["demo.cards.order"] ?? null,
           allKeys: allRows.map((r) => r.key),
           lastDelete: map["_debug.lastdelete"] ?? null,
+          dbHost: dbHostMasked(),
+          dbEnvKeys: Object.keys(process.env).filter((k) => /^(DATABASE|POSTGRES|PG|NEON)/i.test(k)).sort(),
         },
       },
       { headers: { "Cache-Control": "no-store" } },
