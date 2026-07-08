@@ -751,6 +751,7 @@ html[data-edit="1"] .video-card { cursor: default; }
 /* ===== 클릭 요소 hover 시 크롬(메탈릭) 광택 흐름 ===== */
 @keyframes rainbowShift { to { background-position: 200% center; } }
 .nav-links a:hover,
+.nav-links a.is-active,
 .footer-links a:hover,
 .side-nav a:hover .side-nav-label,
 .side-nav a.is-active .side-nav-label,
