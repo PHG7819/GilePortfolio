@@ -6,8 +6,11 @@
 @font-face { font-family: "Paperlogy"; font-weight: 800; font-style: normal; font-display: swap; src: url("/fonts/Paperlogy-8ExtraBold.ttf") format("truetype"); }
 @font-face { font-family: "Paperlogy"; font-weight: 900; font-style: normal; font-display: swap; src: url("/fonts/Paperlogy-9Black.ttf") format("truetype"); }
 
-/* 본문(main) 영역만 Paperlogy 사용 — 헤더/푸터/왼쪽 사이드바는 제외 */
-main { font-family: "Paperlogy", "Pretendard", "Noto Sans KR", "Malgun Gothic", Arial, sans-serif; }
+/* ===== KRAFTON Headline (영문 대문자 전용 CI 서체 · 큰 제목에만) ===== */
+@font-face { font-family: "KRAFTON Headline"; font-weight: 400 900; font-style: normal; font-display: swap; src: url("/fonts/KraftonHeadline.otf") format("opentype"); }
+
+/* 본문(main) — KRAFTON 공식 본문 지정 서체 Pretendard (한글+영문) */
+main { font-family: "Pretendard Variable", "Pretendard", "Paperlogy", "Noto Sans KR", "Malgun Gothic", Arial, sans-serif; }
 
 /* ===== 디자인 토큰 (KRAFTON 모노크롬 리브랜딩) ===== */
 /* 컬러를 걷어내고 흑/백/그레이 + 크롬(메탈릭) 광택으로 '제작의 명가' 톤을 표현. */
@@ -23,8 +26,11 @@ main { font-family: "Paperlogy", "Pretendard", "Noto Sans KR", "Malgun Gothic", 
   --muted: #8c8c92;     /* 중립 그레이 */
   --soft: #d2d2d6;
   --line: rgba(255, 255, 255, .12);
-  /* 크롬/메탈릭 그라디언트 (hover 텍스트 광택 효과용) */
-  --rainbow: linear-gradient(90deg, #8a8a90, #ffffff, #cfcfd4, #ffffff, #8a8a90);
+  /* KRAFTON 포인트 컬러 (Warm Red / Orange) — 에너지·도전 정신 */
+  --accent: #f9423a;
+  --accent-2: #ff6a60;
+  /* hover 텍스트 광택 흐름 — 오렌지 포인트 */
+  --rainbow: linear-gradient(90deg, #f9423a, #ff9a7a, #f9423a);
 }
 
 * { box-sizing: border-box; }
@@ -40,7 +46,7 @@ body {
   margin: 0;
   background: #0a0a0b;
   color: var(--text);
-  font-family: "Inter", "Pretendard", "Noto Sans KR", "Malgun Gothic", Arial, sans-serif;
+  font-family: "Pretendard Variable", "Pretendard", "Inter", "Noto Sans KR", "Malgun Gothic", Arial, sans-serif;
   line-height: 1.6;
   letter-spacing: 0;
   zoom: 1.2;
@@ -85,16 +91,17 @@ img { display: block; max-width: 100%; }
 }
 .logo-mark { height: 36px; width: auto; display: block; border: 0; background: transparent; }
 .logo-text { font-size: 21px; font-weight: 800; letter-spacing: .04em; }
-.logo-text b { color: #fff; }
+.logo-text b { color: var(--accent); }
 
 .nav-links {
   display: flex;
   align-items: center;
   gap: 36px;
   color: #c2c2c8;
-  font-size: 12px;
+  font-family: "KRAFTON Headline", "Pretendard Variable", "Pretendard", sans-serif;
+  font-size: 13px;
   font-weight: 800;
-  letter-spacing: .14em;
+  letter-spacing: .12em;
   text-transform: uppercase;
 }
 .nav-links a {
@@ -123,9 +130,9 @@ img { display: block; max-width: 100%; }
 }
 .visitor-pill {
   min-width: 96px;
-  color: #e6e6e8;
-  border-color: rgba(255,255,255,.3);
-  background: rgba(255,255,255,.05);
+  color: #ff8a7f;
+  border-color: rgba(249,66,58,.5);
+  background: rgba(249,66,58,.1);
 }
 
 /* ===== 왼쪽 세로 섹션 내비게이션 ===== */
@@ -144,9 +151,10 @@ img { display: block; max-width: 100%; }
   align-items: center;
   gap: 10px;
   color: #85858c;
-  font-size: 11px;
+  font-family: "KRAFTON Headline", "Pretendard Variable", "Pretendard", sans-serif;
+  font-size: 12px;
   font-weight: 800;
-  letter-spacing: .12em;
+  letter-spacing: .1em;
   text-transform: uppercase;
   transition: color .2s ease;
 }
@@ -160,7 +168,7 @@ img { display: block; max-width: 100%; }
 }
 .side-nav a:hover { color: #fff; }
 .side-nav a.is-active { color: #fff; }
-.side-nav a.is-active::before { width: 34px; opacity: 1; background: #fff; }
+.side-nav a.is-active::before { width: 34px; opacity: 1; background: var(--accent); }
 @media (max-width: 1100px) { .side-nav { display: none; } }
 
 /* ===== 섹션 공통 ===== */
@@ -172,19 +180,20 @@ section { padding: 88px 28px; scroll-margin-top: 70px; }
 
 .section-kicker {
   margin: 0 0 8px;
-  color: #8c8c92;
+  color: var(--accent);
+  font-family: "KRAFTON Headline", "Pretendard Variable", "Pretendard", sans-serif;
   font-size: 20px;
   font-weight: 500;
-  letter-spacing: .22em;
+  letter-spacing: .18em;
   text-align: center;
   text-transform: uppercase;
 }
-.paper-section .section-kicker { color: #6f6f75; }
-.green-section .section-kicker { color: rgba(255,255,255,.6); }
+.paper-section .section-kicker { color: var(--accent); }
+.green-section .section-kicker { color: var(--accent); }
 
 h1, h2, h3, p { margin-top: 0; }
-h1 { margin-bottom: 32px; text-align: center; font-size: 36px; line-height: 1.08; font-weight: 800; letter-spacing: -.01em; }
-h2 { margin-bottom: 34px; text-align: center; font-size: 36px; line-height: 1.15; font-weight: 800; letter-spacing: -.01em; }
+h1 { margin-bottom: 32px; text-align: center; font-size: 38px; line-height: 1.06; font-weight: 800; letter-spacing: -.01em; font-family: "KRAFTON Headline", "Pretendard Variable", "Pretendard", sans-serif; }
+h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12; font-weight: 800; letter-spacing: -.01em; font-family: "KRAFTON Headline", "Pretendard Variable", "Pretendard", sans-serif; }
 
 /* ===== 갤러리 그리드 + 카드 ===== */
 .reel-grid {
@@ -285,22 +294,22 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 36px; line-height: 1.15
   display: inline-flex; align-items: center; justify-content: center; gap: 16px;
   border-radius: 8px; border: 1px solid rgba(255, 255, 255, .16); color: #fff;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, .14), rgba(255, 255, 255, 0) 46%),
-    linear-gradient(135deg, #2a2a2e, #141416);
+    linear-gradient(180deg, rgba(255, 255, 255, .18), rgba(255, 255, 255, 0) 46%),
+    linear-gradient(135deg, #ff6a60, #f9423a);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, .18),
-    inset 0 -10px 18px rgba(0, 0, 0, .3),
-    0 12px 26px rgba(0, 0, 0, .35);
-  font-size: 16px; font-weight: 400; cursor: pointer;
+    inset 0 1px 0 rgba(255, 255, 255, .28),
+    inset 0 -10px 18px rgba(120, 12, 6, .26),
+    0 12px 26px rgba(249, 66, 58, .3);
+  font-size: 16px; font-weight: 500; cursor: pointer;
   transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
 }
 .button:hover,
 .button:focus-visible {
-  border-color: rgba(255, 255, 255, .32);
+  border-color: rgba(255, 255, 255, .38);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, .26),
-    inset 0 -10px 18px rgba(0, 0, 0, .24),
-    0 16px 32px rgba(0, 0, 0, .45);
+    inset 0 1px 0 rgba(255, 255, 255, .34),
+    inset 0 -10px 18px rgba(120, 12, 6, .2),
+    0 16px 34px rgba(249, 66, 58, .44);
   transform: translateY(-1px); outline: 0;
 }
 
@@ -480,7 +489,7 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 36px; line-height: 1.15
 .career-close:hover, .career-close:focus-visible { opacity: .88; transform: translateY(-1px); outline: 0; }
 
 .career-panel-head { clear: both; margin-bottom: 24px; text-align: center; }
-.career-panel-head .section-kicker { margin-bottom: 8px; color: #6f6f75; font-size: 20px; font-weight: 500; }
+.career-panel-head .section-kicker { margin-bottom: 8px; color: var(--accent); font-size: 20px; font-weight: 500; }
 .career-panel-head h2 { color: #141416; font-size: 36px; line-height: 1.15; font-weight: 800; }
 
 .career-document { display: grid; gap: 18px; padding-bottom: 26px; }
@@ -621,7 +630,7 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 36px; line-height: 1.15
 .social-row a:hover img, .social-row a:focus-visible img { opacity: 1; transform: translateY(-2px); }
 .contact-form { display: grid; grid-template-columns: minmax(0, 1fr) 102px; gap: 0; overflow: hidden; background: #1c1c1f; border-radius: 14px; max-width: 60%; }
 .contact-form input { width: 100%; min-height: 43px; padding: 0 24px; color: #fff; background: transparent; border: 0; font-size: 18px; }
-.contact-form button { min-height: 43px; color: #111112; background: #f0f0f2; border: 0; border-radius: 10px; margin: 5px; font-weight: 600; font-size: 16px; }
+.contact-form button { min-height: 43px; color: #fff; background: var(--accent); border: 0; border-radius: 10px; margin: 5px; font-weight: 600; font-size: 16px; }
 
 /* ===== 반응형 ===== */
 @media (max-width: 900px) {
@@ -759,9 +768,9 @@ html[data-edit="1"] .video-card { cursor: default; }
 
 /* 태그 칩 — 알약 배경 유지를 위해 글자 색만 은은한 실버로 순환 */
 @keyframes pastelCycle {
-  0%   { color: #cfcfd4; }
-  50%  { color: #ffffff; }
-  100% { color: #cfcfd4; }
+  0%   { color: #ffffff; }
+  50%  { color: #ff6a60; }
+  100% { color: #ffffff; }
 }
 .video-card:hover .card-tags span,
 .video-card:focus-visible .card-tags span,

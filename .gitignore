@@ -19,3 +19,6 @@
 .vercel
 next-env.d.ts
 *.tsbuildinfo
+
+# 브랜드 소스 원본(대용량 PDF/원본 폰트) — 실사용 폰트는 public/fonts 에 복사됨
+/폰트와 로고/
