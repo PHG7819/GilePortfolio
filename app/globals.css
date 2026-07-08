@@ -619,11 +619,12 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
 /* ===== Footer ===== */
 .footer { padding: 25px 28px; background: var(--navy); }
 .footer-grid { max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: 1.45fr .72fr .8fr 1.9fr; gap: 72px; color: #b3b3b9; align-items: start; }
-.footer h3 { color: #fff; font-size: 24px; line-height: 1.1; margin-bottom: 26px; }
+.footer h3 { color: #fff; font-family: "KRAFTON Headline", "Pretendard Variable", "Pretendard", sans-serif; font-size: 24px; font-weight: 800; letter-spacing: .02em; line-height: 1.1; margin-bottom: 26px; }
 .footer p, .footer a { color: #a2a2a8; font-size: 16px; line-height: 1.45; }
-.footer-brand-name { display: block; margin-top: 11px; color: #fff; font-size: 30px; font-weight: 800; line-height: 1.1; letter-spacing: .02em; }
+.footer-brand-name { display: block; margin-top: 11px; color: #fff; font-family: "KRAFTON Headline", "Pretendard Variable", "Pretendard", sans-serif; font-size: 30px; font-weight: 800; line-height: 1.1; letter-spacing: .02em; }
 .footer-contact { margin-top: 24px; margin-bottom: 0; }
 .footer-links { display: grid; gap: 13px; }
+.footer-links a { font-family: "KRAFTON Headline", "Pretendard Variable", "Pretendard", sans-serif; letter-spacing: .06em; }
 .social-row { display: flex; align-items: center; gap: 15px; margin-top: 24px; }
 .social-row a { flex-shrink: 0; }
 .social-row img { width: 40px; height: 40px; object-fit: contain; opacity: .78; flex-shrink: 0; transition: opacity .25s ease, transform .25s ease; }
