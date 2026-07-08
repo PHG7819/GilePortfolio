@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" font-family="Pretendard, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif">
+  <rect width="800" height="450" rx="10" fill="#14141a"/>
+  <text x="32" y="52" fill="#ffffff" font-size="27" font-weight="700">코드 마감 D-day 오퍼레이션</text>
+  <text x="32" y="80" fill="#9a9aa0" font-size="15">스트림 분리 → 코드 마감 → 풀 머지 · 빌드 발행 · QA BVT</text>
+
+  <!-- time axis -->
+  <line x1="120" y1="150" x2="680" y2="150" stroke="#3a3a44" stroke-width="2"/>
+  <g fill="#6ea8fe">
+    <circle cx="150" cy="150" r="7"/>
+    <circle cx="400" cy="150" r="7"/>
+    <circle cx="650" cy="150" r="7"/>
+  </g>
+
+  <!-- D-1 -->
+  <text x="150" y="128" fill="#ffd166" font-size="15" font-weight="700" text-anchor="middle">D-1</text>
+  <rect x="40" y="180" width="220" height="150" rx="10" fill="#1e1e26" stroke="rgba(255,255,255,.14)"/>
+  <text x="60" y="212" fill="#e6e6e8" font-size="15" font-weight="600">준비</text>
+  <text x="60" y="242" fill="#9a9aa0" font-size="13">· 마일스톤 스트림 분리</text>
+  <text x="60" y="266" fill="#9a9aa0" font-size="13">· 빌드 세팅 · 테스트 빌드</text>
+  <text x="60" y="290" fill="#9a9aa0" font-size="13">· 워크스페이스 생성 안내</text>
+  <text x="60" y="314" fill="#9a9aa0" font-size="13">· 머지 방식 결정</text>
+
+  <!-- D-day -->
+  <text x="400" y="128" fill="#ffffff" font-size="15" font-weight="700" text-anchor="middle">D-day</text>
+  <rect x="290" y="180" width="220" height="150" rx="10" fill="#243049" stroke="#6ea8fe" stroke-width="1.5"/>
+  <text x="310" y="212" fill="#ffffff" font-size="15" font-weight="700">코드 마감 (~19시)</text>
+  <text x="310" y="242" fill="#c7c7cd" font-size="13">· 기능 구현 · 구현 확인 완료</text>
+  <text x="310" y="266" fill="#c7c7cd" font-size="13">· 잔여 이슈 대응 방안 확정</text>
+  <text x="310" y="290" fill="#c7c7cd" font-size="13">· 야근 필요 여부 사전 안내</text>
+  <text x="310" y="314" fill="#c7c7cd" font-size="13">· 현황 공지 및 종결</text>
+
+  <!-- D+1 -->
+  <text x="650" y="128" fill="#ffd166" font-size="15" font-weight="700" text-anchor="middle">D+1 · 월 11시</text>
+  <rect x="540" y="180" width="220" height="150" rx="10" fill="#1e1e26" stroke="rgba(255,255,255,.14)"/>
+  <text x="560" y="212" fill="#e6e6e8" font-size="15" font-weight="600">빌드 발행</text>
+  <text x="560" y="242" fill="#9a9aa0" font-size="13">· 메인 → 마일스톤 풀 머지</text>
+  <text x="560" y="266" fill="#9a9aa0" font-size="13">· PC · AOS · iOS 빌드</text>
+  <text x="560" y="290" fill="#9a9aa0" font-size="13">· 접속 테스트</text>
+  <text x="560" y="314" fill="#9a9aa0" font-size="13">· QA팀 BVT 진행</text>
+
+  <text x="400" y="382" fill="#c7c7cd" font-size="14" font-weight="600" text-anchor="middle">서밋 금지 → 풀 머지 → 빌드 발행 → BVT 통과 후 서밋 재개</text>
+  <text x="400" y="408" fill="#9a9aa0" font-size="13" text-anchor="middle">각 시점의 시작·완료를 공지 채널에 안내해 대기·혼선 최소화</text>
+</svg>

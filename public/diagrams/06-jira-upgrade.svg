@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" font-family="Pretendard, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif">
+  <rect width="800" height="450" rx="10" fill="#14141a"/>
+  <text x="32" y="52" fill="#ffffff" font-size="27" font-weight="700">Jira 사용 고도화</text>
+  <text x="32" y="80" fill="#9a9aa0" font-size="15">엑셀 대시보드 → Jira Cloud 네이티브 이관</text>
+
+  <!-- Before -->
+  <rect x="32" y="130" width="270" height="230" rx="12" fill="#26201a" stroke="rgba(255,180,120,.3)"/>
+  <text x="52" y="166" fill="#ffb877" font-size="15" font-weight="700">Before · 엑셀 대시보드</text>
+  <text x="52" y="200" fill="#c7c7cd" font-size="13">· 수작업으로 현황 갱신</text>
+  <text x="52" y="226" fill="#c7c7cd" font-size="13">· 문서·데이터 분산</text>
+  <text x="52" y="252" fill="#c7c7cd" font-size="13">· 지라와 이중 관리</text>
+  <text x="52" y="278" fill="#c7c7cd" font-size="13">· 실시간성·추적성 부족</text>
+  <text x="52" y="318" fill="#85858c" font-size="12">→ 반복 업무 · 누락 리스크</text>
+
+  <!-- arrow -->
+  <g fill="none" stroke="#6ea8fe" stroke-width="2.5">
+    <path d="M318 245 l60 0 m-14 -12 l14 12 l-14 12"/>
+  </g>
+  <text x="348" y="228" fill="#6ea8fe" font-size="12" text-anchor="middle">이관</text>
+
+  <!-- After -->
+  <rect x="394" y="130" width="374" height="230" rx="12" fill="#243049" stroke="#6ea8fe" stroke-width="1.5"/>
+  <text x="414" y="166" fill="#ffffff" font-size="15" font-weight="700">After · Jira Cloud 네이티브</text>
+  <text x="414" y="200" fill="#e6e6e8" font-size="13">· JQL 저장 필터로 현황 실시간 조회</text>
+  <text x="414" y="226" fill="#e6e6e8" font-size="13">· 오토메이션 룰로 상태·연결 자동화</text>
+  <text x="414" y="252" fill="#e6e6e8" font-size="13">· 지라 상태 현황 문서 제작·관리</text>
+  <text x="414" y="278" fill="#e6e6e8" font-size="13">· 일괄 연결 스크립트로 대량 처리</text>
+  <text x="414" y="318" fill="#7bd88f" font-size="12">→ 단일 소스 · 데이터 기반 현황 관리</text>
+</svg>

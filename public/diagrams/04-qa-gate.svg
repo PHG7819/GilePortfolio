@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" font-family="Pretendard, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif">
+  <rect width="800" height="450" rx="10" fill="#14141a"/>
+  <text x="32" y="52" fill="#ffffff" font-size="27" font-weight="700">품질 게이트 &amp; 버그 관리</text>
+  <text x="32" y="80" fill="#9a9aa0" font-size="15">구현 확인 → 단위 QA → BVT → 릴리즈, 버그는 빌드 리비전별 에픽으로 관리</text>
+
+  <!-- gate flow -->
+  <g>
+    <rect x="30"  y="150" width="150" height="80" rx="10" fill="#1e1e26" stroke="rgba(255,255,255,.14)"/>
+    <text x="105" y="185" fill="#e6e6e8" font-size="15" font-weight="600" text-anchor="middle">구현 확인</text>
+    <text x="105" y="207" fill="#9a9aa0" font-size="12" text-anchor="middle">기획 명세 대조</text>
+
+    <rect x="220" y="150" width="150" height="80" rx="10" fill="#1e1e26" stroke="rgba(255,255,255,.14)"/>
+    <text x="295" y="185" fill="#e6e6e8" font-size="15" font-weight="600" text-anchor="middle">단위 QA</text>
+    <text x="295" y="207" fill="#9a9aa0" font-size="12" text-anchor="middle">작업별 검증</text>
+
+    <rect x="410" y="150" width="150" height="80" rx="10" fill="#243049" stroke="#6ea8fe" stroke-width="1.5"/>
+    <text x="485" y="185" fill="#ffffff" font-size="15" font-weight="700" text-anchor="middle">BVT</text>
+    <text x="485" y="207" fill="#c7c7cd" font-size="12" text-anchor="middle">빌드 접속 테스트</text>
+
+    <rect x="600" y="150" width="150" height="80" rx="10" fill="#1e2a1e" stroke="#7bd88f" stroke-width="1.5"/>
+    <text x="675" y="185" fill="#ffffff" font-size="15" font-weight="700" text-anchor="middle">릴리즈</text>
+    <text x="675" y="207" fill="#7bd88f" font-size="12" text-anchor="middle">PASS 시 통과</text>
+  </g>
+
+  <g fill="none" stroke="#5b6070" stroke-width="2">
+    <path d="M186 190 l28 0 m-8 -7 l8 7 l-8 7"/>
+    <path d="M376 190 l28 0 m-8 -7 l8 7 l-8 7"/>
+    <path d="M566 190 l28 0 m-8 -7 l8 7 l-8 7"/>
+  </g>
+
+  <!-- bug lane -->
+  <rect x="30" y="300" width="340" height="96" rx="10" fill="#2a1e1e" stroke="rgba(255,120,120,.3)"/>
+  <text x="50" y="332" fill="#ff9d9d" font-size="15" font-weight="600">버그 발생</text>
+  <text x="50" y="358" fill="#c7c7cd" font-size="13">발견자 등록 → PM이 연계 작업에 연결</text>
+  <text x="50" y="380" fill="#c7c7cd" font-size="13">→ 담당자 인계 · QA 참고</text>
+
+  <rect x="410" y="300" width="340" height="96" rx="10" fill="#1e1e26" stroke="rgba(255,255,255,.14)"/>
+  <text x="430" y="332" fill="#e6e6e8" font-size="15" font-weight="600">빌드 리비전별 에픽</text>
+  <text x="430" y="358" fill="#9a9aa0" font-size="13">[Rev.####] 빌드 버그 묶음으로 분류</text>
+  <text x="430" y="380" fill="#9a9aa0" font-size="13">머지 시 수정 완료분 자동 포함 확인</text>
+
+  <g fill="none" stroke="#5b6070" stroke-width="2">
+    <path d="M376 348 l28 0 m-8 -7 l8 7 l-8 7"/>
+  </g>
+</svg>

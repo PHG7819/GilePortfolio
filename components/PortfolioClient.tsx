@@ -6,7 +6,7 @@
 import { useEffect } from "react";
 
 // 다른 사이트와 겹치지 않게 본인 고유값으로 변경하세요.
-const SITE_KEY = "jeonhoon528-portfolio";
+const SITE_KEY = "gile-devlog-portfolio";
 
 function isEditing() {
   return typeof document !== "undefined" && document.documentElement.dataset.edit === "1";
@@ -148,7 +148,7 @@ export function PortfolioClient() {
     function openReel(card: HTMLElement) {
       if (isEditing()) return; // 편집 중엔 모달 열지 않음
       if (!reelFrame || !reelTitle || !reelTags || !reelDescription) return;
-      const videoId = card.dataset.video;
+      const imgSrc = card.dataset.img;
       reelTitle.textContent = card.dataset.title || "";
       reelTags.innerHTML = "";
       const fallbackTags = card.querySelector(".card-tags")?.textContent || "";
@@ -167,7 +167,7 @@ export function PortfolioClient() {
         reelDescription.appendChild(document.createTextNode("\n참고 링크: "));
         reelDescription.appendChild(link);
       }
-      reelFrame.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" title="${card.dataset.title || "Demo reel"}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
+      reelFrame.innerHTML = `<img src="${imgSrc || ""}" alt="${card.dataset.title || "Work highlight"}" />`;
       reelShowcase!.classList.remove("is-closing");
       reelShowcase!.classList.add("is-open");
       reelShowcase!.setAttribute("aria-hidden", "false");
@@ -187,7 +187,7 @@ export function PortfolioClient() {
       }
     }
 
-    const cards = Array.from(document.querySelectorAll<HTMLElement>(".video-card[data-video]"));
+    const cards = Array.from(document.querySelectorAll<HTMLElement>(".video-card[data-img]"));
     const cardClick = (card: HTMLElement) => () => openReel(card);
     const cardKey = (card: HTMLElement) => (event: KeyboardEvent) => {
       if (event.key === "Enter" || event.key === " ") { event.preventDefault(); openReel(card); }

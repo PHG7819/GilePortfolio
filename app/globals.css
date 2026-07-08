@@ -404,6 +404,7 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
   overflow: hidden;
 }
 .reel-panel-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.reel-panel-frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background: #0e0e12; }
 .reel-panel-copy {
   padding: 30px 44px 30px 0;
   display: flex;

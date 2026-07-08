@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" font-family="Pretendard, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif">
+  <rect width="800" height="450" rx="10" fill="#14141a"/>
+  <text x="32" y="52" fill="#ffffff" font-size="27" font-weight="700">2개월 마일스톤 개발 사이클</text>
+  <text x="32" y="80" fill="#9a9aa0" font-size="15">최종 마감에서 역산해 코드 마감(D-14)을 설정하고, 매 마일스톤 반복</text>
+
+  <!-- loop arrow -->
+  <path d="M 700 150 C 740 120, 740 120, 700 120 L 120 120 C 78 120, 78 120, 100 150" fill="none" stroke="#6ea8fe" stroke-width="2" stroke-dasharray="6 6"/>
+  <text x="400" y="112" fill="#6ea8fe" font-size="13" text-anchor="middle">반복</text>
+
+  <!-- boxes -->
+  <g>
+    <rect x="20"  y="185" width="128" height="92" rx="10" fill="#1e1e26" stroke="rgba(255,255,255,.14)"/>
+    <text x="84"  y="228" fill="#e6e6e8" font-size="15" font-weight="600" text-anchor="middle">마일스톤</text>
+    <text x="84"  y="250" fill="#e6e6e8" font-size="15" font-weight="600" text-anchor="middle">시작</text>
+
+    <rect x="178" y="185" width="128" height="92" rx="10" fill="#1e1e26" stroke="rgba(255,255,255,.14)"/>
+    <text x="242" y="228" fill="#e6e6e8" font-size="15" font-weight="600" text-anchor="middle">주요 개발</text>
+    <text x="242" y="250" fill="#9a9aa0" font-size="12" text-anchor="middle">구현 리뷰·작업</text>
+
+    <rect x="336" y="185" width="128" height="92" rx="10" fill="#243049" stroke="#6ea8fe" stroke-width="1.5"/>
+    <text x="400" y="222" fill="#ffffff" font-size="15" font-weight="700" text-anchor="middle">코드 마감</text>
+    <text x="400" y="244" fill="#ffd166" font-size="13" font-weight="600" text-anchor="middle">D-14</text>
+    <text x="400" y="264" fill="#9a9aa0" font-size="11" text-anchor="middle">스트림 분리</text>
+
+    <rect x="494" y="185" width="128" height="92" rx="10" fill="#1e1e26" stroke="rgba(255,255,255,.14)"/>
+    <text x="558" y="228" fill="#e6e6e8" font-size="15" font-weight="600" text-anchor="middle">폴리싱 · QA</text>
+    <text x="558" y="250" fill="#9a9aa0" font-size="12" text-anchor="middle">머지·빌드·BVT</text>
+
+    <rect x="652" y="185" width="128" height="92" rx="10" fill="#1e1e26" stroke="rgba(255,255,255,.14)"/>
+    <text x="716" y="228" fill="#e6e6e8" font-size="15" font-weight="600" text-anchor="middle">최종 마감</text>
+    <text x="716" y="250" fill="#9a9aa0" font-size="12" text-anchor="middle">플레이테스트</text>
+  </g>
+
+  <!-- chevrons -->
+  <g fill="none" stroke="#5b6070" stroke-width="2">
+    <path d="M154 231 l16 0 m-6 -6 l6 6 l-6 6"/>
+    <path d="M312 231 l16 0 m-6 -6 l6 6 l-6 6"/>
+    <path d="M470 231 l16 0 m-6 -6 l6 6 l-6 6"/>
+    <path d="M628 231 l16 0 m-6 -6 l6 6 l-6 6"/>
+  </g>
+
+  <text x="32" y="360" fill="#c7c7cd" font-size="14" font-weight="600">PM 역할</text>
+  <text x="32" y="386" fill="#9a9aa0" font-size="13">· 마일스톤 로드맵 작성·동기화, Jira 작업/버그 관리</text>
+  <text x="32" y="408" fill="#9a9aa0" font-size="13">· 단계별 공지·이슈 트래킹, 코드 마감/최종 마감 타임라인 설계</text>
+</svg>
