@@ -36,11 +36,18 @@ main { font-family: "Pretendard Variable", "Pretendard", "Paperlogy", "Noto Sans
 * { box-sizing: border-box; }
 html {
   scroll-behavior: smooth;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  /* 오른쪽 세로 스크롤바 표시 — KRAFTON 톤(얇게, hover 시 오렌지) */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, .28) transparent;
 }
-html::-webkit-scrollbar,
-body::-webkit-scrollbar { display: none; }
+html::-webkit-scrollbar { width: 12px; }
+html::-webkit-scrollbar-track { background: #0a0a0b; }
+html::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, .24);
+  border-radius: 8px;
+  border: 3px solid #0a0a0b;
+}
+html::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
 body {
   margin: 0;
