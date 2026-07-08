@@ -753,6 +753,7 @@ html[data-edit="1"] .video-card { cursor: default; }
 .nav-links a:hover,
 .footer-links a:hover,
 .side-nav a:hover .side-nav-label,
+.side-nav a.is-active .side-nav-label,
 .button:hover .btn-label,
 .video-card:hover .video-meta strong,
 .video-card:focus-visible .video-meta strong,
