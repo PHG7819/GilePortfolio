@@ -59,7 +59,7 @@ export function EditableImage({ k, value, alt = "", className = "", bg = false, 
   };
 
   const editStyle: CSSProperties = isEditMode
-    ? { cursor: "pointer", outline: "2px dashed #5fd08a", outlineOffset: "-2px", opacity: uploading ? 0.5 : 1 }
+    ? { cursor: "pointer", outline: "2px dashed #ffffff", outlineOffset: "-2px", opacity: uploading ? 0.5 : 1 }
     : {};
 
   if (bg) {
