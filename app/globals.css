@@ -604,7 +604,7 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
 }
 
 /* ===== Stack band ===== */
-.stack-band { padding: 26px 28px; background: var(--green); border-top: 1px solid rgba(255,255,255,.08); border-bottom: 1px solid rgba(255,255,255,.08); }
+.stack-band { margin-top: 44px; padding: 30px 34px; background: #161618; border-radius: 16px; }
 .stack-row { max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 30px; align-items: center; }
 .stack-title span { display: block; color: rgba(255,255,255,.62); font-size: 12px; font-weight: 800; }
 .stack-title strong { display: block; color: #fff; font-size: 21px; }

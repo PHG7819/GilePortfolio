@@ -270,21 +270,6 @@ export default async function Page() {
           </div>
         </section>
 
-        {/* Stack band */}
-        <div className="stack-band">
-          <div className="stack-row">
-            <div className="stack-title">
-              <span><EditableText k="stack.label" value={c(map, "stack.label", "TOOLS")} inline /></span>
-              <strong><EditableText k="stack.title" value={c(map, "stack.title", "주요 사용 도구")} inline /></strong>
-            </div>
-            <div className="stack-list">
-              {[1, 2, 3, 4, 5].map((i) => (
-                <span key={i}><EditableText k={`stack.tool${i}`} value={c(map, `stack.tool${i}`, `Tool ${i}`)} inline /></span>
-              ))}
-            </div>
-          </div>
-        </div>
-
         {/* Skills */}
         <section id="skills" className="paper-section">
           <div className="wrap">
@@ -300,6 +285,21 @@ export default async function Page() {
               ))}
             </div>
             <AddItemButton list="skills.cards" label="+ 스킬 추가" />
+
+            {/* Tools — Skills 섹션에 포함(스킬 박스 아래에 배치) */}
+            <div className="stack-band">
+              <div className="stack-row">
+                <div className="stack-title">
+                  <span><EditableText k="stack.label" value={c(map, "stack.label", "TOOLS")} inline /></span>
+                  <strong><EditableText k="stack.title" value={c(map, "stack.title", "주요 사용 도구")} inline /></strong>
+                </div>
+                <div className="stack-list">
+                  {[1, 2, 3, 4, 5].map((i) => (
+                    <span key={i}><EditableText k={`stack.tool${i}`} value={c(map, `stack.tool${i}`, `Tool ${i}`)} inline /></span>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
