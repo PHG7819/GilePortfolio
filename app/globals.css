@@ -766,6 +766,12 @@ html[data-edit="1"] .video-card { cursor: default; }
 }
 .btn-label { position: relative; z-index: 2; }
 
+/* 오렌지 버튼 위에서는 오렌지 광택이 묻히므로, 버튼 라벨에 한해 흰/은색 반짝임으로 */
+.button:hover .btn-label,
+.button:focus-visible .btn-label {
+  background-image: linear-gradient(90deg, #ffffff, #c9ccd3, #ffffff, #c9ccd3, #ffffff);
+}
+
 /* 태그 칩 — 알약 배경 유지를 위해 글자 색만 은은한 실버로 순환 */
 @keyframes pastelCycle {
   0%   { color: #ffffff; }
