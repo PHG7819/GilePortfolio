@@ -202,13 +202,89 @@ h1, h2, h3, p { margin-top: 0; }
 h1 { margin-bottom: 32px; text-align: center; font-size: 38px; line-height: 1.06; font-weight: 800; letter-spacing: -.015em; }
 h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12; font-weight: 800; letter-spacing: -.015em; }
 
-/* ===== 갤러리 그리드 + 카드 ===== */
-.reel-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
+/* ===== Work Highlights — PM 허브형 통합 도식 ===== */
+.highlight-map {
+  position: relative;
+  isolation: isolate;
+  min-height: 620px;
+  max-width: 1080px;
+  margin: 0 auto;
+  border: 1px solid rgba(255, 255, 255, .12);
+  border-radius: 28px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 48%, rgba(249, 66, 58, .2), transparent 18%),
+    radial-gradient(circle at 18% 22%, rgba(255, 255, 255, .08), transparent 24%),
+    linear-gradient(145deg, rgba(255, 255, 255, .08), rgba(255, 255, 255, .015) 42%, rgba(249, 66, 58, .06)),
+    #101012;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 28px 90px rgba(0,0,0,.38);
 }
-.video-card {
+.highlight-map::before {
+  content: "";
+  position: absolute;
+  inset: 26px;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 22px;
+  pointer-events: none;
+}
+.highlight-map::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);
+  background-size: 54px 54px;
+  mask-image: radial-gradient(circle at center, #000 0 52%, transparent 78%);
+  opacity: .34;
+}
+.highlight-orbit {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(72%, 760px);
+  aspect-ratio: 1.75 / 1;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 50%;
+  box-shadow: 0 0 80px rgba(249,66,58,.08), inset 0 0 50px rgba(255,255,255,.03);
+}
+.highlight-axis {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(249,66,58,.45), rgba(255,255,255,.28), rgba(249,66,58,.45), transparent);
+  opacity: .55;
+}
+.highlight-axis--horizontal { width: 68%; height: 1px; transform: translate(-50%, -50%); }
+.highlight-axis--vertical { width: 1px; height: 68%; transform: translate(-50%, -50%); background: linear-gradient(180deg, transparent, rgba(249,66,58,.45), rgba(255,255,255,.28), rgba(249,66,58,.45), transparent); }
+.highlight-core {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 4;
+  width: 168px;
+  height: 168px;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 6px;
+  border-radius: 50%;
+  color: #fff;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,0) 48%),
+    radial-gradient(circle at 34% 22%, rgba(255,255,255,.28), transparent 24%),
+    linear-gradient(135deg, #ff6a60, #f9423a 52%, #8c1712);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.28), 0 22px 58px rgba(249,66,58,.28);
+}
+.highlight-core span { font-size: 34px; line-height: 1; font-weight: 900; letter-spacing: .02em; }
+.highlight-core strong { color: rgba(255,255,255,.74); font-family: "KRAFTON Headline", "Pretendard Variable", "Pretendard", sans-serif; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; }
+.video-card,
+.highlight-node {
   position: relative;
   overflow: hidden;
   isolation: isolate;
@@ -226,6 +302,67 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
   transform: translateY(-2px);
   outline: 0;
 }
+.highlight-node {
+  position: absolute;
+  z-index: 3;
+  width: 224px;
+  min-height: 132px;
+  padding: 22px 24px 18px;
+  border-radius: 18px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.1), rgba(255,255,255,.02)),
+    rgba(18, 18, 21, .92);
+  border-color: rgba(255,255,255,.16);
+  box-shadow: 0 18px 42px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.08);
+  backdrop-filter: blur(14px);
+}
+.highlight-node:hover,
+.highlight-node:focus-visible {
+  border-color: rgba(249,66,58,.7);
+  box-shadow: 0 22px 52px rgba(0,0,0,.42), 0 0 0 1px rgba(249,66,58,.18), 0 0 34px rgba(249,66,58,.16);
+}
+.highlight-node::after {
+  content: "";
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  bottom: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: .72;
+}
+.highlight-node-eyebrow {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--accent-2);
+  font-family: "KRAFTON Headline", "Pretendard Variable", "Pretendard", sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.highlight-node strong {
+  display: block;
+  color: #fff;
+  font-size: 23px;
+  line-height: 1.16;
+  font-weight: 800;
+  letter-spacing: -.02em;
+}
+.highlight-node-hint {
+  display: block;
+  margin-top: 10px;
+  color: #85858c;
+  font-size: 11px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+.highlight-node .card-tags { margin-top: 14px; }
+.highlight-node .card-tags span { background: rgba(255,255,255,.06); }
+.highlight-node.is-milestone { left: 9%; top: 13%; }
+.highlight-node.is-codefreeze { right: 9%; top: 13%; }
+.highlight-node.is-communication { left: 9%; bottom: 13%; }
+.highlight-node.is-quality { right: 9%; bottom: 13%; }
 
 /* featured 카드 — 평소엔 정지, hover 시 왼쪽→오른쪽 빛 sweep */
 .video-card.is-featured { box-shadow: 0 0 18px rgba(255, 255, 255, .06); }
@@ -646,7 +783,12 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
 @media (max-width: 900px) {
   .nav-links, .date-pill { display: none; }
   section { padding: 64px 20px; }
-  .reel-grid, .project-layout, .learning-grid, .profile, .stack-row, .skills-grid, .footer-grid { grid-template-columns: 1fr; }
+  .project-layout, .learning-grid, .profile, .stack-row, .skills-grid, .footer-grid { grid-template-columns: 1fr; }
+  .highlight-map { min-height: auto; padding: 150px 18px 28px; display: grid; gap: 14px; }
+  .highlight-orbit, .highlight-axis { display: none; }
+  .highlight-core { top: 76px; width: 118px; height: 118px; }
+  .highlight-core span { font-size: 26px; }
+  .highlight-node { position: relative; left: auto !important; right: auto !important; top: auto !important; bottom: auto !important; width: 100%; min-height: 0; }
   .stack-list { flex-wrap: wrap; justify-content: flex-start; }
   .project-collage { grid-template-columns: repeat(2, 1fr); }
   .project-collage .wide { grid-column: 1 / -1; }

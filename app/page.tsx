@@ -52,28 +52,54 @@ export default async function Page() {
   noStore(); // 모든 캐싱 비활성화 — 항상 최신 DB 반영
   const map = await getContentMap();
 
-  // Work Highlights 카드 — 순서는 "demo.cards.order"(JSON 배열), 각 카드는 id 기반 키로 저장.
-  // 영상 대신 업로드 가능한 "프로세스 도식 이미지"를 사용한다.
-  const cardDefaults: Record<string, { img: string; title: string; tags: string; desc: string }> = {
-    "1": { img: "/diagrams/01-milestone-cycle.svg", title: "2개월 마일스톤 개발 사이클", tags: "일정관리,WBS,프로세스", desc: "마일스톤 시작부터 코드 마감(D-14)·폴리싱/QA·최종 마감까지, 최종 마감에서 역산해 일정을 설계합니다.\n각 단계에서 PM이 챙기는 로드맵·공지·이슈 트래킹을 정리했습니다." },
-    "2": { img: "/diagrams/06-jira-upgrade.svg", title: "Jira 사용 고도화 (엑셀 → Jira Cloud)", tags: "Jira,데이터,오토메이션", desc: "엑셀 대시보드를 Jira Cloud 네이티브로 이관하고, JQL 저장 필터·오토메이션 룰·상태 현황 문서·일괄 연결 스크립트로 데이터 기반 현황 관리를 구축했습니다." },
-    "3": { img: "/diagrams/05-ai-automation.svg", title: "AI 활용 업무 자동화 에이전트", tags: "AI,자동화,에이전트", desc: "스튜디오 전용 AI 에이전트를 직접 개발했습니다.\n· 회의록 에이전트(로컬 faster-whisper STT + 기획서 대조): 개발 리뷰 회의록 정리 2~3시간 → 20분\n· 주간보고 자동화(퍼포스 서밋 분석, 7개 서브에이전트 오케스트레이션): 작성 2시간 → 20분\n· 지라 다중 릴레이트 자동화, 빌드 테스트 웹 가이드(HTML)도 제작·배포" },
-    "4": { img: "/diagrams/02-codefreeze-timeline.svg", title: "코드 마감 & 빌드 발행 오퍼레이션", tags: "빌드,마감,TeamCity", desc: "D-1 스트림 분리·빌드 세팅, D-day 코드 마감, D+1 풀 머지·빌드 발행·QA BVT로 이어지는 마감 타임라인.\nTeamCity로 데일리·마감·테스트·핫픽스 빌드를 발행·버전 관리합니다." },
-    "5": { img: "/diagrams/03-collab-hub.svg", title: "PM 중심 크로스팀 커뮤니케이션", tags: "커뮤니케이션,Slack,Jira", desc: "기획·프로그램·아트·QA·퍼블리셔 사이의 논의를 Slack 채널과 Jira로 일원화하고, 개발 중 발생하는 이슈를 시작~종결까지 추적·전파합니다." },
-    "6": { img: "/diagrams/04-qa-gate.svg", title: "품질 게이트 & 버그 관리", tags: "QA,품질,버그", desc: "구현 확인 → 단위 QA → BVT → 릴리즈로 이어지는 품질 게이트.\n버그는 빌드 리비전별 에픽으로 분류해 머지·수정 현황을 관리합니다." },
-  };
-  const cardOrder = readOrder(map, "demo.cards", ["1", "2", "3", "4", "5", "6"]);
-  const newCardDefault = { img: "/diagrams/placeholder.svg", title: "새 하이라이트", tags: "New", desc: "- 내용을 적으세요." };
-  const demoCards = cardOrder.map((id) => {
-    const d = cardDefaults[id] ?? newCardDefault;
-    return {
-      id,
-      img: c(map, `demo.card.${id}.img`, d.img),
-      title: c(map, `demo.card.${id}.title`, d.title),
-      tags: c(map, `demo.card.${id}.tags`, d.tags),
-      desc: c(map, `demo.card.${id}.desc`, d.desc),
-    };
-  });
+  // Work Highlights — PM 을 중심으로 펼쳐지는 단일 허브형 도식.
+  // Jira 고도화/AI 자동화는 별도 섹션에서 다루기 위해 Highlights 에서는 제외한다.
+  const highlightItems = [
+    {
+      id: "milestone",
+      key: "1",
+      className: "is-milestone",
+      label: "마일스톤",
+      eyebrow: "Cycle",
+      img: "/diagrams/01-milestone-cycle.svg",
+      title: c(map, "demo.card.1.title", "마일스톤 개발 사이클"),
+      tags: c(map, "demo.card.1.tags", "일정관리,WBS,프로세스"),
+      desc: c(map, "demo.card.1.desc", "마일스톤 시작부터 코드 마감(D-14)·폴리싱/QA·최종 마감까지, 최종 마감에서 역산해 일정을 설계합니다.\n각 단계에서 PM이 챙기는 로드맵·공지·이슈 트래킹을 정리했습니다."),
+    },
+    {
+      id: "codefreeze",
+      key: "4",
+      className: "is-codefreeze",
+      label: "코드 마감",
+      eyebrow: "D-day",
+      img: "/diagrams/02-codefreeze-timeline.svg",
+      title: c(map, "demo.card.4.title", "코드 마감 D-day 오퍼레이션"),
+      tags: c(map, "demo.card.4.tags", "빌드,마감,TeamCity"),
+      desc: c(map, "demo.card.4.desc", "D-1 스트림 분리·빌드 세팅, D-day 코드 마감, D+1 풀 머지·빌드 발행·QA BVT로 이어지는 마감 타임라인.\nTeamCity로 데일리·마감·테스트·핫픽스 빌드를 발행·버전 관리합니다."),
+    },
+    {
+      id: "communication",
+      key: "5",
+      className: "is-communication",
+      label: "커뮤니케이션",
+      eyebrow: "Hub",
+      img: "/diagrams/03-collab-hub.svg",
+      title: c(map, "demo.card.5.title", "PM 중심 크로스팀 커뮤니케이션"),
+      tags: c(map, "demo.card.5.tags", "커뮤니케이션,Slack,Jira"),
+      desc: c(map, "demo.card.5.desc", "기획·프로그램·아트·QA·퍼블리셔 사이의 논의를 Slack 채널과 Jira로 일원화하고, 개발 중 발생하는 이슈를 시작~종결까지 추적·전파합니다."),
+    },
+    {
+      id: "quality",
+      key: "6",
+      className: "is-quality",
+      label: "품질 게이트",
+      eyebrow: "QA",
+      img: "/diagrams/04-qa-gate.svg",
+      title: c(map, "demo.card.6.title", "품질 게이트 & 버그 관리"),
+      tags: c(map, "demo.card.6.tags", "QA,품질,버그"),
+      desc: c(map, "demo.card.6.desc", "구현 확인 → 단위 QA → BVT → 릴리즈로 이어지는 품질 게이트.\n버그는 빌드 리비전별 에픽으로 분류해 머지·수정 현황을 관리합니다."),
+    },
+  ];
 
   // 다른 반복 섹션들의 순서 목록
   const featOrder = readOrder(map, "projects.feats", ["1", "2", "3", "4"]);
@@ -148,41 +174,44 @@ export default async function Page() {
           <div className="wrap">
             <p className="section-kicker"><EditableText k="demo.kicker" value={c(map, "demo.kicker", "Work Highlights")} inline /></p>
             <h1><EditableText k="demo.title" value={c(map, "demo.title", "프로세스 & 성과 하이라이트")} inline /></h1>
-            <div className="reel-grid">
-              {demoCards.map((card) => (
+            <div className="highlight-map" aria-label="PM 업무 프로세스 하이라이트">
+              <div className="highlight-orbit" aria-hidden="true" />
+              <div className="highlight-axis highlight-axis--vertical" aria-hidden="true" />
+              <div className="highlight-axis highlight-axis--horizontal" aria-hidden="true" />
+              <div className="highlight-core">
+                <span>PM</span>
+                <strong>Process Hub</strong>
+              </div>
+              {highlightItems.map((item) => (
                 <article
-                  key={card.id}
-                  className="video-card is-featured"
+                  key={item.id}
+                  className={`highlight-node video-card is-featured ${item.className}`}
                   tabIndex={0}
                   role="button"
-                  data-img={card.img}
-                  data-title={card.title}
-                  data-tags={card.tags}
-                  data-description={card.desc}
+                  data-img={item.img}
+                  data-title={item.title}
+                  data-tags={item.tags}
+                  data-description={item.desc}
                 >
-                  <div className="video-frame">
-                    <EditableImage k={`demo.card.${card.id}.img`} value={card.img} alt={card.title} />
+                  <span className="highlight-node-eyebrow">{item.eyebrow}</span>
+                  <strong>{item.label}</strong>
+                  <span className="highlight-node-hint">Click to expand</span>
+                  <div className="card-tags">
+                    {item.tags.split(",").map((t, i) => (
+                      <span key={i}>{t.trim()}</span>
+                    ))}
                   </div>
-                  <div className="video-meta">
-                    <strong><EditableText k={`demo.card.${card.id}.title`} value={card.title} inline /></strong>
-                    <div className="card-tags">
-                      {card.tags.split(",").map((t, i) => (
-                        <span key={i}>{t.trim()}</span>
-                      ))}
-                    </div>
-                    <div className="card-edit-fields">
-                      <label>도식 이미지 (위 이미지를 클릭해 업로드)</label>
-                      <label>태그 (콤마로 구분)</label>
-                      <EditableText k={`demo.card.${card.id}.tags`} value={card.tags} inline />
-                      <label>설명 (모달에 표시)</label>
-                      <EditableText k={`demo.card.${card.id}.desc`} value={card.desc} multiline />
-                      <DeleteItemButton list="demo.cards" id={card.id} label="이 카드 삭제" />
-                    </div>
+                  <div className="card-edit-fields">
+                    <label>팝업 제목</label>
+                    <EditableText k={`demo.card.${item.key}.title`} value={item.title} inline />
+                    <label>태그 (콤마로 구분)</label>
+                    <EditableText k={`demo.card.${item.key}.tags`} value={item.tags} inline />
+                    <label>설명 (모달에 표시)</label>
+                    <EditableText k={`demo.card.${item.key}.desc`} value={item.desc} multiline />
                   </div>
                 </article>
               ))}
             </div>
-            <AddItemButton list="demo.cards" label="+ 하이라이트 카드 추가" />
             <div className="center-action"><a className="button no-arrow" href="#projects"><span className="btn-label"><EditableText k="demo.cta" value={c(map, "demo.cta", "프로젝트 자세히 보기")} inline /></span></a></div>
           </div>
         </section>
@@ -201,7 +230,7 @@ export default async function Page() {
                 <EditableImage k="project.img.4" value={c(map, "project.img.4", IMG_SQ)} alt="" />
               </div>
               <div className="project-copy">
-                <p><EditableText k="projects.intro" value={c(map, "projects.intro", "매드엔진 프론티어 스튜디오에서 개발 중인 나이트크로우 후속작 '나이트크로우W' MMORPG의 개발 PM으로, 2개월 주기 마일스톤 전반의 일정·커뮤니케이션·빌드 마감을 담당합니다. 스튜디오의 개발 커뮤니케이션 허브 역할을 맡으면서, 반복 업무를 데이터·AI 기반 도구로 자동화하고 스튜디오 안팎을 잇는 문서를 제작·배포해 왔습니다.")} multiline /></p>
+                <p><EditableText k="projects.intro" value={c(map, "projects.intro", "매드엔진 프론티어 스튜디오에서 개발 중인 나이트크로우 후속작 '나이트크로우W' MMORPG의 개발 PM으로, 프로젝트 상황에 맞춘 마일스톤 전반의 일정·커뮤니케이션·빌드 마감을 담당합니다. 스튜디오의 개발 커뮤니케이션 허브 역할을 맡으면서, 반복 업무를 데이터·AI 기반 도구로 자동화하고 스튜디오 안팎을 잇는 문서를 제작·배포해 왔습니다.")} multiline /></p>
                 {featOrder.map((id, idx) => (
                   <div className="feature-item" key={id}>
                     <EditableImage k={`projects.feat${id}.icon`} value={c(map, `projects.feat${id}.icon`, IMG_FEAT)} className="feature-icon" alt="" />
@@ -291,7 +320,7 @@ export default async function Page() {
                 <div className="skill-card" tabIndex={0} key={id}>
                   <h3><EditableText k={`skills.card${id}.title`} value={c(map, `skills.card${id}.title`, ["마일스톤 · 일정 관리", "크로스팀 커뮤니케이션 · 조율", "데이터 · AI 활용 자동화", "빌드 · 마감 & 문서화"][idx] ?? `Skill ${idx + 1}`)} inline /></h3>
                   <p><EditableText k={`skills.card${id}.desc`} value={c(map, `skills.card${id}.desc`, [
-                    "2개월 주기 마일스톤 로드맵을 설계·동기화하고, 최종 마감에서 역산해 코드 마감을 잡습니다. 엑셀 대시보드를 Jira Cloud로 이관하고 JQL 저장 필터로 현황을 관리합니다.",
+                    "프로젝트 상황에 맞춘 마일스톤 로드맵을 설계·동기화하고, 최종 마감에서 역산해 코드 마감을 잡습니다. 엑셀 대시보드를 Jira Cloud로 이관하고 JQL 저장 필터로 현황을 관리합니다.",
                     "기획·프로그램·아트·QA·퍼블리셔 사이의 논의를 Slack·Jira로 일원화하고, 개발 중 발생하는 버그·QA·일정 이슈를 시작~종결까지 추적·전파합니다.",
                     "스튜디오 전용 AI 에이전트를 직접 개발합니다. 회의록 에이전트(로컬 STT + 기획서 대조)로 개발 리뷰 회의록 정리를 2~3시간→20분, 주간보고 자동화(퍼포스 서밋 분석)로 2시간→20분으로 단축했고, 지라 다중 릴레이트·빌드 테스트 웹 가이드 툴도 만들었습니다.",
                     "TeamCity로 데일리·마감·테스트·핫픽스 빌드를 발행·버전 관리하고, 플레이 가이드·프로세스 문서를 제작·배포해 팀의 기준을 표준화합니다.",
@@ -345,7 +374,7 @@ export default async function Page() {
                   <p><EditableText k="career.r1.summary" value={c(map, "career.r1.summary", "나이트크로우 후속작 '나이트크로우W' MMORPG 개발 프로젝트의 개발 PM. 마일스톤 일정 관리, 크로스팀 커뮤니케이션, 빌드·마감 오퍼레이션, AI 기반 업무 자동화를 담당.")} multiline /></p>
                   <h4><EditableText k="career.r1.h4a" value={c(map, "career.r1.h4a", "<개발 커뮤니케이션 · 일정 · 빌드>")} inline /></h4>
                   <ul>
-                    <li><EditableText k="career.r1.a1" value={c(map, "career.r1.a1", "2개월 주기 마일스톤·일정 관리, 직군 간 조율 및 버그·QA·일정 이슈 트래킹, 빌드 테스트 가이드 배포")} inline /></li>
+                    <li><EditableText k="career.r1.a1" value={c(map, "career.r1.a1", "마일스톤·일정 관리, 직군 간 조율 및 버그·QA·일정 이슈 트래킹, 빌드 테스트 가이드 배포")} inline /></li>
                     <li><EditableText k="career.r1.a2" value={c(map, "career.r1.a2", "코드 마감~최종 마감 타임라인 설계, 스트림 분리·머지, TeamCity 빌드 발행·버전 관리(데일리/마감/테스트/핫픽스)")} inline /></li>
                     <li><EditableText k="career.r1.a3" value={c(map, "career.r1.a3", "엑셀 대시보드 → Jira Cloud 네이티브 이관, JQL 저장 필터·오토메이션으로 지라 고도화 및 상태 현황 문서 관리")} inline /></li>
                   </ul>

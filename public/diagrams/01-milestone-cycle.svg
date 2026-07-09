@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" font-family="Pretendard, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif">
   <rect width="800" height="450" rx="10" fill="#14141a"/>
-  <text x="32" y="52" fill="#ffffff" font-size="27" font-weight="700">2개월 마일스톤 개발 사이클</text>
+  <text x="32" y="52" fill="#ffffff" font-size="27" font-weight="700">마일스톤 개발 사이클</text>
   <text x="32" y="80" fill="#9a9aa0" font-size="15">최종 마감에서 역산해 코드 마감(D-14)을 설정하고, 매 마일스톤 반복</text>
 
   <!-- loop arrow -->
