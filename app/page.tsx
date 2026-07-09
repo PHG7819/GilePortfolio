@@ -52,15 +52,16 @@ export default async function Page() {
   noStore(); // 모든 캐싱 비활성화 — 항상 최신 DB 반영
   const map = await getContentMap();
 
-  // Work Highlights — PM 을 중심으로 펼쳐지는 단일 허브형 도식.
+  // Work Highlights — 5개 카드가 hover/focus 시 펼쳐지는 accordion 구조.
   // Jira 고도화/AI 자동화는 별도 섹션에서 다루기 위해 Highlights 에서는 제외한다.
   const highlightItems = [
     {
       id: "milestone",
       key: "1",
-      className: "is-milestone",
+      index: "WH 01",
       label: "마일스톤",
       eyebrow: "Cycle",
+      summary: "로드맵·일정 동기화",
       img: "/diagrams/01-milestone-cycle.svg",
       title: c(map, "demo.card.1.title", "마일스톤 개발 사이클"),
       tags: c(map, "demo.card.1.tags", "일정관리,WBS,프로세스"),
@@ -69,9 +70,10 @@ export default async function Page() {
     {
       id: "codefreeze",
       key: "4",
-      className: "is-codefreeze",
+      index: "WH 02",
       label: "코드 마감",
       eyebrow: "D-day",
+      summary: "마감 타임라인 운영",
       img: "/diagrams/02-codefreeze-timeline.svg",
       title: c(map, "demo.card.4.title", "코드 마감 D-day 오퍼레이션"),
       tags: c(map, "demo.card.4.tags", "빌드,마감,TeamCity"),
@@ -80,9 +82,10 @@ export default async function Page() {
     {
       id: "communication",
       key: "5",
-      className: "is-communication",
+      index: "WH 03",
       label: "커뮤니케이션",
       eyebrow: "Hub",
+      summary: "직군 간 논의 일원화",
       img: "/diagrams/03-collab-hub.svg",
       title: c(map, "demo.card.5.title", "PM 중심 크로스팀 커뮤니케이션"),
       tags: c(map, "demo.card.5.tags", "커뮤니케이션,Slack,Jira"),
@@ -91,13 +94,26 @@ export default async function Page() {
     {
       id: "quality",
       key: "6",
-      className: "is-quality",
+      index: "WH 04",
       label: "품질 게이트",
       eyebrow: "QA",
+      summary: "BVT·버그 흐름 관리",
       img: "/diagrams/04-qa-gate.svg",
       title: c(map, "demo.card.6.title", "품질 게이트 & 버그 관리"),
       tags: c(map, "demo.card.6.tags", "QA,품질,버그"),
       desc: c(map, "demo.card.6.desc", "구현 확인 → 단위 QA → BVT → 릴리즈로 이어지는 품질 게이트.\n버그는 빌드 리비전별 에픽으로 분류해 머지·수정 현황을 관리합니다."),
+    },
+    {
+      id: "build",
+      key: "7",
+      index: "WH 05",
+      label: "빌드 발행",
+      eyebrow: "Build",
+      summary: "TeamCity 버전 관리",
+      img: "/diagrams/02-codefreeze-timeline.svg",
+      title: c(map, "demo.card.7.title", "빌드 발행 & 버전 관리"),
+      tags: c(map, "demo.card.7.tags", "TeamCity,빌드,버전관리"),
+      desc: c(map, "demo.card.7.desc", "TeamCity를 활용해 데일리·마감·테스트·핫픽스 빌드를 발행하고 버전을 관리합니다.\n빌드 목적과 배포 대상에 맞춰 발행 흐름을 구분하고, QA·플레이테스트가 이어질 수 있도록 상태와 결과를 공유합니다."),
     },
   ];
 
@@ -174,15 +190,11 @@ export default async function Page() {
           <div className="wrap">
             <p className="section-kicker"><EditableText k="demo.kicker" value={c(map, "demo.kicker", "Work Highlights")} inline /></p>
             <h1><EditableText k="demo.title" value={c(map, "demo.title", "프로세스 & 성과 하이라이트")} inline /></h1>
-            <div className="highlight-map" aria-label="PM 업무 프로세스 하이라이트">
-              <div className="highlight-core">
-                <span>PM</span>
-                <strong>Process Hub</strong>
-              </div>
+            <div className="highlight-accordion" aria-label="PM 업무 프로세스 하이라이트">
               {highlightItems.map((item) => (
                 <article
                   key={item.id}
-                  className={`highlight-node video-card is-featured ${item.className}`}
+                  className="highlight-panel video-card is-featured"
                   tabIndex={0}
                   role="button"
                   data-img={item.img}
@@ -190,13 +202,22 @@ export default async function Page() {
                   data-tags={item.tags}
                   data-description={item.desc}
                 >
-                  <span className="highlight-node-eyebrow">{item.eyebrow}</span>
-                  <strong>{item.label}</strong>
-                  <span className="highlight-node-hint">Click to expand</span>
-                  <div className="card-tags">
-                    {item.tags.split(",").map((t, i) => (
-                      <span key={i}>{t.trim()}</span>
-                    ))}
+                  <div className="highlight-panel-bg" aria-hidden="true" />
+                  <div className="highlight-panel-copy">
+                    <span className="highlight-panel-index">{item.index}</span>
+                    <span className="highlight-node-eyebrow">{item.eyebrow}</span>
+                    <strong>{item.label}</strong>
+                    <p>{item.summary}</p>
+                    <div className="card-tags">
+                      {item.tags.split(",").map((t, i) => (
+                        <span key={i}>{t.trim()}</span>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="highlight-panel-detail">
+                    <span>Click to expand</span>
+                    <strong>{item.title}</strong>
+                    <p>{item.desc}</p>
                   </div>
                   <div className="card-edit-fields">
                     <label>팝업 제목</label>
