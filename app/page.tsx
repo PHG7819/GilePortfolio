@@ -175,9 +175,6 @@ export default async function Page() {
             <p className="section-kicker"><EditableText k="demo.kicker" value={c(map, "demo.kicker", "Work Highlights")} inline /></p>
             <h1><EditableText k="demo.title" value={c(map, "demo.title", "프로세스 & 성과 하이라이트")} inline /></h1>
             <div className="highlight-map" aria-label="PM 업무 프로세스 하이라이트">
-              <div className="highlight-orbit" aria-hidden="true" />
-              <div className="highlight-axis highlight-axis--vertical" aria-hidden="true" />
-              <div className="highlight-axis highlight-axis--horizontal" aria-hidden="true" />
               <div className="highlight-core">
                 <span>PM</span>
                 <strong>Process Hub</strong>

@@ -211,51 +211,8 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
   margin: 0 auto;
   overflow: visible;
 }
-.highlight-map::before {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: min(64%, 680px);
-  aspect-ratio: 1.85 / 1;
-  transform: translate(-50%, -50%);
-  border: 1px solid rgba(255,255,255,.1);
-  border-radius: 50%;
-  pointer-events: none;
-}
-.highlight-map::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 360px;
-  height: 360px;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  pointer-events: none;
-  background: radial-gradient(circle, rgba(249,66,58,.12), transparent 62%);
-  opacity: .8;
-}
-.highlight-orbit {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: min(78%, 800px);
-  height: 1px;
-  transform: translate(-50%, -50%);
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,.08), rgba(249,66,58,.22), rgba(255,255,255,.08), transparent);
-}
-.highlight-axis {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  z-index: 1;
-  pointer-events: none;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,.16), rgba(249,66,58,.36), rgba(255,255,255,.16), transparent);
-  opacity: .6;
-}
-.highlight-axis--horizontal { width: 62%; height: 1px; transform: translate(-50%, -50%); }
-.highlight-axis--vertical { width: 1px; height: 62%; transform: translate(-50%, -50%); background: linear-gradient(180deg, transparent, rgba(255,255,255,.16), rgba(249,66,58,.36), rgba(255,255,255,.16), transparent); }
+.highlight-map::before,
+.highlight-map::after { content: none; }
 .highlight-core {
   position: absolute;
   left: 50%;
@@ -772,10 +729,10 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
   section { padding: 64px 20px; }
   .project-layout, .learning-grid, .profile, .stack-row, .skills-grid, .footer-grid { grid-template-columns: 1fr; }
   .highlight-map { min-height: auto; padding: 150px 18px 28px; display: grid; gap: 14px; }
-  .highlight-orbit, .highlight-axis { display: none; }
   .highlight-core { top: 76px; width: 118px; height: 118px; }
   .highlight-core span { font-size: 26px; }
   .highlight-node { position: relative; left: auto !important; right: auto !important; top: auto !important; bottom: auto !important; width: 100%; min-height: 0; }
+  html[data-edit="1"] .highlight-map { grid-template-columns: 1fr; padding-top: 18px; }
   .stack-list { flex-wrap: wrap; justify-content: flex-start; }
   .project-collage { grid-template-columns: repeat(2, 1fr); }
   .project-collage .wide { grid-column: 1 / -1; }
@@ -861,6 +818,37 @@ html[data-edit="1"] .card-edit-fields {
 
 /* 편집 모드에서는 카드 클릭으로 모달이 열리지 않도록 커서/포인터 정리 */
 html[data-edit="1"] .video-card { cursor: default; }
+html[data-edit="1"] .highlight-map {
+  min-height: auto;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  padding-top: 28px;
+}
+html[data-edit="1"] .highlight-core { display: none; }
+html[data-edit="1"] .highlight-node {
+  position: relative;
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+  bottom: auto !important;
+  width: 100%;
+  min-height: 0;
+  overflow: visible;
+  transform: none !important;
+}
+html[data-edit="1"] .highlight-node .card-edit-fields { padding: 14px 0 0; }
+html[data-edit="1"] .highlight-node .edit-field {
+  width: 100% !important;
+  max-width: 100% !important;
+  color: #fff;
+  background: rgba(255,255,255,.08);
+}
+html[data-edit="1"] .highlight-node textarea.edit-field {
+  min-height: 112px;
+  white-space: pre-wrap;
+}
+html[data-edit="1"] .highlight-node-hint { display: none; }
 
 /* 카드 추가/삭제 버튼 */
 .add-card-row { display: flex; justify-content: center; margin-top: 18px; }
