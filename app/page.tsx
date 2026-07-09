@@ -212,7 +212,6 @@ export default async function Page() {
                 </article>
               ))}
             </div>
-            <div className="center-action"><a className="button no-arrow" href="#projects"><span className="btn-label"><EditableText k="demo.cta" value={c(map, "demo.cta", "프로젝트 자세히 보기")} inline /></span></a></div>
           </div>
         </section>
 

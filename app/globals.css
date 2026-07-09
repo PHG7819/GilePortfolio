@@ -206,49 +206,44 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
 .highlight-map {
   position: relative;
   isolation: isolate;
-  min-height: 620px;
+  min-height: 560px;
   max-width: 1080px;
   margin: 0 auto;
-  border: 1px solid rgba(255, 255, 255, .12);
-  border-radius: 28px;
-  overflow: hidden;
-  background:
-    radial-gradient(circle at 50% 48%, rgba(249, 66, 58, .2), transparent 18%),
-    radial-gradient(circle at 18% 22%, rgba(255, 255, 255, .08), transparent 24%),
-    linear-gradient(145deg, rgba(255, 255, 255, .08), rgba(255, 255, 255, .015) 42%, rgba(249, 66, 58, .06)),
-    #101012;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 28px 90px rgba(0,0,0,.38);
+  overflow: visible;
 }
 .highlight-map::before {
   content: "";
   position: absolute;
-  inset: 26px;
-  border: 1px solid rgba(255,255,255,.08);
-  border-radius: 22px;
+  left: 50%;
+  top: 50%;
+  width: min(64%, 680px);
+  aspect-ratio: 1.85 / 1;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 50%;
   pointer-events: none;
 }
 .highlight-map::after {
   content: "";
   position: absolute;
-  inset: 0;
+  left: 50%;
+  top: 50%;
+  width: 360px;
+  height: 360px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
   pointer-events: none;
-  background-image:
-    linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);
-  background-size: 54px 54px;
-  mask-image: radial-gradient(circle at center, #000 0 52%, transparent 78%);
-  opacity: .34;
+  background: radial-gradient(circle, rgba(249,66,58,.12), transparent 62%);
+  opacity: .8;
 }
 .highlight-orbit {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: min(72%, 760px);
-  aspect-ratio: 1.75 / 1;
+  width: min(78%, 800px);
+  height: 1px;
   transform: translate(-50%, -50%);
-  border: 1px solid rgba(255,255,255,.14);
-  border-radius: 50%;
-  box-shadow: 0 0 80px rgba(249,66,58,.08), inset 0 0 50px rgba(255,255,255,.03);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.08), rgba(249,66,58,.22), rgba(255,255,255,.08), transparent);
 }
 .highlight-axis {
   position: absolute;
@@ -256,11 +251,11 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
   top: 50%;
   z-index: 1;
   pointer-events: none;
-  background: linear-gradient(90deg, transparent, rgba(249,66,58,.45), rgba(255,255,255,.28), rgba(249,66,58,.45), transparent);
-  opacity: .55;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.16), rgba(249,66,58,.36), rgba(255,255,255,.16), transparent);
+  opacity: .6;
 }
-.highlight-axis--horizontal { width: 68%; height: 1px; transform: translate(-50%, -50%); }
-.highlight-axis--vertical { width: 1px; height: 68%; transform: translate(-50%, -50%); background: linear-gradient(180deg, transparent, rgba(249,66,58,.45), rgba(255,255,255,.28), rgba(249,66,58,.45), transparent); }
+.highlight-axis--horizontal { width: 62%; height: 1px; transform: translate(-50%, -50%); }
+.highlight-axis--vertical { width: 1px; height: 62%; transform: translate(-50%, -50%); background: linear-gradient(180deg, transparent, rgba(255,255,255,.16), rgba(249,66,58,.36), rgba(255,255,255,.16), transparent); }
 .highlight-core {
   position: absolute;
   left: 50%;
@@ -305,21 +300,19 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
 .highlight-node {
   position: absolute;
   z-index: 3;
-  width: 224px;
-  min-height: 132px;
-  padding: 22px 24px 18px;
-  border-radius: 18px;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.1), rgba(255,255,255,.02)),
-    rgba(18, 18, 21, .92);
-  border-color: rgba(255,255,255,.16);
-  box-shadow: 0 18px 42px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.08);
-  backdrop-filter: blur(14px);
+  width: 214px;
+  min-height: 118px;
+  padding: 20px 22px 16px;
+  border-radius: 16px;
+  background: rgba(12, 12, 14, .64);
+  border-color: rgba(255,255,255,.14);
+  box-shadow: none;
+  backdrop-filter: blur(10px);
 }
 .highlight-node:hover,
 .highlight-node:focus-visible {
-  border-color: rgba(249,66,58,.7);
-  box-shadow: 0 22px 52px rgba(0,0,0,.42), 0 0 0 1px rgba(249,66,58,.18), 0 0 34px rgba(249,66,58,.16);
+  border-color: rgba(249,66,58,.68);
+  box-shadow: 0 0 0 1px rgba(249,66,58,.16), 0 14px 34px rgba(0,0,0,.24);
 }
 .highlight-node::after {
   content: "";
@@ -344,7 +337,7 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
 .highlight-node strong {
   display: block;
   color: #fff;
-  font-size: 23px;
+  font-size: 21px;
   line-height: 1.16;
   font-weight: 800;
   letter-spacing: -.02em;
@@ -423,13 +416,7 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
   border-radius: 999px; font-size: 11px; font-weight: 400;
 }
 
-.center-action { display: flex; justify-content: center; margin-top: 46px; }
 #demo .wrap { position: relative; }
-#demo .center-action { position: absolute; top: 30px; right: 0; z-index: 3; margin-top: 0; }
-@media (max-width: 900px) {
-  #demo .center-action { position: static; justify-content: center; margin-top: 32px; }
-}
-.center-action .button { height: 50px; min-width: 220px; font-size: 16px; font-weight: 400; }
 
 /* ===== 버튼 (메탈릭 차콜) ===== */
 .button {
