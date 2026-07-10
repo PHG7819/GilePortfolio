@@ -207,7 +207,7 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
   display: flex;
   gap: 14px;
   width: min(100%, 1180px);
-  min-height: 520px;
+  min-height: 460px;
   margin: 0 auto;
 }
 .highlight-panel-wrap {
@@ -241,7 +241,7 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
 }
 .highlight-panel {
   width: 100%;
-  min-height: 520px;
+  min-height: 460px;
   padding: 26px 22px;
   border-color: rgba(255,255,255,.16);
   background: #101012;
@@ -296,7 +296,7 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
   line-height: 1.15;
   font-weight: 800;
   letter-spacing: -.03em;
-  word-break: keep-all;
+  white-space: nowrap;
 }
 .highlight-panel-copy p {
   margin: 10px 0 0;
@@ -420,6 +420,12 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
 }
 
 #demo .wrap { position: relative; }
+/* Highlights 위치 상향 + 위아래 여백 균형 */
+#demo { padding-top: 44px; padding-bottom: 40px; }
+#demo h1 { margin-bottom: 20px; }
+/* Projects·Learning 한 화면에 들어오도록 세로 여백 축소 */
+#projects, #learning { padding-top: 60px; padding-bottom: 60px; }
+#projects h2, #learning .learning-head { margin-bottom: 24px; }
 
 /* ===== 버튼 (메탈릭 차콜) ===== */
 .button {
@@ -506,18 +512,18 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
 
 .reel-panel {
   position: relative;
-  width: min(1080px, 100%);
+  width: min(1360px, 96vw);
   max-height: 88vh;
   overflow-y: auto;
   margin: 0;
-  padding: 26px 28px;
+  padding: 28px 32px;
   background: #101014;
   border: 1px solid rgba(255,255,255,.14);
   border-radius: 16px;
   box-shadow: 0 30px 80px rgba(0,0,0,.5);
   display: grid;
-  grid-template-columns: 7fr 3fr;
-  gap: 24px;
+  grid-template-columns: 1.55fr 1fr;
+  gap: 28px;
   align-items: stretch;
 }
 .reel-panel-frame {
@@ -682,34 +688,34 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
 .project-layout {
   display: grid;
   grid-template-columns: minmax(0, .94fr) minmax(0, 1fr);
-  gap: 44px;
+  gap: 36px;
   align-items: center;
 }
 .project-collage { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
 .project-collage .wide { grid-column: 1 / -1; aspect-ratio: 16 / 7.5; object-fit: cover; }
-.project-collage img { width: 100%; height: 100%; min-height: 110px; object-fit: cover; border-radius: 2px; }
-.project-copy > p { margin-bottom: 28px; color: #25303c; font-size: 17px; font-weight: 400; word-break: keep-all; }
-.feature-item { display: grid; grid-template-columns: 58px minmax(0, 1fr); gap: 18px; margin-bottom: 24px; }
-.feature-icon { width: 52px; height: 52px; object-fit: contain; }
-.feature-item h3 { margin-bottom: 4px; font-size: 27px; line-height: 1.12; font-weight: 700; }
-.feature-item p { margin: 0; color: #48515f; font-size: 15px; word-break: keep-all; }
+.project-collage img { width: 100%; height: 100%; min-height: 92px; object-fit: cover; border-radius: 2px; }
+.project-copy > p { margin-bottom: 18px; color: #25303c; font-size: 15px; line-height: 1.55; font-weight: 400; word-break: keep-all; }
+.feature-item { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 14px; margin-bottom: 14px; }
+.feature-icon { width: 40px; height: 40px; object-fit: contain; }
+.feature-item h3 { margin-bottom: 3px; font-size: 20px; line-height: 1.15; font-weight: 700; }
+.feature-item p { margin: 0; color: #48515f; font-size: 14px; line-height: 1.5; word-break: keep-all; }
 
 /* ===== Learning (charcoal) ===== */
-.learning-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
-.learning-head { display: block; margin-bottom: 34px; }
+.learning-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.learning-head { display: block; margin-bottom: 18px; }
 .learning-title .section-kicker,
 .learning-title h2 { text-align: center; margin-inline: auto; }
 .learning-title h2 { margin-bottom: 0; }
 .learning-card {
-  display: flex; flex-direction: column; align-items: flex-start; min-height: 230px;
-  padding: 34px; color: #1d2631; background: #e2e2e4; border-radius: 10px;
+  display: flex; flex-direction: column; align-items: flex-start;
+  padding: 22px; color: #1d2631; background: #e2e2e4; border-radius: 10px;
 }
-.learning-image-frame { width: 100%; aspect-ratio: 16 / 9; margin-bottom: 20px; display: grid; place-items: center; overflow: hidden; }
+.learning-image-frame { width: 100%; height: 120px; margin-bottom: 12px; display: grid; place-items: center; overflow: hidden; border-radius: 6px; }
 .learning-image { width: 100%; height: 100%; object-fit: contain; object-position: center; }
-.learning-card p { color: #283342; font-size: 15px; font-weight: 400; word-break: keep-all; }
-.learning-card .button { min-width: 146px; height: 46px; align-self: flex-end; margin-top: auto; font-size: 16px; font-weight: 400; border-radius: 8px; }
-.learning-card .button::after { font-size: 17px; }
-.learning-card strong { display: block; margin-top: 8px; color: #0d1623; font-size: 18px; font-weight: 700; }
+.learning-card p { margin: 0; color: #283342; font-size: 13.5px; line-height: 1.5; font-weight: 400; word-break: keep-all; }
+.learning-card .button { min-width: 128px; height: 42px; align-self: flex-end; margin-top: 16px; font-size: 15px; font-weight: 400; border-radius: 8px; }
+.learning-card .button::after { font-size: 16px; }
+.learning-card strong { display: block; margin-top: 6px; color: #0d1623; font-size: 16px; font-weight: 700; }
 
 /* ===== About (dark) — profile + portrait ===== */
 #about { min-height: 80vh; display: flex; align-items: center; }
@@ -717,7 +723,7 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
 .profile-head { grid-column: 1 / -1; margin-bottom: 0; }
 .profile h2, .profile .section-kicker { text-align: center; }
 .profile-copy { align-self: stretch; }
-.profile p { color: #c2c2c8; font-size: 15px; word-break: keep-all; }
+.profile-copy p { color: #c2c2c8; font-size: 15px; word-break: keep-all; }
 .profile-copy p { margin-bottom: 14px; }
 .portrait {
   min-height: 100%;
