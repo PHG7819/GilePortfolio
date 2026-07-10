@@ -236,7 +236,7 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
   display: flex;
   gap: 14px;
   width: min(100%, 1180px);
-  min-height: 420px;
+  min-height: 504px;
   margin: 0 auto;
 }
 .highlight-panel-wrap {
@@ -270,7 +270,7 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
 }
 .highlight-panel {
   width: 100%;
-  min-height: 420px;
+  min-height: 504px;
   padding: 28px 24px;
   border-radius: 26px;
   border: 1px solid rgba(255,255,255,.14);
@@ -1097,12 +1097,6 @@ html[data-edit="1"] .highlight-panel { cursor: pointer; }
   animation: rainbowShift 1.1s linear infinite;
 }
 .btn-label { position: relative; z-index: 2; }
-
-/* 오렌지 버튼 위에서는 오렌지 광택이 묻히므로, 버튼 라벨에 한해 흰/은색 반짝임으로 */
-.button:hover .btn-label,
-.button:focus-visible .btn-label {
-  background-image: linear-gradient(90deg, #ffffff, #c9ccd3, #ffffff, #c9ccd3, #ffffff);
-}
 
 /* 태그 칩 — 알약 배경 유지를 위해 글자 색만 은은한 실버로 순환 */
 @keyframes pastelCycle {
