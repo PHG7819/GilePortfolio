@@ -171,7 +171,7 @@ export function PortfolioClient() {
       reelShowcase!.classList.remove("is-closing");
       reelShowcase!.classList.add("is-open");
       reelShowcase!.setAttribute("aria-hidden", "false");
-      reelShowcase!.scrollIntoView({ behavior: "smooth", block: "start" });
+      document.body.style.overflow = "hidden";
       reelClose?.focus();
     }
     function closeReel() {
@@ -179,12 +179,16 @@ export function PortfolioClient() {
       reelShowcase!.classList.remove("is-open");
       reelShowcase!.classList.add("is-closing");
       reelShowcase!.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
     }
     function onReelAnimEnd() {
       if (reelShowcase!.classList.contains("is-closing")) {
         reelShowcase!.classList.remove("is-closing");
         if (reelFrame) reelFrame.innerHTML = "";
       }
+    }
+    function onReelBackdrop(event: MouseEvent) {
+      if (event.target === reelShowcase) closeReel();
     }
 
     const cards = Array.from(document.querySelectorAll<HTMLElement>(".video-card[data-img]"));
@@ -319,6 +323,7 @@ export function PortfolioClient() {
     window.addEventListener("wheel", onWheel, { passive: false });
     window.addEventListener("keydown", onKeydown);
     reelShowcase.addEventListener("animationend", onReelAnimEnd);
+    reelShowcase.addEventListener("click", onReelBackdrop);
     reelClose?.addEventListener("click", closeReel);
     reelEscapeButton?.addEventListener("click", closeReel);
     careerTrigger?.addEventListener("click", openCareer);
@@ -333,6 +338,7 @@ export function PortfolioClient() {
       window.removeEventListener("wheel", onWheel);
       window.removeEventListener("keydown", onKeydown);
       reelShowcase.removeEventListener("animationend", onReelAnimEnd);
+      reelShowcase.removeEventListener("click", onReelBackdrop);
       reelClose?.removeEventListener("click", closeReel);
       reelEscapeButton?.removeEventListener("click", closeReel);
       careerTrigger?.removeEventListener("click", openCareer);
