@@ -179,7 +179,7 @@ export default async function Page() {
         {/* 영상 모달 */}
         <section className="reel-showcase" id="reel-showcase" aria-hidden="true">
           <div className="reel-panel">
-            <button className="reel-close" type="button" aria-label="닫기">×</button>
+            <button className="reel-close" type="button" aria-label="닫기"><span className="btn-label">×</span></button>
             <div className="reel-panel-frame" id="reel-panel-frame" />
             <div className="reel-panel-copy">
               <h3 id="reel-panel-title" />
@@ -228,7 +228,7 @@ export default async function Page() {
                   </article>
                   <section className="highlight-edit-modal" id={`highlight-edit-${item.id}`} aria-hidden="true">
                     <div className="highlight-edit-panel">
-                      <button className="highlight-edit-close" type="button" aria-label="편집 창 닫기">×</button>
+                      <button className="highlight-edit-close" type="button" aria-label="편집 창 닫기"><span className="btn-label">×</span></button>
                       <p className="section-kicker">Highlight Edit</p>
                       <h3>{item.label}</h3>
                       <div className="highlight-edit-grid">
@@ -519,7 +519,7 @@ export default async function Page() {
             <h3>Contact</h3>
             <form className="contact-form" action="mailto:gksrlf1199@gmail.com" method="post" encType="text/plain">
               <input type="email" name="email" placeholder="name@domain.com" aria-label="Email address" />
-              <button type="submit">Send</button>
+              <button type="submit"><span className="btn-label">Send</span></button>
             </form>
           </div>
         </div>
