@@ -111,13 +111,22 @@ export function PortfolioClient() {
       }
       frameId = requestAnimationFrame(step);
     }
+    // 섹션의 콘텐츠(.wrap)를 "헤더 아래 가시 영역"의 정중앙에 오게 하는 스크롤 위치를 계산.
+    // CSS 중앙정렬에 의존하지 않고 실제 렌더 높이를 측정하므로, 콘텐츠가 어떤 높이든 항상 정중앙.
+    function centerScrollTop(section: HTMLElement) {
+      const wrap = section.querySelector<HTMLElement>(".wrap") ?? section;
+      const headerHeight = header!.offsetHeight || 64;
+      const rect = wrap.getBoundingClientRect();
+      const wrapTopDoc = rect.top + window.scrollY;
+      const avail = window.innerHeight - headerHeight;
+      const desiredViewportTop = headerHeight + Math.max(0, (avail - rect.height) / 2);
+      return Math.max(0, Math.round(wrapTopDoc - desiredViewportTop));
+    }
     function scrollToSnapSection(index: number) {
       targetSnapIndex = Math.max(0, Math.min(index, snapSections.length - 1));
       const target = snapSections[targetSnapIndex];
       if (!target) return;
-      const headerHeight = header!.offsetHeight || 64;
-      const targetTop = target.getBoundingClientRect().top + window.scrollY - headerHeight;
-      animateScrollTo(Math.max(0, targetTop));
+      animateScrollTo(centerScrollTop(target));
       window.setTimeout(() => { targetSnapIndex = null; syncActiveNav(); }, 160);
     }
     function onWheel(event: WheelEvent) {
@@ -312,11 +321,37 @@ export function PortfolioClient() {
       }
     }
 
+    /* 네비(헤더/사이드) 클릭도 기본 앵커 점프 대신 콘텐츠를 화면 중앙에 맞춰 이동 */
+    const navAnchors = Array.from(
+      document.querySelectorAll<HTMLAnchorElement>(".nav-links a[href^='#'], .side-nav a[href^='#']")
+    );
+    const navAnchorHandlers = navAnchors.map((a) => {
+      const onClick = (event: MouseEvent) => {
+        if (isEditing()) return;
+        const id = a.getAttribute("href");
+        if (!id || id === "#top" || id.length < 2) return;
+        const section = document.querySelector<HTMLElement>(id);
+        if (!section) return;
+        event.preventDefault();
+        animateScrollTo(centerScrollTop(section));
+        window.setTimeout(syncActiveNav, 180);
+      };
+      a.addEventListener("click", onClick);
+      return { a, onClick };
+    });
+
     // 초기 실행 + 리스너 등록
     syncHeaderState();
     syncDate();
     syncVisitors();
     syncActiveNav();
+    // 첫 진입 섹션도 폰트/레이아웃 안정화 후 정중앙으로 맞춤
+    const initialCenter = window.setTimeout(() => {
+      if (isEditing()) return;
+      const hash = window.location.hash;
+      const section = (hash && hash.length > 1 ? document.querySelector<HTMLElement>(hash) : null) ?? snapSections[0];
+      if (section) window.scrollTo(0, centerScrollTop(section));
+    }, 180);
     const dateTimer = window.setInterval(syncDate, 60 * 1000);
     window.addEventListener("scroll", syncHeaderState, { passive: true });
     window.addEventListener("scroll", syncActiveNav, { passive: true });
@@ -332,6 +367,8 @@ export function PortfolioClient() {
 
     return () => {
       window.clearInterval(dateTimer);
+      window.clearTimeout(initialCenter);
+      navAnchorHandlers.forEach(({ a, onClick }) => a.removeEventListener("click", onClick));
       if (frameId) cancelAnimationFrame(frameId);
       window.removeEventListener("scroll", syncHeaderState);
       window.removeEventListener("scroll", syncActiveNav);
