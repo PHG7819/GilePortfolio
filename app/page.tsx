@@ -232,22 +232,14 @@ export default async function Page() {
                       <p className="section-kicker">Highlight Edit</p>
                       <h3>{item.label}</h3>
                       <div className="highlight-edit-grid">
-                        <label>카드 번호</label>
-                        <EditableText k={`demo.card.${item.key}.index`} value={item.index} />
-                        <label>상단 영문 라벨</label>
-                        <EditableText k={`demo.card.${item.key}.eyebrow`} value={item.eyebrow} />
-                        <label>카드 제목</label>
-                        <EditableText k={`demo.card.${item.key}.label`} value={item.label} />
-                        <label>카드 요약</label>
-                        <EditableText k={`demo.card.${item.key}.summary`} value={item.summary} />
-                        <label>확장 안내 문구</label>
-                        <EditableText k={`demo.card.${item.key}.hint`} value={item.hint} />
-                        <label>팝업 제목</label>
-                        <EditableText k={`demo.card.${item.key}.title`} value={item.title} />
-                        <label>태그 (콤마로 구분)</label>
-                        <EditableText k={`demo.card.${item.key}.tags`} value={item.tags} />
-                        <label>설명 (모달에 표시)</label>
-                        <EditableText k={`demo.card.${item.key}.desc`} value={item.desc} multiline />
+                        <div className="he-field"><label>카드 번호</label><EditableText k={`demo.card.${item.key}.index`} value={item.index} /></div>
+                        <div className="he-field"><label>상단 영문 라벨</label><EditableText k={`demo.card.${item.key}.eyebrow`} value={item.eyebrow} /></div>
+                        <div className="he-field"><label>카드 제목</label><EditableText k={`demo.card.${item.key}.label`} value={item.label} /></div>
+                        <div className="he-field"><label>카드 요약</label><EditableText k={`demo.card.${item.key}.summary`} value={item.summary} /></div>
+                        <div className="he-field"><label>확장 안내 문구</label><EditableText k={`demo.card.${item.key}.hint`} value={item.hint} /></div>
+                        <div className="he-field"><label>팝업 제목</label><EditableText k={`demo.card.${item.key}.title`} value={item.title} /></div>
+                        <div className="he-field he-field--full"><label>태그 (콤마로 구분)</label><EditableText k={`demo.card.${item.key}.tags`} value={item.tags} /></div>
+                        <div className="he-field he-field--full"><label>설명 (모달에 표시)</label><EditableText k={`demo.card.${item.key}.desc`} value={item.desc} multiline /></div>
                       </div>
                     </div>
                   </section>
