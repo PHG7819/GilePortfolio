@@ -210,6 +210,16 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
   min-height: 520px;
   margin: 0 auto;
 }
+.highlight-panel-wrap {
+  display: flex;
+  flex: 1 1 0;
+  min-width: 0;
+  transition: flex .44s cubic-bezier(.2,.8,.2,1);
+}
+.highlight-panel-wrap:hover,
+.highlight-panel-wrap:focus-within {
+  flex: 3.4 1 0;
+}
 .video-card,
 .highlight-panel {
   position: relative;
@@ -230,21 +240,12 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
   outline: 0;
 }
 .highlight-panel {
-  flex: 1 1 0;
+  width: 100%;
   min-height: 520px;
   padding: 26px 22px;
   border-color: rgba(255,255,255,.16);
   background: #101012;
-  transition: flex .44s cubic-bezier(.2,.8,.2,1), border-color .24s ease, transform .24s ease, box-shadow .24s ease;
-}
-.highlight-panel:first-child,
-.highlight-accordion:hover .highlight-panel:hover,
-.highlight-accordion:focus-within .highlight-panel:focus-within {
-  flex: 3.4 1 0;
-}
-.highlight-accordion:hover .highlight-panel:first-child:not(:hover),
-.highlight-accordion:focus-within .highlight-panel:first-child:not(:focus-within) {
-  flex: 1 1 0;
+  transition: border-color .24s ease, transform .24s ease, box-shadow .24s ease;
 }
 .highlight-panel:hover,
 .highlight-panel:focus-visible,
@@ -256,19 +257,11 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
   position: absolute;
   inset: 0;
   z-index: 0;
-  background:
-    linear-gradient(180deg, rgba(0,0,0,.08), rgba(0,0,0,.58)),
-    radial-gradient(circle at 40% 28%, rgba(249,66,58,.22), transparent 30%),
-    linear-gradient(135deg, #27272b, #101012 58%, #050506);
-  opacity: .9;
-  transition: transform .5s ease, opacity .35s ease, filter .35s ease;
+  background: linear-gradient(160deg, #17171b 0%, #0d0d10 62%, #08080a 100%);
+  transition: transform .5s ease;
 }
-.highlight-panel:nth-child(2) .highlight-panel-bg { background: linear-gradient(180deg, rgba(0,0,0,.1), rgba(0,0,0,.62)), radial-gradient(circle at 52% 24%, rgba(255,255,255,.12), transparent 28%), linear-gradient(135deg, #221717, #101012 62%, #050506); }
-.highlight-panel:nth-child(3) .highlight-panel-bg { background: linear-gradient(180deg, rgba(0,0,0,.1), rgba(0,0,0,.62)), radial-gradient(circle at 45% 30%, rgba(249,66,58,.18), transparent 28%), linear-gradient(135deg, #1b1d24, #101012 62%, #050506); }
-.highlight-panel:nth-child(4) .highlight-panel-bg { background: linear-gradient(180deg, rgba(0,0,0,.1), rgba(0,0,0,.62)), radial-gradient(circle at 54% 28%, rgba(255,255,255,.1), transparent 30%), linear-gradient(135deg, #202016, #101012 62%, #050506); }
-.highlight-panel:nth-child(5) .highlight-panel-bg { background: linear-gradient(180deg, rgba(0,0,0,.1), rgba(0,0,0,.62)), radial-gradient(circle at 50% 24%, rgba(249,66,58,.16), transparent 30%), linear-gradient(135deg, #152018, #101012 62%, #050506); }
 .highlight-panel:hover .highlight-panel-bg,
-.highlight-panel:focus-within .highlight-panel-bg { transform: scale(1.04); opacity: 1; filter: saturate(1.1); }
+.highlight-panel:focus-within .highlight-panel-bg { transform: scale(1.03); }
 .highlight-panel-copy {
   position: relative;
   z-index: 2;
@@ -314,7 +307,6 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
   max-width: 340px;
   transition: opacity .24s ease;
 }
-.highlight-panel:first-child .highlight-panel-copy p,
 .highlight-panel:hover .highlight-panel-copy p,
 .highlight-panel:focus-within .highlight-panel-copy p { opacity: 1; }
 .highlight-panel .card-tags {
@@ -323,7 +315,6 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
   transform: translateY(10px);
   transition: opacity .24s ease, transform .24s ease;
 }
-.highlight-panel:first-child .card-tags,
 .highlight-panel:hover .card-tags,
 .highlight-panel:focus-within .card-tags { opacity: 1; transform: translateY(0); }
 .highlight-panel .card-tags span { background: rgba(255,255,255,.1); backdrop-filter: blur(6px); }
@@ -344,7 +335,6 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
   pointer-events: none;
   transition: opacity .24s ease, transform .24s ease;
 }
-.highlight-panel:first-child .highlight-panel-detail,
 .highlight-panel:hover .highlight-panel-detail,
 .highlight-panel:focus-within .highlight-panel-detail { opacity: 1; transform: translateY(0); }
 .highlight-panel-detail span {
@@ -870,41 +860,72 @@ html[data-edit="1"] .card-edit-fields {
 }
 .card-edit-fields label { font-size: 10px; color: #85858c; text-transform: uppercase; letter-spacing: .04em; }
 
-/* 편집 모드에서는 카드 클릭으로 모달이 열리지 않도록 커서/포인터 정리 */
+/* 편집 모드: 일반 화면(video-card)은 커서 정리, Highlights 는 accordion 유지 + 클릭 시 편집 팝업 */
 html[data-edit="1"] .video-card { cursor: default; }
-html[data-edit="1"] .highlight-accordion {
-  min-height: auto;
+html[data-edit="1"] .highlight-panel { cursor: pointer; }
+
+/* Highlight 편집 팝업 — 편집 모드에서 카드 클릭 시 오버레이로 표시(평소 숨김) */
+.highlight-edit-modal { display: none; }
+.highlight-edit-modal.is-open {
+  display: flex;
+  position: fixed;
+  inset: 0;
+  z-index: 130;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(0,0,0,.66);
+  backdrop-filter: blur(4px);
+}
+.highlight-edit-panel {
+  position: relative;
+  width: min(560px, 100%);
+  max-height: 86vh;
+  overflow-y: auto;
+  padding: 30px 28px 32px;
+  color: #e8e8ea;
+  background: #141416;
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 16px;
+  box-shadow: 0 30px 80px rgba(0,0,0,.5);
+}
+.highlight-edit-panel .section-kicker { margin-bottom: 4px; color: var(--accent-2); }
+.highlight-edit-panel h3 { margin-bottom: 18px; color: #fff; font-size: 22px; font-weight: 800; }
+.highlight-edit-close {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  width: 34px;
+  height: 34px;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px;
-  padding-top: 28px;
-}
-html[data-edit="1"] .highlight-panel,
-html[data-edit="1"] .highlight-panel:first-child,
-html[data-edit="1"] .highlight-accordion:hover .highlight-panel:hover {
-  min-height: 0;
-  flex: none;
-  overflow: visible;
-  transform: none !important;
-}
-html[data-edit="1"] .highlight-panel-bg { opacity: .42; }
-html[data-edit="1"] .highlight-panel-detail { display: none; }
-html[data-edit="1"] .highlight-panel .card-tags { opacity: 1; transform: none; }
-html[data-edit="1"] .highlight-panel-copy p { opacity: 1; }
-html[data-edit="1"] .highlight-panel .card-edit-fields { padding: 14px 0 0; }
-html[data-edit="1"] .highlight-panel .edit-field {
-  width: 100% !important;
-  max-width: 100% !important;
-  color: #fff;
+  place-items: center;
+  color: #cfcfd4;
   background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 9px;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
 }
-html[data-edit="1"] .highlight-panel textarea.edit-field {
-  min-height: 112px;
-  white-space: pre-wrap;
+.highlight-edit-close:hover { color: #fff; background: rgba(255,255,255,.16); }
+.highlight-edit-grid { display: grid; gap: 4px; }
+.highlight-edit-grid label {
+  margin-top: 12px;
+  color: #8b8b92;
+  font-size: 10px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
 }
-@media (max-width: 900px) {
-  html[data-edit="1"] .highlight-accordion { grid-template-columns: 1fr; }
+.highlight-edit-grid .edit-field {
+  width: 100%;
+  padding: 9px 11px;
+  color: #fff;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 8px;
+  font-size: 14px;
 }
+.highlight-edit-grid textarea.edit-field { min-height: 120px; resize: vertical; white-space: pre-wrap; }
 
 /* 카드 추가/삭제 버튼 */
 .add-card-row { display: flex; justify-content: center; margin-top: 18px; }

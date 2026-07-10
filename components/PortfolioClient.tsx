@@ -200,6 +200,54 @@ export function PortfolioClient() {
       return { card, ch, kh };
     });
 
+    /* Highlight 편집 팝업 — 편집 모드에서 카드 클릭 시 오버레이로 열기 */
+    const highlightPanels = Array.from(document.querySelectorAll<HTMLElement>(".highlight-panel[data-edit-target]"));
+    const highlightEditModals = Array.from(document.querySelectorAll<HTMLElement>(".highlight-edit-modal"));
+    function openHighlightEdit(panel: HTMLElement) {
+      const id = panel.dataset.editTarget;
+      const modal = id ? document.getElementById(id) : null;
+      if (!modal) return;
+      modal.classList.add("is-open");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      modal.querySelector<HTMLElement>(".highlight-edit-close")?.focus();
+    }
+    function closeHighlightEdit(modal: HTMLElement) {
+      modal.classList.remove("is-open");
+      modal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+    function closeAllHighlightEdit() {
+      highlightEditModals.forEach((m) => { if (m.classList.contains("is-open")) closeHighlightEdit(m); });
+    }
+    const highlightPanelHandlers = highlightPanels.map((panel) => {
+      const onClick = (event: MouseEvent) => {
+        if (!isEditing()) return; // 일반 모드는 기존 상세 모달(openReel) 유지
+        event.preventDefault();
+        event.stopPropagation();
+        openHighlightEdit(panel);
+      };
+      const onKey = (event: KeyboardEvent) => {
+        if (!isEditing()) return;
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          event.stopPropagation();
+          openHighlightEdit(panel);
+        }
+      };
+      panel.addEventListener("click", onClick);
+      panel.addEventListener("keydown", onKey as EventListener);
+      return { panel, onClick, onKey };
+    });
+    const highlightModalHandlers = highlightEditModals.map((modal) => {
+      const closeBtn = modal.querySelector<HTMLElement>(".highlight-edit-close");
+      const onClose = () => closeHighlightEdit(modal);
+      const onBackdrop = (event: MouseEvent) => { if (event.target === modal) closeHighlightEdit(modal); };
+      closeBtn?.addEventListener("click", onClose);
+      modal.addEventListener("click", onBackdrop);
+      return { modal, closeBtn, onClose, onBackdrop };
+    });
+
     /* 경력 팝업 */
     const careerShowcase = document.querySelector<HTMLElement>("#career-showcase");
     const careerTrigger = document.querySelector<HTMLElement>(".career-trigger");
@@ -256,6 +304,7 @@ export function PortfolioClient() {
       if (event.key === "Escape") {
         if (reelShowcase!.classList.contains("is-open")) closeReel();
         if (careerShowcase?.classList.contains("is-open")) closeCareer();
+        closeAllHighlightEdit();
       }
     }
 
@@ -292,6 +341,14 @@ export function PortfolioClient() {
       cardHandlers.forEach(({ card, ch, kh }) => {
         card.removeEventListener("click", ch);
         card.removeEventListener("keydown", kh as EventListener);
+      });
+      highlightPanelHandlers.forEach(({ panel, onClick, onKey }) => {
+        panel.removeEventListener("click", onClick);
+        panel.removeEventListener("keydown", onKey as EventListener);
+      });
+      highlightModalHandlers.forEach(({ modal, closeBtn, onClose, onBackdrop }) => {
+        closeBtn?.removeEventListener("click", onClose);
+        modal.removeEventListener("click", onBackdrop);
       });
       skillHandlers.forEach(({ card, showKorean, showEnglish }) => {
         card.removeEventListener("mouseenter", showKorean);

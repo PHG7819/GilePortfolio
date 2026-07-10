@@ -58,10 +58,11 @@ export default async function Page() {
     {
       id: "milestone",
       key: "1",
-      index: "WH 01",
-      label: "마일스톤",
-      eyebrow: "Cycle",
-      summary: "로드맵·일정 동기화",
+      index: c(map, "demo.card.1.index", "WH 01"),
+      label: c(map, "demo.card.1.label", "마일스톤"),
+      eyebrow: c(map, "demo.card.1.eyebrow", "Cycle"),
+      summary: c(map, "demo.card.1.summary", "로드맵·일정 동기화"),
+      hint: c(map, "demo.card.1.hint", "Click to expand"),
       img: "/diagrams/01-milestone-cycle.svg",
       title: c(map, "demo.card.1.title", "마일스톤 개발 사이클"),
       tags: c(map, "demo.card.1.tags", "일정관리,WBS,프로세스"),
@@ -70,10 +71,11 @@ export default async function Page() {
     {
       id: "codefreeze",
       key: "4",
-      index: "WH 02",
-      label: "코드 마감",
-      eyebrow: "D-day",
-      summary: "마감 타임라인 운영",
+      index: c(map, "demo.card.4.index", "WH 02"),
+      label: c(map, "demo.card.4.label", "코드 마감"),
+      eyebrow: c(map, "demo.card.4.eyebrow", "D-day"),
+      summary: c(map, "demo.card.4.summary", "마감 타임라인 운영"),
+      hint: c(map, "demo.card.4.hint", "Click to expand"),
       img: "/diagrams/02-codefreeze-timeline.svg",
       title: c(map, "demo.card.4.title", "코드 마감 D-day 오퍼레이션"),
       tags: c(map, "demo.card.4.tags", "빌드,마감,TeamCity"),
@@ -82,10 +84,11 @@ export default async function Page() {
     {
       id: "communication",
       key: "5",
-      index: "WH 03",
-      label: "커뮤니케이션",
-      eyebrow: "Hub",
-      summary: "직군 간 논의 일원화",
+      index: c(map, "demo.card.5.index", "WH 03"),
+      label: c(map, "demo.card.5.label", "커뮤니케이션"),
+      eyebrow: c(map, "demo.card.5.eyebrow", "Hub"),
+      summary: c(map, "demo.card.5.summary", "직군 간 논의 일원화"),
+      hint: c(map, "demo.card.5.hint", "Click to expand"),
       img: "/diagrams/03-collab-hub.svg",
       title: c(map, "demo.card.5.title", "PM 중심 크로스팀 커뮤니케이션"),
       tags: c(map, "demo.card.5.tags", "커뮤니케이션,Slack,Jira"),
@@ -94,10 +97,11 @@ export default async function Page() {
     {
       id: "quality",
       key: "6",
-      index: "WH 04",
-      label: "품질 게이트",
-      eyebrow: "QA",
-      summary: "BVT·버그 흐름 관리",
+      index: c(map, "demo.card.6.index", "WH 04"),
+      label: c(map, "demo.card.6.label", "품질 게이트"),
+      eyebrow: c(map, "demo.card.6.eyebrow", "QA"),
+      summary: c(map, "demo.card.6.summary", "BVT·버그 흐름 관리"),
+      hint: c(map, "demo.card.6.hint", "Click to expand"),
       img: "/diagrams/04-qa-gate.svg",
       title: c(map, "demo.card.6.title", "품질 게이트 & 버그 관리"),
       tags: c(map, "demo.card.6.tags", "QA,품질,버그"),
@@ -106,10 +110,11 @@ export default async function Page() {
     {
       id: "build",
       key: "7",
-      index: "WH 05",
-      label: "빌드 발행",
-      eyebrow: "Build",
-      summary: "TeamCity 버전 관리",
+      index: c(map, "demo.card.7.index", "WH 05"),
+      label: c(map, "demo.card.7.label", "빌드 발행"),
+      eyebrow: c(map, "demo.card.7.eyebrow", "Build"),
+      summary: c(map, "demo.card.7.summary", "TeamCity 버전 관리"),
+      hint: c(map, "demo.card.7.hint", "Click to expand"),
       img: "/diagrams/02-codefreeze-timeline.svg",
       title: c(map, "demo.card.7.title", "빌드 발행 & 버전 관리"),
       tags: c(map, "demo.card.7.tags", "TeamCity,빌드,버전관리"),
@@ -192,42 +197,61 @@ export default async function Page() {
             <h1><EditableText k="demo.title" value={c(map, "demo.title", "프로세스 & 성과 하이라이트")} inline /></h1>
             <div className="highlight-accordion" aria-label="PM 업무 프로세스 하이라이트">
               {highlightItems.map((item) => (
-                <article
-                  key={item.id}
-                  className="highlight-panel video-card is-featured"
-                  tabIndex={0}
-                  role="button"
-                  data-img={item.img}
-                  data-title={item.title}
-                  data-tags={item.tags}
-                  data-description={item.desc}
-                >
-                  <div className="highlight-panel-bg" aria-hidden="true" />
-                  <div className="highlight-panel-copy">
-                    <span className="highlight-panel-index">{item.index}</span>
-                    <span className="highlight-node-eyebrow">{item.eyebrow}</span>
-                    <strong>{item.label}</strong>
-                    <p>{item.summary}</p>
-                    <div className="card-tags">
-                      {item.tags.split(",").map((t, i) => (
-                        <span key={i}>{t.trim()}</span>
-                      ))}
+                <div className="highlight-panel-wrap" key={item.id}>
+                  <article
+                    className="highlight-panel video-card is-featured"
+                    tabIndex={0}
+                    role="button"
+                    data-img={item.img}
+                    data-title={item.title}
+                    data-tags={item.tags}
+                    data-description={item.desc}
+                    data-edit-target={`highlight-edit-${item.id}`}
+                  >
+                    <div className="highlight-panel-bg" aria-hidden="true" />
+                    <div className="highlight-panel-copy">
+                      <span className="highlight-panel-index">{item.index}</span>
+                      <span className="highlight-node-eyebrow">{item.eyebrow}</span>
+                      <strong>{item.label}</strong>
+                      <p>{item.summary}</p>
+                      <div className="card-tags">
+                        {item.tags.split(",").map((t, i) => (
+                          <span key={i}>{t.trim()}</span>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                  <div className="highlight-panel-detail">
-                    <span>Click to expand</span>
-                    <strong>{item.title}</strong>
-                    <p>{item.desc}</p>
-                  </div>
-                  <div className="card-edit-fields">
-                    <label>팝업 제목</label>
-                    <EditableText k={`demo.card.${item.key}.title`} value={item.title} inline />
-                    <label>태그 (콤마로 구분)</label>
-                    <EditableText k={`demo.card.${item.key}.tags`} value={item.tags} inline />
-                    <label>설명 (모달에 표시)</label>
-                    <EditableText k={`demo.card.${item.key}.desc`} value={item.desc} multiline />
-                  </div>
-                </article>
+                    <div className="highlight-panel-detail">
+                      <span>{item.hint}</span>
+                      <strong>{item.title}</strong>
+                      <p>{item.desc}</p>
+                    </div>
+                  </article>
+                  <section className="highlight-edit-modal" id={`highlight-edit-${item.id}`} aria-hidden="true">
+                    <div className="highlight-edit-panel">
+                      <button className="highlight-edit-close" type="button" aria-label="편집 창 닫기">×</button>
+                      <p className="section-kicker">Highlight Edit</p>
+                      <h3>{item.label}</h3>
+                      <div className="highlight-edit-grid">
+                        <label>카드 번호</label>
+                        <EditableText k={`demo.card.${item.key}.index`} value={item.index} />
+                        <label>상단 영문 라벨</label>
+                        <EditableText k={`demo.card.${item.key}.eyebrow`} value={item.eyebrow} />
+                        <label>카드 제목</label>
+                        <EditableText k={`demo.card.${item.key}.label`} value={item.label} />
+                        <label>카드 요약</label>
+                        <EditableText k={`demo.card.${item.key}.summary`} value={item.summary} />
+                        <label>확장 안내 문구</label>
+                        <EditableText k={`demo.card.${item.key}.hint`} value={item.hint} />
+                        <label>팝업 제목</label>
+                        <EditableText k={`demo.card.${item.key}.title`} value={item.title} />
+                        <label>태그 (콤마로 구분)</label>
+                        <EditableText k={`demo.card.${item.key}.tags`} value={item.tags} />
+                        <label>설명 (모달에 표시)</label>
+                        <EditableText k={`demo.card.${item.key}.desc`} value={item.desc} multiline />
+                      </div>
+                    </div>
+                  </section>
+                </div>
               ))}
             </div>
           </div>
