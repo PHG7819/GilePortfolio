@@ -1074,6 +1074,8 @@ html[data-edit="1"] .highlight-panel { cursor: pointer; }
 .side-nav a:hover .side-nav-label,
 .side-nav a.is-active .side-nav-label,
 .button:hover .btn-label,
+.button:hover::after,
+.button:focus-visible::after,
 .reel-close:hover .btn-label,
 .highlight-edit-close:hover .btn-label,
 .contact-form button:hover .btn-label,
