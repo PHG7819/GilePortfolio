@@ -26,6 +26,7 @@ main { font-family: "Pretendard Variable", "Pretendard", "Paperlogy", "Noto Sans
   --muted: #8c8c92;     /* 중립 그레이 */
   --soft: #d2d2d6;
   --line: rgba(255, 255, 255, .12);
+  --header-h: 65px;   /* 헤더(.nav-wrap 64px + border) 높이 — 섹션 중앙정렬/스크롤 기준 */
   /* KRAFTON 포인트 컬러 (Warm Red / Orange) — 에너지·도전 정신 */
   --accent: #f9423a;
   --accent-2: #ff6a60;
@@ -201,7 +202,7 @@ img { display: block; max-width: 100%; }
 @media (max-width: 1100px) { .side-nav { display: none; } }
 
 /* ===== 섹션 공통 ===== */
-section { padding: 88px 28px; scroll-margin-top: 70px; }
+section { padding: 88px 28px; scroll-margin-top: var(--header-h); }
 .dark-section { background: var(--navy); }
 .paper-section {
   background:
@@ -456,12 +457,14 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
 #demo .wrap { position: relative; }
 /* 주요 섹션 = 한 화면(100vh) 꽉 채우고 콘텐츠 세로 중앙 정렬 (16:9에서도 안 잘리게 콘텐츠는 여유 있게) */
 #demo, #projects, #learning, #about, #skills {
-  min-height: 100vh;
+  /* 헤더를 뺀 실제 가시 영역 높이 → 콘텐츠가 헤더 아래 영역 정중앙에 오도록.
+     네비 클릭·휠 스냅이 섹션 상단을 헤더 바로 아래에 맞추므로 이동 위치와 중앙이 일치. */
+  min-height: calc(100vh - var(--header-h));
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-top: 84px;
-  padding-bottom: 64px;
+  padding-top: 40px;
+  padding-bottom: 40px;
 }
 #demo h1 { margin-bottom: 24px; }
 #projects h2, #skills h2 { margin-bottom: 26px; }
