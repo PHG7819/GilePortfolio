@@ -345,7 +345,7 @@ export function PortfolioClient() {
 
     /* 경력 팝업 */
     const careerShowcase = document.querySelector<HTMLElement>("#career-showcase");
-    const careerTrigger = document.querySelector<HTMLElement>(".career-trigger");
+    const careerTriggers = Array.from(document.querySelectorAll<HTMLElement>(".career-trigger"));
     const careerClose = careerShowcase?.querySelector<HTMLElement>(".career-close") ?? null;
     function openCareer() {
       if (!careerShowcase) return;
@@ -444,7 +444,18 @@ export function PortfolioClient() {
     reelShowcase.addEventListener("click", onReelBackdrop);
     reelClose?.addEventListener("click", closeReel);
     reelEscapeButton?.addEventListener("click", closeReel);
-    careerTrigger?.addEventListener("click", openCareer);
+    const careerTriggerHandlers = careerTriggers.map((trigger) => {
+      const onClick = () => openCareer();
+      const onKey = (event: KeyboardEvent) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          openCareer();
+        }
+      };
+      trigger.addEventListener("click", onClick);
+      trigger.addEventListener("keydown", onKey as EventListener);
+      return { trigger, onClick, onKey };
+    });
     careerClose?.addEventListener("click", closeCareer);
     careerShowcase?.addEventListener("animationend", onCareerAnimEnd);
 
@@ -461,7 +472,10 @@ export function PortfolioClient() {
       reelShowcase.removeEventListener("click", onReelBackdrop);
       reelClose?.removeEventListener("click", closeReel);
       reelEscapeButton?.removeEventListener("click", closeReel);
-      careerTrigger?.removeEventListener("click", openCareer);
+      careerTriggerHandlers.forEach(({ trigger, onClick, onKey }) => {
+        trigger.removeEventListener("click", onClick);
+        trigger.removeEventListener("keydown", onKey as EventListener);
+      });
       careerClose?.removeEventListener("click", closeCareer);
       careerShowcase?.removeEventListener("animationend", onCareerAnimEnd);
       projectGalleryTriggerHandlers.forEach(({ trigger, onClick, onKey }) => {

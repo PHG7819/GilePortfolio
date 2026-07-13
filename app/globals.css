@@ -740,12 +740,12 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
 .project-bento {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
-  grid-template-rows: repeat(3, minmax(112px, auto));
+  grid-template-rows: repeat(3, minmax(92px, auto));
   gap: 12px;
   grid-template-areas:
     "summary summary summary ai    ai    mWeek"
-    "summary summary summary ai    ai    mMeet"
-    "feat1   feat1   feat2  feat2  feat4  feat4";
+    "feat1   feat1   feat2  ai    ai    mMeet"
+    "feat1   feat1   feat2  ai    ai    career";
 }
 .pb-a-summary { grid-area: summary; }
 .pb-a-ai      { grid-area: ai; }
@@ -753,7 +753,7 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
 .pb-a-mMeet   { grid-area: mMeet; }
 .pb-a-feat1   { grid-area: feat1; }
 .pb-a-feat2   { grid-area: feat2; }
-.pb-a-feat4   { grid-area: feat4; }
+.pb-a-career  { grid-area: career; }
 
 /* 공통 타일 = Liquid Glass */
 .pb-tile {
@@ -782,12 +782,15 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
     linear-gradient(135deg, rgba(255,255,255,.34), rgba(255,255,255,0) 42%);
 }
 .pb-tile > * { position: relative; z-index: 1; }
-.pb-gallery-trigger {
+.pb-gallery-trigger,
+.pb-career {
   cursor: pointer;
   transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease, background .22s ease;
 }
 .pb-gallery-trigger:hover,
-.pb-gallery-trigger:focus-visible {
+.pb-gallery-trigger:focus-visible,
+.pb-career:hover,
+.pb-career:focus-visible {
   outline: 0;
   transform: translateY(-3px);
   border-color: rgba(255,255,255,.92);
@@ -814,32 +817,70 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
 .pb-gallery-trigger:focus-visible .pb-open-hint { color: var(--accent); }
 
 /* 요약 타일 */
-.pb-summary { display: flex; flex-direction: column; justify-content: center; padding: 24px 30px; }
-.pb-eyebrow { margin-bottom: 10px; color: var(--accent); font-size: 12px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
-.pb-summary-title { margin-bottom: 14px; color: #1b232e; font-size: 30px; line-height: 1.08; font-weight: 800; letter-spacing: -.01em; }
-.pb-summary-desc { margin-bottom: 0; color: #38414d; font-size: 13.5px; line-height: 1.56; font-weight: 400; word-break: keep-all; }
+.pb-summary { display: flex; flex-direction: column; justify-content: center; padding: 18px 26px; }
+.pb-eyebrow { margin-bottom: 8px; color: var(--accent); font-size: 12px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+.pb-summary-title { margin-bottom: 10px; color: #1b232e; font-size: 28px; line-height: 1.08; font-weight: 800; letter-spacing: -.01em; }
+.pb-summary-desc { margin-bottom: 0; color: #38414d; font-size: 13px; line-height: 1.48; font-weight: 400; word-break: keep-all; }
 
 /* 역량 타일 */
 .pb-feat { display: flex; flex-direction: column; gap: 8px; justify-content: center; }
 .pb-feat h3 { margin-bottom: 0; color: #1b232e; font-size: 16px; line-height: 1.2; font-weight: 700; word-break: keep-all; }
-.pb-feat p { margin: 0; color: #48515f; font-size: 12.5px; line-height: 1.48; font-weight: 400; word-break: keep-all; }
+.pb-feat p { margin: 0; color: #48515f; font-size: 12.5px; line-height: 1.46; font-weight: 400; word-break: keep-all; }
 .pb-ai { justify-content: flex-start; padding: 22px 24px; }
 .pb-ai h3 { font-size: 21px; line-height: 1.15; }
 .pb-ai p { font-size: 13.2px; line-height: 1.58; }
 .pb-tag { align-self: flex-start; margin-bottom: 12px; padding: 4px 13px; border-radius: 999px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 800; letter-spacing: .12em; }
 
 /* 지표 타일 */
-.pb-metric { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 8px; }
+.pb-metric { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 7px; padding: 14px 16px; }
 .pb-metric-value {
   color: var(--accent);
-  font-size: clamp(20px, 1.8vw, 25px);
+  font-size: clamp(18px, 1.35vw, 22px);
   line-height: 1.02;
   font-weight: 800;
-  letter-spacing: -.02em;
+  letter-spacing: -.035em;
   white-space: nowrap;
   word-break: keep-all;
 }
 .pb-metric-label { color: #56606d; font-size: 12px; font-weight: 600; letter-spacing: .01em; white-space: nowrap; word-break: keep-all; }
+
+/* 경력 기술서 타일 */
+.pb-career {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: auto auto;
+  align-content: center;
+  align-items: center;
+  gap: 2px 12px;
+  padding: 14px 18px;
+}
+.pb-career-kicker {
+  grid-column: 1 / -1;
+  color: var(--accent);
+  font-family: "KRAFTON Headline", "Pretendard Variable", "Pretendard", sans-serif;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.pb-career strong {
+  color: #1b232e;
+  font-size: 16px;
+  line-height: 1.2;
+  font-weight: 800;
+  white-space: nowrap;
+}
+.pb-career-arrow {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: var(--accent);
+  border-radius: 50%;
+  font-size: 20px;
+  line-height: 1;
+}
 
 /* 편집 모드 전용 성과 이미지 업로드 슬롯 */
 .pb-gallery-edit { display: none; }
@@ -861,10 +902,6 @@ html[data-edit="1"] .pb-gallery-edit {
   font-size: 11px;
   font-weight: 700;
 }
-
-.project-actions { display: flex; justify-content: center; margin-top: 18px; }
-.project-actions .button { min-width: 210px; white-space: nowrap; }
-.project-actions .button .btn-label { white-space: nowrap; }
 
 /* Projects 성과 이미지 팝업 */
 .project-gallery-showcase {
@@ -1089,7 +1126,7 @@ html[data-edit="1"] .pb-gallery-edit {
   .stack-list { flex-wrap: wrap; justify-content: flex-start; }
   /* 벤토 → 2열 자동 배치로 스택(그리드 영역 해제) */
   .project-bento { grid-template-columns: 1fr 1fr; grid-template-rows: none; grid-auto-rows: minmax(104px, auto); grid-template-areas: none; }
-  .pb-summary, .pb-ai, .pb-a-feat4 { grid-column: 1 / -1; }
+  .pb-summary, .pb-ai, .pb-career { grid-column: 1 / -1; }
   .project-gallery-panel { width: calc(100vw - 28px); padding: 22px 18px 18px; }
   .project-gallery-nav { width: 40px; height: 40px; }
   .project-gallery-prev { left: 0; }

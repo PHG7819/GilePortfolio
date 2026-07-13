@@ -341,25 +341,12 @@ export default async function Page() {
                 ]} />
               </article>
 
-              {/* 역량 — 빌드·문서 */}
-              <article
-                className="pb-tile pb-feat pb-a-feat4 pb-gallery-trigger"
-                tabIndex={0}
-                role="button"
-                data-gallery={galleryData([c(map, "project.feat4.img.1", ""), c(map, "project.feat4.img.2", "")])}
-                data-gallery-title={c(map, "projects.feat4.title", "빌드 발행 & 문서 제작·배포")}
-              >
-                <h3><EditableText k="projects.feat4.title" value={c(map, "projects.feat4.title", "빌드 발행 & 문서 제작·배포")} inline /></h3>
-                <p><EditableText k="projects.feat4.desc" value={c(map, "projects.feat4.desc", "TeamCity로 데일리·마감·테스트·핫픽스 빌드를 발행·버전 관리하고, 플레이 가이드·라이브 요약본·퍼블리셔 피칭덱 등 안팎을 잇는 문서를 제작·배포합니다.")} multiline /></p>
-                <span className="pb-open-hint">이미지 보기</span>
-                <ProjectGalleryEdit slots={[
-                  { contentKey: "project.feat4.img.1", value: c(map, "project.feat4.img.1", "") },
-                  { contentKey: "project.feat4.img.2", value: c(map, "project.feat4.img.2", "") },
-                ]} />
+              {/* 경력 기술서 보기 — 그리드 타일형 팝업 트리거 */}
+              <article className="pb-tile pb-career pb-a-career career-trigger" tabIndex={0} role="button">
+                <span className="pb-career-kicker">Career Profile</span>
+                <strong><EditableText k="projects.careerBtn" value={c(map, "projects.careerBtn", "경력 기술서 보기")} inline /></strong>
+                <span className="pb-career-arrow" aria-hidden="true">→</span>
               </article>
-            </div>
-            <div className="project-actions">
-              <button className="button career-trigger" type="button"><span className="btn-label"><EditableText k="projects.careerBtn" value={c(map, "projects.careerBtn", "경력 기술서 보기")} inline /></span></button>
             </div>
           </div>
         </section>
