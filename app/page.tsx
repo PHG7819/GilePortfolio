@@ -270,11 +270,22 @@ export default async function Page() {
             <h2><EditableText k="projects.title" value={c(map, "projects.title", "주요 프로젝트")} inline /></h2>
             <div className="project-bento">
               {/* 프로젝트 요약 */}
-              <div className="pb-tile pb-summary pb-a-summary">
+              <article
+                className="pb-tile pb-summary pb-a-summary pb-gallery-trigger"
+                tabIndex={0}
+                role="button"
+                data-gallery={galleryData([c(map, "project.summary.img.1", ""), c(map, "project.summary.img.2", "")])}
+                data-gallery-title={c(map, "projects.summary.name", "나이트크로우W")}
+              >
                 <p className="pb-eyebrow"><EditableText k="projects.summary.eyebrow" value={c(map, "projects.summary.eyebrow", "MMORPG · 개발 PM")} inline /></p>
                 <h3 className="pb-summary-title"><EditableText k="projects.summary.name" value={c(map, "projects.summary.name", "나이트크로우W")} inline /></h3>
                 <p className="pb-summary-desc"><EditableText k="projects.intro" value={c(map, "projects.intro", "매드엔진 프론티어 스튜디오에서 개발 중인 나이트크로우 후속작. 마일스톤 일정·크로스팀 커뮤니케이션·빌드 마감을 총괄하고, 반복 업무를 데이터·AI로 자동화해 스튜디오 안팎을 잇는 문서를 제작·배포합니다.")} multiline /></p>
-              </div>
+                <span className="pb-open-hint">이미지 보기</span>
+                <ProjectGalleryEdit slots={[
+                  { contentKey: "project.summary.img.1", value: c(map, "project.summary.img.1", "") },
+                  { contentKey: "project.summary.img.2", value: c(map, "project.summary.img.2", "") },
+                ]} />
+              </article>
 
               {/* AI 자동화 — 대표 성과(큰 타일) */}
               <article
@@ -345,7 +356,7 @@ export default async function Page() {
               <article className="pb-tile pb-career pb-a-career career-trigger" tabIndex={0} role="button">
                 <span className="pb-career-kicker">Career Profile</span>
                 <strong><EditableText k="projects.careerBtn" value={c(map, "projects.careerBtn", "경력 기술서 보기")} inline /></strong>
-                <span className="pb-career-arrow" aria-hidden="true">→</span>
+                <span className="pb-career-arrow" aria-hidden="true"><span>→</span></span>
               </article>
             </div>
           </div>
@@ -449,12 +460,14 @@ export default async function Page() {
         {/* Projects 성과 이미지 팝업 */}
         <section className="project-gallery-showcase" id="project-gallery-showcase" aria-hidden="true">
           <div className="project-gallery-panel">
-            <button className="project-gallery-close" type="button" aria-label="성과 이미지 닫기"><span className="btn-label">×</span></button>
-            <button className="project-gallery-nav project-gallery-prev" type="button" aria-label="이전 이미지"><span>‹</span></button>
-            <div className="project-gallery-frame" id="project-gallery-frame">
-              <span className="project-gallery-empty">편집 모드에서 이 성과에 맞는 이미지를 업로드하세요.</span>
+            <div className="project-gallery-frame">
+              <button className="project-gallery-close" type="button" aria-label="성과 이미지 닫기"><span className="btn-label">×</span></button>
+              <button className="project-gallery-nav project-gallery-prev" type="button" aria-label="이전 이미지"><span>‹</span></button>
+              <div className="project-gallery-media" id="project-gallery-media">
+                <span className="project-gallery-empty">편집 모드에서 이 성과에 맞는 이미지를 업로드하세요.</span>
+              </div>
+              <button className="project-gallery-nav project-gallery-next" type="button" aria-label="다음 이미지"><span>›</span></button>
             </div>
-            <button className="project-gallery-nav project-gallery-next" type="button" aria-label="다음 이미지"><span>›</span></button>
             <div className="project-gallery-meta">
               <h3 id="project-gallery-title">성과 이미지</h3>
               <span id="project-gallery-count">0 / 0</span>

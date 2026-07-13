@@ -263,7 +263,7 @@ export function PortfolioClient() {
 
     /* Projects 성과 이미지 팝업 */
     const projectGalleryShowcase = document.querySelector<HTMLElement>("#project-gallery-showcase");
-    const projectGalleryFrame = document.querySelector<HTMLElement>("#project-gallery-frame");
+    const projectGalleryFrame = document.querySelector<HTMLElement>("#project-gallery-media");
     const projectGalleryTitle = document.querySelector<HTMLElement>("#project-gallery-title");
     const projectGalleryCount = document.querySelector<HTMLElement>("#project-gallery-count");
     const projectGalleryClose = projectGalleryShowcase?.querySelector<HTMLElement>(".project-gallery-close") ?? null;
