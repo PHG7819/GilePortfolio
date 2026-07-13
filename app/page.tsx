@@ -29,12 +29,6 @@ function readOrder(map: ContentMap, list: string, def: string[]): string[] {
 }
 
 // ── 플레이스홀더 이미지(data URI) ─────────────────────────
-const IMG_WIDE =
-  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='300'%3E%3Crect width='100%25' height='100%25' fill='%23c2c5ca'/%3E%3Ctext x='50%25' y='50%25' fill='%237b8290' font-family='sans-serif' font-size='22' text-anchor='middle' dominant-baseline='middle'%3EPROJECT IMAGE%3C/text%3E%3C/svg%3E";
-const IMG_SQ =
-  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='160'%3E%3Crect width='100%25' height='100%25' fill='%23cacdd2'/%3E%3C/svg%3E";
-const IMG_FEAT =
-  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='52' height='52'%3E%3Crect width='100%25' height='100%25' rx='12' fill='%237d8997'/%3E%3C/svg%3E";
 const IMG_LEARN =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225'%3E%3Crect width='100%25' height='100%25' fill='%23c2c5ca'/%3E%3C/svg%3E";
 const IMG_C3 =
@@ -123,7 +117,6 @@ export default async function Page() {
   ];
 
   // 다른 반복 섹션들의 순서 목록
-  const featOrder = readOrder(map, "projects.feats", ["1", "2", "3", "4"]);
   const learnOrder = readOrder(map, "learning.cards", ["1", "2", "3", "4"]);
   const skillOrder = readOrder(map, "skills.cards", ["1", "2", "3", "4"]);
   const miniOrder = readOrder(map, "career.minis", ["1", "2", "3", "4"]);
@@ -254,32 +247,62 @@ export default async function Page() {
           <div className="wrap">
             <p className="section-kicker"><EditableText k="projects.kicker" value={c(map, "projects.kicker", "Projects")} inline /></p>
             <h2><EditableText k="projects.title" value={c(map, "projects.title", "주요 프로젝트")} inline /></h2>
-            <div className="project-layout">
-              <div className="project-collage">
-                <EditableImage k="project.img.wide" value={c(map, "project.img.wide", IMG_WIDE)} className="wide" alt="프로젝트 대표 이미지" />
-                <EditableImage k="project.img.1" value={c(map, "project.img.1", IMG_SQ)} alt="" />
-                <EditableImage k="project.img.2" value={c(map, "project.img.2", IMG_SQ)} alt="" />
-                <EditableImage k="project.img.3" value={c(map, "project.img.3", IMG_SQ)} alt="" />
-                <EditableImage k="project.img.4" value={c(map, "project.img.4", IMG_SQ)} alt="" />
+            <div className="project-bento">
+              {/* 프로젝트 요약 */}
+              <div className="pb-tile pb-summary pb-a-summary">
+                <p className="pb-eyebrow"><EditableText k="projects.summary.eyebrow" value={c(map, "projects.summary.eyebrow", "MMORPG · 개발 PM")} inline /></p>
+                <h3 className="pb-summary-title"><EditableText k="projects.summary.name" value={c(map, "projects.summary.name", "나이트크로우W")} inline /></h3>
+                <p className="pb-summary-desc"><EditableText k="projects.intro" value={c(map, "projects.intro", "매드엔진 프론티어 스튜디오에서 개발 중인 나이트크로우 후속작. 마일스톤 일정·크로스팀 커뮤니케이션·빌드 마감을 총괄하고, 반복 업무를 데이터·AI로 자동화해 스튜디오 안팎을 잇는 문서를 제작·배포합니다.")} multiline /></p>
               </div>
-              <div className="project-copy">
-                <p><EditableText k="projects.intro" value={c(map, "projects.intro", "매드엔진 프론티어 스튜디오에서 개발 중인 나이트크로우 후속작 '나이트크로우W' MMORPG의 개발 PM으로, 프로젝트 상황에 맞춘 마일스톤 전반의 일정·커뮤니케이션·빌드 마감을 담당합니다. 스튜디오의 개발 커뮤니케이션 허브 역할을 맡으면서, 반복 업무를 데이터·AI 기반 도구로 자동화하고 스튜디오 안팎을 잇는 문서를 제작·배포해 왔습니다.")} multiline /></p>
-                {featOrder.map((id, idx) => (
-                  <div className="feature-item" key={id}>
-                    <EditableImage k={`projects.feat${id}.icon`} value={c(map, `projects.feat${id}.icon`, IMG_FEAT)} className="feature-icon" alt="" />
-                    <div>
-                      <h3><EditableText k={`projects.feat${id}.title`} value={c(map, `projects.feat${id}.title`, ["스튜디오 개발 커뮤니케이션", "데이터 기반 현황 관리 · Jira 고도화", "AI 활용 업무 자동화 툴 개발", "빌드 발행 & 문서 제작·배포"][idx] ?? `역량 ${idx + 1}`)} inline /></h3>
-                      <p><EditableText k={`projects.feat${id}.desc`} value={c(map, `projects.feat${id}.desc`, [
-                        "마일스톤·일정 관리와 직군 간 조율을 담당하고, 개발 중 발생하는 버그·QA·일정 이슈를 시작부터 종결까지 추적·전파합니다. 빌드 테스트 가이드도 배포합니다.",
-                        "엑셀 대시보드를 Jira Cloud 네이티브로 이관하고 JQL 저장 필터·오토메이션으로 지라 사용을 고도화했습니다. 지라 상태 현황 문서와 일괄 연결 스크립트로 현황을 관리합니다.",
-                        "스튜디오 전용 AI 에이전트를 직접 개발했습니다. 회의록 에이전트(로컬 faster-whisper STT + 기획서 대조)로 개발 리뷰 회의록 정리 2~3시간→20분, 퍼포스 서밋 추출 기반 주간보고 자동화(7개 서브에이전트 오케스트레이션)로 2시간→20분 단축. 지라 다중 릴레이트 자동화, 마일스톤 빌드 플레이 테스트 웹 가이드(HTML)도 제작·배포.",
-                        "TeamCity로 데일리·마감·테스트·핫픽스 빌드를 발행·버전 관리하고, 플레이 가이드·AION2 라이브 요약본·퍼블리셔 피칭덱 등 안팎을 잇는 문서를 제작·배포합니다.",
-                      ][idx] ?? "이 역량에 대한 짧은 설명을 적으세요.")} multiline /></p>
-                      <DeleteItemButton list="projects.feats" id={id} label="역량 삭제" />
-                    </div>
-                  </div>
-                ))}
-                <AddItemButton list="projects.feats" label="+ 역량 추가" />
+
+              {/* AI 자동화 — 대표 성과(큰 타일) */}
+              <div className="pb-tile pb-feat pb-ai pb-a-ai">
+                <span className="pb-tag">AI</span>
+                <h3><EditableText k="projects.feat3.title" value={c(map, "projects.feat3.title", "AI 활용 업무 자동화 툴 개발")} inline /></h3>
+                <p><EditableText k="projects.feat3.desc" value={c(map, "projects.feat3.desc", "스튜디오 전용 AI 에이전트를 직접 개발했습니다. 회의록 에이전트(로컬 faster-whisper STT + 기획서 대조), 퍼포스 서밋 기반 주간보고 자동화(7개 서브에이전트 오케스트레이션), 지라 다중 릴레이트 자동화, 마일스톤 빌드 플레이 테스트 웹 가이드까지 제작·배포했습니다.")} multiline /></p>
+              </div>
+
+              {/* 성과 이미지 1 */}
+              <EditableImage k="project.img.1" value={c(map, "project.img.1", "")} className="pb-tile pb-img pb-a-img1" bg bgLabel={<span className="pb-img-label">＋ 성과 이미지</span>} />
+
+              {/* 지표 — 주간 보고 */}
+              <div className="pb-tile pb-metric pb-a-mWeek">
+                <strong className="pb-metric-value"><EditableText k="projects.metric1.value" value={c(map, "projects.metric1.value", "2h → 20min")} inline /></strong>
+                <span className="pb-metric-label"><EditableText k="projects.metric1.label" value={c(map, "projects.metric1.label", "주간 보고 자동화")} inline /></span>
+              </div>
+
+              {/* 지표 — 회의록 */}
+              <div className="pb-tile pb-metric pb-a-mMeet">
+                <strong className="pb-metric-value"><EditableText k="projects.metric2.value" value={c(map, "projects.metric2.value", "2~3h → 20min")} inline /></strong>
+                <span className="pb-metric-label"><EditableText k="projects.metric2.label" value={c(map, "projects.metric2.label", "회의록 정리 자동화")} inline /></span>
+              </div>
+
+              {/* 역량 — 개발 커뮤니케이션 */}
+              <div className="pb-tile pb-feat pb-a-feat1">
+                <h3><EditableText k="projects.feat1.title" value={c(map, "projects.feat1.title", "스튜디오 개발 커뮤니케이션")} inline /></h3>
+                <p><EditableText k="projects.feat1.desc" value={c(map, "projects.feat1.desc", "기획·프로그램·아트·QA·퍼블리셔 사이 논의를 Slack·Jira로 일원화하고, 버그·QA·일정 이슈를 시작~종결까지 추적·전파합니다.")} multiline /></p>
+              </div>
+
+              {/* 성과 이미지 2 */}
+              <EditableImage k="project.img.2" value={c(map, "project.img.2", "")} className="pb-tile pb-img pb-a-img2" bg bgLabel={<span className="pb-img-label">＋ 성과 이미지</span>} />
+
+              {/* 역량 — 데이터·Jira 고도화 */}
+              <div className="pb-tile pb-feat pb-a-feat2">
+                <h3><EditableText k="projects.feat2.title" value={c(map, "projects.feat2.title", "데이터 기반 현황 관리 · Jira 고도화")} inline /></h3>
+                <p><EditableText k="projects.feat2.desc" value={c(map, "projects.feat2.desc", "엑셀 대시보드를 Jira Cloud 네이티브로 이관하고, JQL 저장 필터·오토메이션으로 지라 사용을 고도화해 프로젝트 현황을 관리합니다.")} multiline /></p>
+              </div>
+
+              {/* 역량 — 빌드·문서 */}
+              <div className="pb-tile pb-feat pb-a-feat4">
+                <h3><EditableText k="projects.feat4.title" value={c(map, "projects.feat4.title", "빌드 발행 & 문서 제작·배포")} inline /></h3>
+                <p><EditableText k="projects.feat4.desc" value={c(map, "projects.feat4.desc", "TeamCity로 데일리·마감·테스트·핫픽스 빌드를 발행·버전 관리하고, 플레이 가이드·라이브 요약본·퍼블리셔 피칭덱 등 안팎을 잇는 문서를 제작·배포합니다.")} multiline /></p>
+              </div>
+
+              {/* 성과 이미지 3 */}
+              <EditableImage k="project.img.3" value={c(map, "project.img.3", "")} className="pb-tile pb-img pb-a-img3" bg bgLabel={<span className="pb-img-label">＋ 성과 이미지</span>} />
+
+              {/* 경력 기술서 보기 버튼 (팝업 트리거 유지) */}
+              <div className="pb-tile pb-career pb-a-career">
                 <button className="button career-trigger" type="button"><span className="btn-label"><EditableText k="projects.careerBtn" value={c(map, "projects.careerBtn", "경력 기술서 보기")} inline /></span></button>
               </div>
             </div>

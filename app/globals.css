@@ -735,29 +735,76 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
 .career-mini-card p { margin: 0; color: rgba(255,255,255,.74); font-size: 16px; line-height: 1.6; word-break: keep-all; }
 
 /* ===== Projects (paper) ===== */
-.project-layout {
+/* ===== Projects — Bento 성과 보드 ===== */
+.project-bento {
   display: grid;
-  grid-template-columns: minmax(0, .94fr) minmax(0, 1fr);
-  gap: 36px;
-  align-items: center;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-rows: repeat(4, minmax(92px, auto));
+  gap: 12px;
+  grid-template-areas:
+    "summary summary summary ai    ai    img1"
+    "summary summary summary ai    ai    mWeek"
+    "feat1   feat1   img2    ai    ai    mMeet"
+    "feat2   feat2   feat4   feat4 img3  career";
 }
-.project-collage { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
-.project-collage .wide { grid-column: 1 / -1; aspect-ratio: 16 / 7.5; object-fit: cover; border-radius: 12px; }
-.project-collage img { width: 100%; height: 100%; min-height: 92px; object-fit: cover; border-radius: 10px; }
-.project-copy {
-  padding: 28px 30px 26px;
+.pb-a-summary { grid-area: summary; }
+.pb-a-ai      { grid-area: ai; }
+.pb-a-img1    { grid-area: img1; }
+.pb-a-img2    { grid-area: img2; }
+.pb-a-img3    { grid-area: img3; }
+.pb-a-mWeek   { grid-area: mWeek; }
+.pb-a-mMeet   { grid-area: mMeet; }
+.pb-a-feat1   { grid-area: feat1; }
+.pb-a-feat2   { grid-area: feat2; }
+.pb-a-feat4   { grid-area: feat4; }
+.pb-a-career  { grid-area: career; }
+
+/* 공통 타일 = 라이트 글래스 */
+.pb-tile {
+  position: relative;
+  min-height: 0;
+  min-width: 0;
+  padding: 18px 20px;
   background: var(--glass-light-bg);
   -webkit-backdrop-filter: var(--glass-blur);
   backdrop-filter: var(--glass-blur);
   border: 1px solid var(--glass-light-border);
-  border-radius: var(--glass-radius);
+  border-radius: 18px;
   box-shadow: var(--glass-light-shadow);
+  overflow: hidden;
 }
-.project-copy > p { margin-bottom: 18px; color: #25303c; font-size: 15px; line-height: 1.55; font-weight: 400; word-break: keep-all; }
-.feature-item { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 14px; margin-bottom: 14px; }
-.feature-icon { width: 40px; height: 40px; object-fit: contain; }
-.feature-item h3 { margin-bottom: 3px; font-size: 20px; line-height: 1.15; font-weight: 700; }
-.feature-item p { margin: 0; color: #48515f; font-size: 14px; line-height: 1.5; word-break: keep-all; }
+
+/* 요약 타일 */
+.pb-summary { display: flex; flex-direction: column; justify-content: center; padding: 26px 30px; }
+.pb-eyebrow { margin-bottom: 10px; color: var(--accent); font-size: 12px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+.pb-summary-title { margin-bottom: 14px; color: #1b232e; font-size: 30px; line-height: 1.08; font-weight: 800; letter-spacing: -.01em; }
+.pb-summary-desc { color: #38414d; font-size: 14px; line-height: 1.6; font-weight: 400; word-break: keep-all; }
+
+/* 역량 타일 */
+.pb-feat { display: flex; flex-direction: column; gap: 8px; justify-content: center; }
+.pb-feat h3 { color: #1b232e; font-size: 16px; line-height: 1.2; font-weight: 700; word-break: keep-all; }
+.pb-feat p { margin: 0; color: #48515f; font-size: 12.5px; line-height: 1.5; font-weight: 400; word-break: keep-all; }
+.pb-ai { justify-content: flex-start; padding: 22px 24px; }
+.pb-ai h3 { font-size: 21px; line-height: 1.15; }
+.pb-ai p { font-size: 13.5px; line-height: 1.62; }
+.pb-tag { align-self: flex-start; margin-bottom: 12px; padding: 4px 13px; border-radius: 999px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 800; letter-spacing: .12em; }
+
+/* 지표 타일 */
+.pb-metric { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 6px; }
+.pb-metric-value { color: var(--accent); font-size: 23px; line-height: 1.02; font-weight: 800; letter-spacing: -.015em; word-break: keep-all; }
+.pb-metric-label { color: #56606d; font-size: 12px; font-weight: 600; letter-spacing: .01em; word-break: keep-all; }
+
+/* 이미지 타일 (bg 모드 — 클릭해서 편집) */
+.pb-img {
+  display: flex; align-items: center; justify-content: center;
+  min-height: 92px; padding: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,.5), rgba(222,225,231,.55));
+}
+.pb-img-label { color: #7b8290; font-size: 12px; font-weight: 700; letter-spacing: .04em; }
+
+/* 경력 기술서 버튼 타일 */
+.pb-career { display: flex; align-items: center; justify-content: center; text-align: center; }
+.pb-career .button { width: 100%; }
 
 /* ===== Learning (charcoal) ===== */
 .learning-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
@@ -892,13 +939,15 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
   .nav-links, .date-pill { display: none; }
   section { padding: 64px 20px; }
   #demo, #projects, #learning, #about, #skills { min-height: 0; display: block; }
-  .project-layout, .learning-grid, .profile, .stack-row, .skills-grid, .footer-grid { grid-template-columns: 1fr; }
+  .learning-grid, .profile, .stack-row, .skills-grid, .footer-grid { grid-template-columns: 1fr; }
   .highlight-accordion { min-height: auto; display: grid; grid-template-columns: 1fr; gap: 14px; }
   .highlight-panel, .highlight-panel:first-child, .highlight-accordion:hover .highlight-panel:hover { min-height: 360px; flex: none; }
   .highlight-panel-detail { position: relative; left: auto; right: auto; bottom: auto; margin-top: 80px; opacity: 1; transform: none; }
   .stack-list { flex-wrap: wrap; justify-content: flex-start; }
-  .project-collage { grid-template-columns: repeat(2, 1fr); }
-  .project-collage .wide { grid-column: 1 / -1; }
+  /* 벤토 → 2열 자동 배치로 스택(그리드 영역 해제) */
+  .project-bento { grid-template-columns: 1fr 1fr; grid-template-rows: none; grid-auto-rows: minmax(104px, auto); grid-template-areas: none; }
+  .pb-summary, .pb-ai, .pb-a-feat4 { grid-column: 1 / -1; }
+  .pb-img { min-height: 120px; }
   .portrait { min-height: 420px; }
   .profile-head { margin-bottom: 24px; }
   .contact-form { grid-template-columns: 1fr; max-width: 100%; }
