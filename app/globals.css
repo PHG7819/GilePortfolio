@@ -736,75 +736,218 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
 
 /* ===== Projects (paper) ===== */
 /* ===== Projects — Bento 성과 보드 ===== */
+#projects .wrap { width: min(1180px, 100%); }
 .project-bento {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
-  grid-template-rows: repeat(4, minmax(92px, auto));
+  grid-template-rows: repeat(3, minmax(112px, auto));
   gap: 12px;
   grid-template-areas:
-    "summary summary summary ai    ai    img1"
     "summary summary summary ai    ai    mWeek"
-    "feat1   feat1   img2    ai    ai    mMeet"
-    "feat2   feat2   feat4   feat4 img3  career";
+    "summary summary summary ai    ai    mMeet"
+    "feat1   feat1   feat2  feat2  feat4  feat4";
 }
 .pb-a-summary { grid-area: summary; }
 .pb-a-ai      { grid-area: ai; }
-.pb-a-img1    { grid-area: img1; }
-.pb-a-img2    { grid-area: img2; }
-.pb-a-img3    { grid-area: img3; }
 .pb-a-mWeek   { grid-area: mWeek; }
 .pb-a-mMeet   { grid-area: mMeet; }
 .pb-a-feat1   { grid-area: feat1; }
 .pb-a-feat2   { grid-area: feat2; }
 .pb-a-feat4   { grid-area: feat4; }
-.pb-a-career  { grid-area: career; }
 
-/* 공통 타일 = 라이트 글래스 */
+/* 공통 타일 = Liquid Glass */
 .pb-tile {
   position: relative;
   min-height: 0;
   min-width: 0;
   padding: 18px 20px;
+  color: #1b232e;
   background: var(--glass-light-bg);
   -webkit-backdrop-filter: var(--glass-blur);
   backdrop-filter: var(--glass-blur);
   border: 1px solid var(--glass-light-border);
-  border-radius: 18px;
+  border-radius: var(--glass-radius);
   box-shadow: var(--glass-light-shadow);
   overflow: hidden;
 }
+.pb-tile::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    radial-gradient(70% 80% at 10% 0%, rgba(255,255,255,.45), rgba(255,255,255,0) 58%),
+    linear-gradient(135deg, rgba(255,255,255,.34), rgba(255,255,255,0) 42%);
+}
+.pb-tile > * { position: relative; z-index: 1; }
+.pb-gallery-trigger {
+  cursor: pointer;
+  transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease, background .22s ease;
+}
+.pb-gallery-trigger:hover,
+.pb-gallery-trigger:focus-visible {
+  outline: 0;
+  transform: translateY(-3px);
+  border-color: rgba(255,255,255,.92);
+  box-shadow:
+    0 24px 58px rgba(20,22,40,.22),
+    inset 0 1px 0 rgba(255,255,255,1),
+    inset 0 0 0 1px rgba(255,255,255,.42);
+}
+.pb-open-hint {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  margin-top: auto;
+  padding: 4px 10px;
+  color: #6a7280;
+  border: 1px solid rgba(20,22,40,.08);
+  border-radius: 999px;
+  background: rgba(255,255,255,.38);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .02em;
+}
+.pb-gallery-trigger:hover .pb-open-hint,
+.pb-gallery-trigger:focus-visible .pb-open-hint { color: var(--accent); }
 
 /* 요약 타일 */
-.pb-summary { display: flex; flex-direction: column; justify-content: center; padding: 26px 30px; }
+.pb-summary { display: flex; flex-direction: column; justify-content: center; padding: 24px 30px; }
 .pb-eyebrow { margin-bottom: 10px; color: var(--accent); font-size: 12px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
 .pb-summary-title { margin-bottom: 14px; color: #1b232e; font-size: 30px; line-height: 1.08; font-weight: 800; letter-spacing: -.01em; }
-.pb-summary-desc { color: #38414d; font-size: 14px; line-height: 1.6; font-weight: 400; word-break: keep-all; }
+.pb-summary-desc { margin-bottom: 0; color: #38414d; font-size: 13.5px; line-height: 1.56; font-weight: 400; word-break: keep-all; }
 
 /* 역량 타일 */
 .pb-feat { display: flex; flex-direction: column; gap: 8px; justify-content: center; }
-.pb-feat h3 { color: #1b232e; font-size: 16px; line-height: 1.2; font-weight: 700; word-break: keep-all; }
-.pb-feat p { margin: 0; color: #48515f; font-size: 12.5px; line-height: 1.5; font-weight: 400; word-break: keep-all; }
+.pb-feat h3 { margin-bottom: 0; color: #1b232e; font-size: 16px; line-height: 1.2; font-weight: 700; word-break: keep-all; }
+.pb-feat p { margin: 0; color: #48515f; font-size: 12.5px; line-height: 1.48; font-weight: 400; word-break: keep-all; }
 .pb-ai { justify-content: flex-start; padding: 22px 24px; }
 .pb-ai h3 { font-size: 21px; line-height: 1.15; }
-.pb-ai p { font-size: 13.5px; line-height: 1.62; }
+.pb-ai p { font-size: 13.2px; line-height: 1.58; }
 .pb-tag { align-self: flex-start; margin-bottom: 12px; padding: 4px 13px; border-radius: 999px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 800; letter-spacing: .12em; }
 
 /* 지표 타일 */
-.pb-metric { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 6px; }
-.pb-metric-value { color: var(--accent); font-size: 23px; line-height: 1.02; font-weight: 800; letter-spacing: -.015em; word-break: keep-all; }
-.pb-metric-label { color: #56606d; font-size: 12px; font-weight: 600; letter-spacing: .01em; word-break: keep-all; }
-
-/* 이미지 타일 (bg 모드 — 클릭해서 편집) */
-.pb-img {
-  display: flex; align-items: center; justify-content: center;
-  min-height: 92px; padding: 0;
-  background: linear-gradient(135deg, rgba(255,255,255,.5), rgba(222,225,231,.55));
+.pb-metric { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 8px; }
+.pb-metric-value {
+  color: var(--accent);
+  font-size: clamp(20px, 1.8vw, 25px);
+  line-height: 1.02;
+  font-weight: 800;
+  letter-spacing: -.02em;
+  white-space: nowrap;
+  word-break: keep-all;
 }
-.pb-img-label { color: #7b8290; font-size: 12px; font-weight: 700; letter-spacing: .04em; }
+.pb-metric-label { color: #56606d; font-size: 12px; font-weight: 600; letter-spacing: .01em; white-space: nowrap; word-break: keep-all; }
 
-/* 경력 기술서 버튼 타일 */
-.pb-career { display: flex; align-items: center; justify-content: center; text-align: center; }
-.pb-career .button { width: 100%; }
+/* 편집 모드 전용 성과 이미지 업로드 슬롯 */
+.pb-gallery-edit { display: none; }
+html[data-edit="1"] .pb-gallery-edit {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 10px;
+}
+.pb-gallery-edit-slot {
+  min-height: 58px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  color: #6a7280;
+  background: linear-gradient(135deg, rgba(255,255,255,.54), rgba(222,225,231,.58));
+  border: 1px dashed rgba(20,22,40,.22);
+  border-radius: 14px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.project-actions { display: flex; justify-content: center; margin-top: 18px; }
+.project-actions .button { min-width: 210px; white-space: nowrap; }
+.project-actions .button .btn-label { white-space: nowrap; }
+
+/* Projects 성과 이미지 팝업 */
+.project-gallery-showcase {
+  position: fixed;
+  inset: 0;
+  z-index: 1300;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(6, 6, 8, .72);
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+}
+.project-gallery-showcase.is-open { display: flex; }
+.project-gallery-panel {
+  position: relative;
+  width: min(1180px, 94vw);
+  max-height: 90vh;
+  padding: 26px 28px 22px;
+  color: #e8e8ea;
+  background: var(--glass-dark-bg);
+  -webkit-backdrop-filter: blur(30px) saturate(180%);
+  backdrop-filter: blur(30px) saturate(180%);
+  border: 1px solid var(--glass-dark-border);
+  border-radius: 28px;
+  box-shadow: var(--glass-dark-shadow);
+}
+.project-gallery-frame {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: min(62vh, 680px);
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 20px;
+  background: rgba(0,0,0,.28);
+}
+.project-gallery-frame img { width: 100%; height: 100%; max-height: min(62vh, 680px); object-fit: contain; }
+.project-gallery-empty { color: rgba(255,255,255,.54); font-size: 15px; font-weight: 600; }
+.project-gallery-close {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  z-index: 4;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: rgba(255,255,255,.12);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  backdrop-filter: blur(12px) saturate(160%);
+  border: 1px solid rgba(255,255,255,.28);
+  border-radius: 50%;
+  font-size: 22px;
+  cursor: pointer;
+}
+.project-gallery-nav {
+  position: absolute;
+  top: 50%;
+  z-index: 4;
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: rgba(255,255,255,.12);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  backdrop-filter: blur(12px) saturate(160%);
+  border: 1px solid rgba(255,255,255,.28);
+  border-radius: 50%;
+  box-shadow: 0 12px 28px rgba(0,0,0,.3);
+  cursor: pointer;
+  transform: translateY(-50%);
+}
+.project-gallery-nav span { font-size: 34px; line-height: 1; transform: translateY(-2px); }
+.project-gallery-prev { left: 6px; }
+.project-gallery-next { right: 6px; }
+.project-gallery-nav:disabled { opacity: .28; cursor: default; }
+.project-gallery-meta { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 14px; }
+.project-gallery-meta h3 { margin: 0; color: #fff; font-size: 18px; line-height: 1.3; font-weight: 800; }
+.project-gallery-meta span { color: rgba(255,255,255,.62); font-size: 13px; font-weight: 700; }
 
 /* ===== Learning (charcoal) ===== */
 .learning-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
@@ -947,7 +1090,11 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
   /* 벤토 → 2열 자동 배치로 스택(그리드 영역 해제) */
   .project-bento { grid-template-columns: 1fr 1fr; grid-template-rows: none; grid-auto-rows: minmax(104px, auto); grid-template-areas: none; }
   .pb-summary, .pb-ai, .pb-a-feat4 { grid-column: 1 / -1; }
-  .pb-img { min-height: 120px; }
+  .project-gallery-panel { width: calc(100vw - 28px); padding: 22px 18px 18px; }
+  .project-gallery-nav { width: 40px; height: 40px; }
+  .project-gallery-prev { left: 0; }
+  .project-gallery-next { right: 0; }
+  .project-gallery-frame { min-height: 48vh; }
   .portrait { min-height: 420px; }
   .profile-head { margin-bottom: 24px; }
   .contact-form { grid-template-columns: 1fr; max-width: 100%; }
@@ -1127,6 +1274,7 @@ html[data-edit="1"] .highlight-panel { cursor: pointer; }
 .button:focus-visible::after,
 .reel-close:hover .btn-label,
 .highlight-edit-close:hover .btn-label,
+.project-gallery-close:hover .btn-label,
 .contact-form button:hover .btn-label,
 .video-card:hover .video-meta strong,
 .video-card:focus-visible .video-meta strong,

@@ -132,7 +132,7 @@ export function PortfolioClient() {
     function onWheel(event: WheelEvent) {
       if (isEditing()) return; // 편집 중엔 일반 스크롤 허용
       if (!snapSections.length) return;
-      if ((event.target as Element)?.closest(".reel-showcase, .career-showcase")) return;
+      if ((event.target as Element)?.closest(".reel-showcase, .career-showcase, .project-gallery-showcase")) return;
       if (Math.abs(event.deltaY) < 10) { event.preventDefault(); return; }
       wheelBuffer += event.deltaY;
       const rawSteps = Math.trunc(wheelBuffer / wheelStepSize);
@@ -261,6 +261,88 @@ export function PortfolioClient() {
       return { modal, closeBtn, onClose, onBackdrop };
     });
 
+    /* Projects 성과 이미지 팝업 */
+    const projectGalleryShowcase = document.querySelector<HTMLElement>("#project-gallery-showcase");
+    const projectGalleryFrame = document.querySelector<HTMLElement>("#project-gallery-frame");
+    const projectGalleryTitle = document.querySelector<HTMLElement>("#project-gallery-title");
+    const projectGalleryCount = document.querySelector<HTMLElement>("#project-gallery-count");
+    const projectGalleryClose = projectGalleryShowcase?.querySelector<HTMLElement>(".project-gallery-close") ?? null;
+    const projectGalleryPrev = projectGalleryShowcase?.querySelector<HTMLElement>(".project-gallery-prev") ?? null;
+    const projectGalleryNext = projectGalleryShowcase?.querySelector<HTMLElement>(".project-gallery-next") ?? null;
+    const projectGalleryTriggers = Array.from(document.querySelectorAll<HTMLElement>(".pb-gallery-trigger"));
+    let projectGalleryImages: string[] = [];
+    let projectGalleryIndex = 0;
+
+    function parseProjectGallery(trigger: HTMLElement) {
+      try {
+        const parsed = JSON.parse(trigger.dataset.gallery || "[]");
+        return Array.isArray(parsed) ? parsed.map((v) => String(v)).filter(Boolean) : [];
+      } catch {
+        return [];
+      }
+    }
+    function renderProjectGallery() {
+      if (!projectGalleryFrame || !projectGalleryCount) return;
+      const total = projectGalleryImages.length;
+      projectGalleryCount.textContent = total ? `${projectGalleryIndex + 1} / ${total}` : "0 / 0";
+      projectGalleryPrev?.toggleAttribute("disabled", total <= 1);
+      projectGalleryNext?.toggleAttribute("disabled", total <= 1);
+      projectGalleryFrame.replaceChildren();
+      if (!total) {
+        const empty = document.createElement("span");
+        empty.className = "project-gallery-empty";
+        empty.textContent = "편집 모드에서 이 성과에 맞는 이미지를 업로드하세요.";
+        projectGalleryFrame.appendChild(empty);
+        return;
+      }
+      const img = document.createElement("img");
+      img.src = projectGalleryImages[projectGalleryIndex];
+      img.alt = `성과 이미지 ${projectGalleryIndex + 1}`;
+      projectGalleryFrame.appendChild(img);
+    }
+    function openProjectGallery(trigger: HTMLElement) {
+      if (isEditing() || !projectGalleryShowcase) return;
+      projectGalleryImages = parseProjectGallery(trigger);
+      projectGalleryIndex = 0;
+      if (projectGalleryTitle) projectGalleryTitle.textContent = trigger.dataset.galleryTitle || "성과 이미지";
+      renderProjectGallery();
+      projectGalleryShowcase.classList.add("is-open");
+      projectGalleryShowcase.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      projectGalleryClose?.focus();
+    }
+    function closeProjectGallery() {
+      if (!projectGalleryShowcase?.classList.contains("is-open")) return;
+      projectGalleryShowcase.classList.remove("is-open");
+      projectGalleryShowcase.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+    function stepProjectGallery(delta: number) {
+      const total = projectGalleryImages.length;
+      if (total <= 1) return;
+      projectGalleryIndex = (projectGalleryIndex + delta + total) % total;
+      renderProjectGallery();
+    }
+    const projectGalleryTriggerHandlers = projectGalleryTriggers.map((trigger) => {
+      const onClick = () => openProjectGallery(trigger);
+      const onKey = (event: KeyboardEvent) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          openProjectGallery(trigger);
+        }
+      };
+      trigger.addEventListener("click", onClick);
+      trigger.addEventListener("keydown", onKey as EventListener);
+      return { trigger, onClick, onKey };
+    });
+    const onProjectGalleryBackdrop = (event: MouseEvent) => { if (event.target === projectGalleryShowcase) closeProjectGallery(); };
+    const onProjectGalleryPrev = () => stepProjectGallery(-1);
+    const onProjectGalleryNext = () => stepProjectGallery(1);
+    projectGalleryShowcase?.addEventListener("click", onProjectGalleryBackdrop);
+    projectGalleryClose?.addEventListener("click", closeProjectGallery);
+    projectGalleryPrev?.addEventListener("click", onProjectGalleryPrev);
+    projectGalleryNext?.addEventListener("click", onProjectGalleryNext);
+
     /* 경력 팝업 */
     const careerShowcase = document.querySelector<HTMLElement>("#career-showcase");
     const careerTrigger = document.querySelector<HTMLElement>(".career-trigger");
@@ -317,6 +399,7 @@ export function PortfolioClient() {
       if (event.key === "Escape") {
         if (reelShowcase!.classList.contains("is-open")) closeReel();
         if (careerShowcase?.classList.contains("is-open")) closeCareer();
+        if (projectGalleryShowcase?.classList.contains("is-open")) closeProjectGallery();
         closeAllHighlightEdit();
       }
     }
@@ -381,6 +464,14 @@ export function PortfolioClient() {
       careerTrigger?.removeEventListener("click", openCareer);
       careerClose?.removeEventListener("click", closeCareer);
       careerShowcase?.removeEventListener("animationend", onCareerAnimEnd);
+      projectGalleryTriggerHandlers.forEach(({ trigger, onClick, onKey }) => {
+        trigger.removeEventListener("click", onClick);
+        trigger.removeEventListener("keydown", onKey as EventListener);
+      });
+      projectGalleryShowcase?.removeEventListener("click", onProjectGalleryBackdrop);
+      projectGalleryClose?.removeEventListener("click", closeProjectGallery);
+      projectGalleryPrev?.removeEventListener("click", onProjectGalleryPrev);
+      projectGalleryNext?.removeEventListener("click", onProjectGalleryNext);
       cardHandlers.forEach(({ card, ch, kh }) => {
         card.removeEventListener("click", ch);
         card.removeEventListener("keydown", kh as EventListener);

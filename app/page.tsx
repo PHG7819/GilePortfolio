@@ -28,6 +28,27 @@ function readOrder(map: ContentMap, list: string, def: string[]): string[] {
   return def;
 }
 
+function galleryData(images: string[]) {
+  return JSON.stringify(images.filter(Boolean));
+}
+
+function ProjectGalleryEdit({ slots }: { slots: { contentKey: string; value: string }[] }) {
+  return (
+    <div className="pb-gallery-edit" aria-label="성과 이미지 편집">
+      {slots.map((slot, index) => (
+        <EditableImage
+          key={slot.contentKey}
+          k={slot.contentKey}
+          value={slot.value}
+          className="pb-gallery-edit-slot"
+          bg
+          bgLabel={<span>＋ 이미지 {index + 1}</span>}
+        />
+      ))}
+    </div>
+  );
+}
+
 // ── 플레이스홀더 이미지(data URI) ─────────────────────────
 const IMG_LEARN =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225'%3E%3Crect width='100%25' height='100%25' fill='%23c2c5ca'/%3E%3C/svg%3E";
@@ -256,14 +277,23 @@ export default async function Page() {
               </div>
 
               {/* AI 자동화 — 대표 성과(큰 타일) */}
-              <div className="pb-tile pb-feat pb-ai pb-a-ai">
+              <article
+                className="pb-tile pb-feat pb-ai pb-a-ai pb-gallery-trigger"
+                tabIndex={0}
+                role="button"
+                data-gallery={galleryData([c(map, "project.img.1", ""), c(map, "project.img.2", ""), c(map, "project.img.3", "")])}
+                data-gallery-title={c(map, "projects.feat3.title", "AI 활용 업무 자동화 툴 개발")}
+              >
                 <span className="pb-tag">AI</span>
                 <h3><EditableText k="projects.feat3.title" value={c(map, "projects.feat3.title", "AI 활용 업무 자동화 툴 개발")} inline /></h3>
                 <p><EditableText k="projects.feat3.desc" value={c(map, "projects.feat3.desc", "스튜디오 전용 AI 에이전트를 직접 개발했습니다. 회의록 에이전트(로컬 faster-whisper STT + 기획서 대조), 퍼포스 서밋 기반 주간보고 자동화(7개 서브에이전트 오케스트레이션), 지라 다중 릴레이트 자동화, 마일스톤 빌드 플레이 테스트 웹 가이드까지 제작·배포했습니다.")} multiline /></p>
-              </div>
-
-              {/* 성과 이미지 1 */}
-              <EditableImage k="project.img.1" value={c(map, "project.img.1", "")} className="pb-tile pb-img pb-a-img1" bg bgLabel={<span className="pb-img-label">＋ 성과 이미지</span>} />
+                <span className="pb-open-hint">이미지 보기</span>
+                <ProjectGalleryEdit slots={[
+                  { contentKey: "project.img.1", value: c(map, "project.img.1", "") },
+                  { contentKey: "project.img.2", value: c(map, "project.img.2", "") },
+                  { contentKey: "project.img.3", value: c(map, "project.img.3", "") },
+                ]} />
+              </article>
 
               {/* 지표 — 주간 보고 */}
               <div className="pb-tile pb-metric pb-a-mWeek">
@@ -278,33 +308,58 @@ export default async function Page() {
               </div>
 
               {/* 역량 — 개발 커뮤니케이션 */}
-              <div className="pb-tile pb-feat pb-a-feat1">
+              <article
+                className="pb-tile pb-feat pb-a-feat1 pb-gallery-trigger"
+                tabIndex={0}
+                role="button"
+                data-gallery={galleryData([c(map, "project.feat1.img.1", ""), c(map, "project.feat1.img.2", "")])}
+                data-gallery-title={c(map, "projects.feat1.title", "스튜디오 개발 커뮤니케이션")}
+              >
                 <h3><EditableText k="projects.feat1.title" value={c(map, "projects.feat1.title", "스튜디오 개발 커뮤니케이션")} inline /></h3>
                 <p><EditableText k="projects.feat1.desc" value={c(map, "projects.feat1.desc", "기획·프로그램·아트·QA·퍼블리셔 사이 논의를 Slack·Jira로 일원화하고, 버그·QA·일정 이슈를 시작~종결까지 추적·전파합니다.")} multiline /></p>
-              </div>
-
-              {/* 성과 이미지 2 */}
-              <EditableImage k="project.img.2" value={c(map, "project.img.2", "")} className="pb-tile pb-img pb-a-img2" bg bgLabel={<span className="pb-img-label">＋ 성과 이미지</span>} />
+                <span className="pb-open-hint">이미지 보기</span>
+                <ProjectGalleryEdit slots={[
+                  { contentKey: "project.feat1.img.1", value: c(map, "project.feat1.img.1", "") },
+                  { contentKey: "project.feat1.img.2", value: c(map, "project.feat1.img.2", "") },
+                ]} />
+              </article>
 
               {/* 역량 — 데이터·Jira 고도화 */}
-              <div className="pb-tile pb-feat pb-a-feat2">
+              <article
+                className="pb-tile pb-feat pb-a-feat2 pb-gallery-trigger"
+                tabIndex={0}
+                role="button"
+                data-gallery={galleryData([c(map, "project.feat2.img.1", ""), c(map, "project.feat2.img.2", "")])}
+                data-gallery-title={c(map, "projects.feat2.title", "데이터 기반 현황 관리 · Jira 고도화")}
+              >
                 <h3><EditableText k="projects.feat2.title" value={c(map, "projects.feat2.title", "데이터 기반 현황 관리 · Jira 고도화")} inline /></h3>
                 <p><EditableText k="projects.feat2.desc" value={c(map, "projects.feat2.desc", "엑셀 대시보드를 Jira Cloud 네이티브로 이관하고, JQL 저장 필터·오토메이션으로 지라 사용을 고도화해 프로젝트 현황을 관리합니다.")} multiline /></p>
-              </div>
+                <span className="pb-open-hint">이미지 보기</span>
+                <ProjectGalleryEdit slots={[
+                  { contentKey: "project.feat2.img.1", value: c(map, "project.feat2.img.1", "") },
+                  { contentKey: "project.feat2.img.2", value: c(map, "project.feat2.img.2", "") },
+                ]} />
+              </article>
 
               {/* 역량 — 빌드·문서 */}
-              <div className="pb-tile pb-feat pb-a-feat4">
+              <article
+                className="pb-tile pb-feat pb-a-feat4 pb-gallery-trigger"
+                tabIndex={0}
+                role="button"
+                data-gallery={galleryData([c(map, "project.feat4.img.1", ""), c(map, "project.feat4.img.2", "")])}
+                data-gallery-title={c(map, "projects.feat4.title", "빌드 발행 & 문서 제작·배포")}
+              >
                 <h3><EditableText k="projects.feat4.title" value={c(map, "projects.feat4.title", "빌드 발행 & 문서 제작·배포")} inline /></h3>
                 <p><EditableText k="projects.feat4.desc" value={c(map, "projects.feat4.desc", "TeamCity로 데일리·마감·테스트·핫픽스 빌드를 발행·버전 관리하고, 플레이 가이드·라이브 요약본·퍼블리셔 피칭덱 등 안팎을 잇는 문서를 제작·배포합니다.")} multiline /></p>
-              </div>
-
-              {/* 성과 이미지 3 */}
-              <EditableImage k="project.img.3" value={c(map, "project.img.3", "")} className="pb-tile pb-img pb-a-img3" bg bgLabel={<span className="pb-img-label">＋ 성과 이미지</span>} />
-
-              {/* 경력 기술서 보기 버튼 (팝업 트리거 유지) */}
-              <div className="pb-tile pb-career pb-a-career">
-                <button className="button career-trigger" type="button"><span className="btn-label"><EditableText k="projects.careerBtn" value={c(map, "projects.careerBtn", "경력 기술서 보기")} inline /></span></button>
-              </div>
+                <span className="pb-open-hint">이미지 보기</span>
+                <ProjectGalleryEdit slots={[
+                  { contentKey: "project.feat4.img.1", value: c(map, "project.feat4.img.1", "") },
+                  { contentKey: "project.feat4.img.2", value: c(map, "project.feat4.img.2", "") },
+                ]} />
+              </article>
+            </div>
+            <div className="project-actions">
+              <button className="button career-trigger" type="button"><span className="btn-label"><EditableText k="projects.careerBtn" value={c(map, "projects.careerBtn", "경력 기술서 보기")} inline /></span></button>
             </div>
           </div>
         </section>
@@ -400,6 +455,22 @@ export default async function Page() {
                   ))}
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Projects 성과 이미지 팝업 */}
+        <section className="project-gallery-showcase" id="project-gallery-showcase" aria-hidden="true">
+          <div className="project-gallery-panel">
+            <button className="project-gallery-close" type="button" aria-label="성과 이미지 닫기"><span className="btn-label">×</span></button>
+            <button className="project-gallery-nav project-gallery-prev" type="button" aria-label="이전 이미지"><span>‹</span></button>
+            <div className="project-gallery-frame" id="project-gallery-frame">
+              <span className="project-gallery-empty">편집 모드에서 이 성과에 맞는 이미지를 업로드하세요.</span>
+            </div>
+            <button className="project-gallery-nav project-gallery-next" type="button" aria-label="다음 이미지"><span>›</span></button>
+            <div className="project-gallery-meta">
+              <h3 id="project-gallery-title">성과 이미지</h3>
+              <span id="project-gallery-count">0 / 0</span>
             </div>
           </div>
         </section>
