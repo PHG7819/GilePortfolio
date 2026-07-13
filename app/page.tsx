@@ -469,7 +469,6 @@ export default async function Page() {
               <button className="project-gallery-nav project-gallery-next" type="button" aria-label="다음 이미지"><span>›</span></button>
             </div>
             <div className="project-gallery-meta">
-              <h3 id="project-gallery-title">성과 이미지</h3>
               <span id="project-gallery-count">0 / 0</span>
             </div>
           </div>

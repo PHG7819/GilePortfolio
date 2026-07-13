@@ -264,7 +264,6 @@ export function PortfolioClient() {
     /* Projects 성과 이미지 팝업 */
     const projectGalleryShowcase = document.querySelector<HTMLElement>("#project-gallery-showcase");
     const projectGalleryFrame = document.querySelector<HTMLElement>("#project-gallery-media");
-    const projectGalleryTitle = document.querySelector<HTMLElement>("#project-gallery-title");
     const projectGalleryCount = document.querySelector<HTMLElement>("#project-gallery-count");
     const projectGalleryClose = projectGalleryShowcase?.querySelector<HTMLElement>(".project-gallery-close") ?? null;
     const projectGalleryPrev = projectGalleryShowcase?.querySelector<HTMLElement>(".project-gallery-prev") ?? null;
@@ -304,7 +303,6 @@ export function PortfolioClient() {
       if (isEditing() || !projectGalleryShowcase) return;
       projectGalleryImages = parseProjectGallery(trigger);
       projectGalleryIndex = 0;
-      if (projectGalleryTitle) projectGalleryTitle.textContent = trigger.dataset.galleryTitle || "성과 이미지";
       renderProjectGallery();
       projectGalleryShowcase.classList.add("is-open");
       projectGalleryShowcase.setAttribute("aria-hidden", "false");
