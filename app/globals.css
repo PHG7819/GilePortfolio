@@ -1191,7 +1191,7 @@ html[data-edit="1"] .pb-gallery-edit {
 .learning-card-control:focus-visible { color: var(--accent-2); border-color: rgba(255,255,255,.38); background: rgba(255,255,255,.13); outline: 0; }
 .learning-orbit-nav {
   position: absolute;
-  left: calc(50% + 382px);
+  left: calc(50% + 320px);
   top: 50%;
   z-index: 3;
   width: 340px;
@@ -1228,9 +1228,9 @@ html[data-edit="1"] .pb-gallery-edit {
   pointer-events: auto;
   position: absolute;
   top: 50%;
-  right: 31px;
-  width: 54px;
-  height: 54px;
+  right: -6px;
+  width: 72px;
+  height: 72px;
   display: grid;
   place-items: center;
   color: rgba(255,255,255,.56);
@@ -1244,8 +1244,6 @@ html[data-edit="1"] .pb-gallery-edit {
   transition: transform .38s cubic-bezier(.2,.8,.2,1), opacity .32s ease, color .22s ease, background .22s ease, border-color .22s ease;
 }
 .learning-orbit-step.is-active {
-  width: 72px;
-  height: 72px;
   color: #fff;
   background: linear-gradient(135deg, rgba(255,255,255,.92), rgba(255,255,255,.72));
   border-color: rgba(255,255,255,.95);

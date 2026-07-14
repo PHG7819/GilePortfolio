@@ -374,7 +374,7 @@ export function PortfolioClient() {
         const y = -Math.sin(rad) * radius;
         step.classList.toggle("is-active", isActive);
         step.setAttribute("aria-current", isActive ? "true" : "false");
-        step.style.transform = `translate(${Math.round(x)}px, calc(-50% + ${Math.round(y)}px)) scale(${isActive ? 1 : .82})`;
+        step.style.transform = `translate(${Math.round(x)}px, calc(-50% + ${Math.round(y)}px)) scale(${isActive ? 1 : .75})`;
         step.style.opacity = String(isActive ? 1 : visible ? .5 : 0);
         step.style.pointerEvents = visible ? "auto" : "none";
         step.style.zIndex = String(isActive ? 10 : 5);
