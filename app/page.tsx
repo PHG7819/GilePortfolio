@@ -280,7 +280,7 @@ export default async function Page() {
                 <p className="pb-eyebrow"><EditableText k="projects.summary.eyebrow" value={c(map, "projects.summary.eyebrow", "MMORPG · 개발 PM")} inline /></p>
                 <h3 className="pb-summary-title"><EditableText k="projects.summary.name" value={c(map, "projects.summary.name", "나이트크로우W")} inline /></h3>
                 <p className="pb-summary-desc"><EditableText k="projects.intro" value={c(map, "projects.intro", "매드엔진 프론티어 스튜디오에서 개발 중인 나이트크로우 후속작. 마일스톤 일정·크로스팀 커뮤니케이션·빌드 마감을 총괄하고, 반복 업무를 데이터·AI로 자동화해 스튜디오 안팎을 잇는 문서를 제작·배포합니다.")} multiline /></p>
-                <span className="pb-open-hint">이미지 보기</span>
+                <span className="pb-open-hint">보기</span>
                 <ProjectGalleryEdit slots={[
                   { contentKey: "project.summary.img.1", value: c(map, "project.summary.img.1", "") },
                   { contentKey: "project.summary.img.2", value: c(map, "project.summary.img.2", "") },
@@ -298,7 +298,7 @@ export default async function Page() {
                 <span className="pb-tag">AI</span>
                 <h3><EditableText k="projects.feat3.title" value={c(map, "projects.feat3.title", "AI 활용 업무 자동화 툴 개발")} inline /></h3>
                 <p><EditableText k="projects.feat3.desc" value={c(map, "projects.feat3.desc", "스튜디오 전용 AI 에이전트를 직접 개발했습니다. 회의록 에이전트(로컬 faster-whisper STT + 기획서 대조), 퍼포스 서밋 기반 주간보고 자동화(7개 서브에이전트 오케스트레이션), 지라 다중 릴레이트 자동화, 마일스톤 빌드 플레이 테스트 웹 가이드까지 제작·배포했습니다.")} multiline /></p>
-                <span className="pb-open-hint">이미지 보기</span>
+                <span className="pb-open-hint">보기</span>
                 <ProjectGalleryEdit slots={[
                   { contentKey: "project.img.1", value: c(map, "project.img.1", "") },
                   { contentKey: "project.img.2", value: c(map, "project.img.2", "") },
@@ -328,7 +328,7 @@ export default async function Page() {
               >
                 <h3><EditableText k="projects.feat1.title" value={c(map, "projects.feat1.title", "스튜디오 개발 커뮤니케이션")} inline /></h3>
                 <p><EditableText k="projects.feat1.desc" value={c(map, "projects.feat1.desc", "기획·프로그램·아트·QA·퍼블리셔 사이 논의를 Slack·Jira로 일원화하고, 버그·QA·일정 이슈를 시작~종결까지 추적·전파합니다.")} multiline /></p>
-                <span className="pb-open-hint">이미지 보기</span>
+                <span className="pb-open-hint">보기</span>
                 <ProjectGalleryEdit slots={[
                   { contentKey: "project.feat1.img.1", value: c(map, "project.feat1.img.1", "") },
                   { contentKey: "project.feat1.img.2", value: c(map, "project.feat1.img.2", "") },
@@ -345,7 +345,7 @@ export default async function Page() {
               >
                 <h3><EditableText k="projects.feat2.title" value={c(map, "projects.feat2.title", "데이터 기반 현황 관리 · Jira 고도화")} inline /></h3>
                 <p><EditableText k="projects.feat2.desc" value={c(map, "projects.feat2.desc", "엑셀 대시보드를 Jira Cloud 네이티브로 이관하고, JQL 저장 필터·오토메이션으로 지라 사용을 고도화해 프로젝트 현황을 관리합니다.")} multiline /></p>
-                <span className="pb-open-hint">이미지 보기</span>
+                <span className="pb-open-hint">보기</span>
                 <ProjectGalleryEdit slots={[
                   { contentKey: "project.feat2.img.1", value: c(map, "project.feat2.img.1", "") },
                   { contentKey: "project.feat2.img.2", value: c(map, "project.feat2.img.2", "") },

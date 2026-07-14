@@ -621,9 +621,9 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
   justify-content: center;
   padding: 0 22px 96px;
   overflow-y: auto;
-  background: rgba(10, 10, 12, .88);
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
+  background: rgba(236, 236, 239, .72);
+  backdrop-filter: blur(8px) saturate(150%);
+  -webkit-backdrop-filter: blur(8px) saturate(150%);
   color: var(--ink);
   opacity: 0;
   pointer-events: none;
@@ -643,13 +643,13 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
   min-height: calc(100vh - 64px);
   padding: 44px 44px 96px;
   overflow: visible;
-  color: #e8e8ea;
-  background: linear-gradient(160deg, rgba(32,32,38,.72), rgba(16,16,20,.62));
-  -webkit-backdrop-filter: blur(30px) saturate(170%);
-  backdrop-filter: blur(30px) saturate(170%);
-  border: 1px solid rgba(255,255,255,.16);
+  color: var(--ink);
+  background: var(--glass-light-bg);
+  -webkit-backdrop-filter: blur(30px) saturate(180%);
+  backdrop-filter: blur(30px) saturate(180%);
+  border: 1px solid var(--glass-light-border);
   border-radius: 26px;
-  box-shadow: 0 28px 80px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.16);
+  box-shadow: var(--glass-light-shadow);
   transform: translateY(18px);
   transition: transform .28s ease;
   flex: 0 0 auto;
@@ -663,20 +663,20 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
   min-width: 150px; height: 44px;
   margin: 0 0 10px 18px; padding: 0 22px;
   border-radius: 999px;
-  color: #fff;
-  background: linear-gradient(135deg, rgba(255,255,255,.2), rgba(255,255,255,.06));
+  color: #1a1c22;
+  background: linear-gradient(135deg, rgba(255,255,255,.72), rgba(255,255,255,.36));
   -webkit-backdrop-filter: blur(16px) saturate(160%);
   backdrop-filter: blur(16px) saturate(160%);
-  border: 1px solid rgba(255,255,255,.28);
-  box-shadow: 0 10px 26px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.42);
+  border: 1px solid rgba(255,255,255,.86);
+  box-shadow: 0 10px 26px rgba(20,22,40,.14), inset 0 1px 0 rgba(255,255,255,.96);
   font-size: 15px; font-weight: 500; line-height: 1; cursor: pointer;
   transition: transform .2s ease, border-color .2s ease, background .2s ease;
 }
-.career-close:hover, .career-close:focus-visible { border-color: rgba(255,255,255,.5); transform: translateY(-1px); outline: 0; }
+.career-close:hover, .career-close:focus-visible { border-color: #fff; transform: translateY(-1px); outline: 0; }
 
 .career-panel-head { clear: both; margin-bottom: 24px; text-align: center; }
 .career-panel-head .section-kicker { margin-bottom: 8px; color: var(--accent); font-size: 20px; font-weight: 500; }
-.career-panel-head h2 { color: #fff; font-size: 36px; line-height: 1.15; font-weight: 800; }
+.career-panel-head h2 { color: #141416; font-size: 36px; line-height: 1.15; font-weight: 800; }
 
 .career-document { display: grid; gap: 18px; padding-bottom: 26px; }
 
@@ -689,63 +689,63 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
 
 .career-resume-card, .career-info-card {
   display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 48px; padding: 40px;
-  background: var(--glass-dark-bg);
+  background: var(--glass-light-bg);
   -webkit-backdrop-filter: var(--glass-blur);
   backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--glass-dark-border); border-radius: var(--glass-radius);
-  box-shadow: var(--glass-dark-shadow);
+  border: 1px solid var(--glass-light-border); border-radius: var(--glass-radius);
+  box-shadow: var(--glass-light-shadow);
 }
 .career-resume-card { border-radius: 0 0 34px 34px; }
 .career-resume-card--warhaven { grid-template-columns: 230px minmax(0, 1fr) minmax(300px, 382px); align-items: start; }
-.career-resume-meta strong { display: block; margin-bottom: 10px; color: #fff; font-size: 18px; line-height: 1.35; font-weight: 700; }
-.career-resume-meta span { display: block; color: rgba(255,255,255,.6); font-size: 15px; font-weight: 600; }
-.career-resume-card h3, .career-info-card h3 { margin: 0 0 10px; color: #fff; font-size: 24px; line-height: 1.25; font-weight: 700; }
-.career-resume-card p, .career-info-card p { margin: 0 0 14px; color: rgba(255,255,255,.74); font-size: 16px; line-height: 1.6; word-break: keep-all; }
-.career-resume-card h4 { margin: 16px 0 4px; color: #fff; font-size: 18px; line-height: 1.35; font-weight: 700; }
-.career-resume-card ul, .career-info-card ul { margin: 0; padding-left: 20px; color: rgba(255,255,255,.74); font-size: 16px; line-height: 1.6; word-break: keep-all; }
+.career-resume-meta strong { display: block; margin-bottom: 10px; color: #141416; font-size: 18px; line-height: 1.35; font-weight: 700; }
+.career-resume-meta span { display: block; color: #5f6874; font-size: 15px; font-weight: 600; }
+.career-resume-card h3, .career-info-card h3 { margin: 0 0 10px; color: #141416; font-size: 24px; line-height: 1.25; font-weight: 700; }
+.career-resume-card p, .career-info-card p { margin: 0 0 14px; color: #4c5563; font-size: 16px; line-height: 1.6; word-break: keep-all; }
+.career-resume-card h4 { margin: 16px 0 4px; color: #141416; font-size: 18px; line-height: 1.35; font-weight: 700; }
+.career-resume-card ul, .career-info-card ul { margin: 0; padding-left: 20px; color: #4c5563; font-size: 16px; line-height: 1.6; word-break: keep-all; }
 .career-resume-card li + li, .career-info-card li + li { margin-top: 8px; }
 
 /* warhaven 노션 카드 */
 .career-warhaven-card {
   width: min(100%, 382px); display: block; overflow: hidden;
-  align-self: start; justify-self: end; color: #fff;
-  background: #101012; border: 1px solid rgba(255,255,255,.14); border-radius: 4px;
-  box-shadow: 0 18px 36px rgba(0,0,0,.28);
+  align-self: start; justify-self: end; color: #141416;
+  background: rgba(255,255,255,.48); border: 1px solid rgba(255,255,255,.78); border-radius: 18px;
+  box-shadow: 0 18px 36px rgba(20,22,40,.14), inset 0 1px 0 rgba(255,255,255,.9);
   transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease; isolation: isolate;
 }
 .career-warhaven-card:hover, .career-warhaven-card:focus-visible {
-  border-color: rgba(255,255,255,.28); box-shadow: 0 22px 42px rgba(0,0,0,.34); transform: translateY(-2px); outline: 0;
+  border-color: #fff; box-shadow: 0 22px 42px rgba(20,22,40,.18), inset 0 1px 0 rgba(255,255,255,1); transform: translateY(-2px); outline: 0;
 }
-.career-warhaven-card-frame { position: relative; display: block; aspect-ratio: 16 / 9; overflow: hidden; background: #111; }
+.career-warhaven-card-frame { position: relative; display: block; aspect-ratio: 16 / 9; overflow: hidden; background: rgba(20,22,40,.12); }
 .career-warhaven-card-frame > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .career-warhaven-card-notion { position: absolute; right: 8px; bottom: 8px; z-index: 2; width: 72px; height: 72px; display: grid; place-items: center; }
 .career-warhaven-card-notion img { position: static; width: 52px; height: 52px; object-fit: contain; opacity: .94; }
-.career-warhaven-card-meta { display: block; padding: 12px 14px 14px; background: #101012; }
-.career-warhaven-card-meta strong { display: block; margin-bottom: 10px; color: #fff; font-size: 14px; line-height: 1.25; font-weight: 800; }
+.career-warhaven-card-meta { display: block; padding: 12px 14px 14px; background: rgba(255,255,255,.58); }
+.career-warhaven-card-meta strong { display: block; margin-bottom: 10px; color: #141416; font-size: 14px; line-height: 1.25; font-weight: 800; }
 .career-warhaven-card-tags { display: flex; flex-wrap: wrap; gap: 6px; }
 .career-warhaven-card-tags span {
   display: inline-flex; align-items: center; min-height: 24px; padding: 0 9px;
-  color: #dcdce0; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12);
+  color: #4c5563; background: rgba(20,22,40,.05); border: 1px solid rgba(20,22,40,.08);
   border-radius: 999px; font-size: 11px; font-weight: 700; line-height: 1;
 }
 
 .career-bottom-grid { display: grid; grid-template-columns: 1.05fr 1.05fr 1.05fr .62fr; gap: 18px; padding-bottom: 28px; }
-.career-mini-card { min-height: 180px; padding: 28px 34px; background: var(--glass-dark-bg); -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-dark-border); border-radius: var(--glass-radius); box-shadow: var(--glass-dark-shadow); }
-.career-mini-card h3 { margin: 0 0 18px; color: #fff; font-size: 24px; line-height: 1.25; font-weight: 700; }
-.career-mini-card p { margin: 0; color: rgba(255,255,255,.74); font-size: 16px; line-height: 1.6; word-break: keep-all; }
+.career-mini-card { min-height: 180px; padding: 28px 34px; background: var(--glass-light-bg); -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-light-border); border-radius: var(--glass-radius); box-shadow: var(--glass-light-shadow); }
+.career-mini-card h3 { margin: 0 0 18px; color: #141416; font-size: 24px; line-height: 1.25; font-weight: 700; }
+.career-mini-card p { margin: 0; color: #4c5563; font-size: 16px; line-height: 1.6; word-break: keep-all; }
 
 /* ===== Projects (paper) ===== */
 /* ===== Projects — Bento 성과 보드 ===== */
-#projects .wrap { width: min(1360px, 100%); }
+#projects .wrap { max-width: 1400px; width: min(1400px, calc(100vw - 160px)); }
 .project-bento {
   display: grid;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
+  grid-template-columns: repeat(8, minmax(0, 1fr));
   grid-template-rows: repeat(3, minmax(92px, auto));
   gap: 12px;
   grid-template-areas:
-    "summary summary summary summary ai    ai    mWeek"
-    "feat1   feat1   feat2   feat2   ai    ai    mMeet"
-    "feat1   feat1   feat2   feat2   ai    ai    career";
+    "summary summary summary summary ai    ai    ai    mWeek"
+    "feat1   feat1   feat2   feat2   ai    ai    ai    mMeet"
+    "feat1   feat1   feat2   feat2   ai    ai    ai    career";
 }
 .pb-a-summary { grid-area: summary; }
 .pb-a-ai      { grid-area: ai; }
@@ -804,7 +804,7 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
   align-items: center;
   align-self: flex-start;
   margin-top: auto;
-  padding: 4px 10px;
+  padding: 3px 8px;
   color: #6a7280;
   border: 1px solid rgba(20,22,40,.08);
   border-radius: 999px;
@@ -827,20 +827,31 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
 .pb-feat h3 { margin-bottom: 0; color: #1b232e; font-size: 16px; line-height: 1.2; font-weight: 700; word-break: keep-all; }
 .pb-feat p { margin: 0; color: #48515f; font-size: 12.5px; line-height: 1.46; font-weight: 400; word-break: keep-all; }
 .pb-ai { justify-content: flex-start; padding: 22px 24px; }
-.pb-ai h3 { font-size: 21px; line-height: 1.15; }
+.pb-ai h3 { font-size: clamp(19px, 1.45vw, 21px); line-height: 1.15; white-space: nowrap; }
 .pb-ai p { font-size: 13.2px; line-height: 1.58; }
 .pb-tag { align-self: flex-start; margin-bottom: 12px; padding: 4px 13px; border-radius: 999px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 800; letter-spacing: .12em; }
 
 /* 지표 타일 */
 .pb-metric { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 7px; padding: 14px 10px 14px 12px; }
 .pb-metric-value {
-  color: var(--accent);
+  color: #1b232e;
   font-size: clamp(16px, 1.18vw, 20px);
   line-height: 1.02;
   font-weight: 800;
   letter-spacing: -.055em;
   white-space: nowrap;
   word-break: keep-all;
+  transition: color .22s ease;
+}
+.pb-metric:hover .pb-metric-value,
+.pb-metric:focus-within .pb-metric-value {
+  background-image: var(--rainbow);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: rainbowShift 1.1s linear infinite;
 }
 .pb-metric-label { color: #56606d; font-size: 12px; font-weight: 600; letter-spacing: .01em; white-space: nowrap; word-break: keep-all; }
 
