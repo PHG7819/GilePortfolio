@@ -736,7 +736,7 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
 
 /* ===== Projects (paper) ===== */
 /* ===== Projects — Bento 성과 보드 ===== */
-#projects .wrap { max-width: 1400px; width: min(1400px, calc(100vw - 160px)); }
+#projects .wrap { max-width: 1320px; width: min(1320px, calc(100vw - 230px)); }
 .project-bento {
   display: grid;
   grid-template-columns: repeat(8, minmax(0, 1fr));
