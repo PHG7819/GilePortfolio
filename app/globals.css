@@ -1072,28 +1072,39 @@ html[data-edit="1"] .pb-gallery-edit {
 .learning-title h2 { margin-bottom: 0; }
 .learning-orbit {
   position: relative;
-  width: min(100%, 880px);
-  min-height: 520px;
+  width: min(100%, 1040px);
+  min-height: 560px;
   margin: 0 auto;
   display: grid;
-  place-items: center;
+  grid-template-columns: minmax(0, 650px) 250px;
+  align-items: center;
+  justify-content: center;
+  gap: 80px;
   isolation: isolate;
 }
 .learning-orbit::before {
   content: "";
   position: absolute;
-  inset: 34px 58px 34px auto;
-  width: 430px;
+  top: 44px;
+  right: 12px;
+  bottom: 44px;
+  width: 250px;
   border: 1px solid rgba(255,255,255,.11);
   border-left: 0;
   border-radius: 0 999px 999px 0;
   opacity: .72;
   pointer-events: none;
 }
+.learning-stage-shell {
+  position: relative;
+  width: 100%;
+  display: grid;
+  place-items: center;
+}
 .learning-stage {
   position: relative;
-  width: min(440px, 52vw);
-  min-height: 500px;
+  width: min(560px, 100%);
+  min-height: 540px;
   display: grid;
   place-items: center;
   z-index: 2;
@@ -1104,7 +1115,7 @@ html[data-edit="1"] .pb-gallery-edit {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 22px;
+  padding: 24px;
   color: #e8e8ea;
   background: var(--glass-dark-bg);
   -webkit-backdrop-filter: var(--glass-blur);
@@ -1114,6 +1125,7 @@ html[data-edit="1"] .pb-gallery-edit {
   box-shadow: var(--glass-dark-shadow);
   opacity: 0;
   pointer-events: none;
+  cursor: pointer;
   transform: translateX(34px) scale(.96);
   transition: opacity .34s ease, transform .34s cubic-bezier(.2,.8,.2,1), border-color .28s ease, box-shadow .28s ease;
 }
@@ -1123,6 +1135,12 @@ html[data-edit="1"] .pb-gallery-edit {
   transform: translateX(0) scale(1);
 }
 .learning-card.is-exiting { transform: translateX(-34px) scale(.96); }
+.learning-card:hover,
+.learning-card:focus-visible {
+  border-color: rgba(255,255,255,.28);
+  box-shadow: 0 28px 64px rgba(0,0,0,.54), inset 0 1px 0 rgba(255,255,255,.24);
+  outline: 0;
+}
 .learning-card::before {
   content: "";
   position: absolute;
@@ -1138,12 +1156,12 @@ html[data-edit="1"] .pb-gallery-edit {
 .learning-image-frame {
   width: 100%;
   aspect-ratio: 1 / 1;
-  max-height: 270px;
-  margin-bottom: 14px;
+  max-height: 330px;
+  margin-bottom: 16px;
   display: grid;
   place-items: center;
   overflow: hidden;
-  border-radius: 22px;
+  border-radius: 24px;
   background: rgba(255,255,255,.06);
   border: 1px solid rgba(255,255,255,.1);
 }
@@ -1157,24 +1175,43 @@ html[data-edit="1"] .pb-gallery-edit {
   letter-spacing: .14em;
   text-transform: uppercase;
 }
-.learning-card strong { display: block; color: #fff; font-size: 18px; line-height: 1.28; font-weight: 800; word-break: keep-all; }
-.learning-card p { margin: 8px 0 0; color: rgba(255,255,255,.72); font-size: 13.5px; line-height: 1.5; font-weight: 400; word-break: keep-all; }
-.learning-card .button { min-width: 128px; height: 42px; align-self: flex-end; margin-top: auto; font-size: 15px; font-weight: 400; border-radius: 999px; }
-.learning-card .button::after { font-size: 16px; }
-.learning-orbit-nav {
+.learning-card strong { display: block; color: #fff; font-size: 20px; line-height: 1.28; font-weight: 800; word-break: keep-all; }
+.learning-card p { margin: 9px 0 0; color: rgba(255,255,255,.72); font-size: 14px; line-height: 1.5; font-weight: 400; word-break: keep-all; }
+.learning-card-control {
   position: absolute;
   top: 50%;
-  right: 4px;
-  z-index: 3;
-  width: 214px;
-  height: 440px;
+  z-index: 6;
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  color: rgba(255,255,255,.84);
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 50%;
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  backdrop-filter: blur(14px) saturate(160%);
+  box-shadow: 0 14px 32px rgba(0,0,0,.32), inset 0 1px 0 rgba(255,255,255,.24);
+  cursor: pointer;
   transform: translateY(-50%);
+  transition: color .22s ease, transform .22s ease, border-color .22s ease, background .22s ease;
+}
+.learning-card-prev { left: 12px; }
+.learning-card-next { right: 12px; }
+.learning-card-control span { font-size: 34px; line-height: 1; transform: translateY(-2px); }
+.learning-card-control:hover,
+.learning-card-control:focus-visible { color: var(--accent-2); border-color: rgba(255,255,255,.38); background: rgba(255,255,255,.13); outline: 0; }
+.learning-orbit-nav {
+  position: relative;
+  z-index: 3;
+  width: 250px;
+  height: 460px;
   pointer-events: none;
 }
 .learning-orbit-track {
   position: absolute;
   inset: 24px 0 24px auto;
-  width: 214px;
+  width: 250px;
   border: 1px solid rgba(255,255,255,.16);
   border-left: 0;
   border-radius: 0 999px 999px 0;
@@ -1183,61 +1220,45 @@ html[data-edit="1"] .pb-gallery-edit {
     radial-gradient(80% 46% at 100% 50%, rgba(255,255,255,.08), rgba(255,255,255,0) 68%);
   box-shadow: inset -1px 0 0 rgba(255,255,255,.08);
 }
-.learning-orbit-step,
-.learning-orbit-control {
+.learning-orbit-step {
   pointer-events: auto;
   position: absolute;
+  top: 50%;
+  right: 8px;
+  width: 48px;
+  height: 48px;
   display: grid;
   place-items: center;
-  border-radius: 999px;
-  cursor: pointer;
-  transition: transform .32s ease, opacity .32s ease, color .22s ease, background .22s ease, border-color .22s ease;
-}
-.learning-orbit-step {
-  width: 46px;
-  height: 46px;
-  right: 6px;
-  top: 50%;
   color: rgba(255,255,255,.56);
   background: rgba(255,255,255,.06);
   -webkit-backdrop-filter: blur(14px) saturate(160%);
   backdrop-filter: blur(14px) saturate(160%);
   border: 1px solid rgba(255,255,255,.14);
+  border-radius: 999px;
   box-shadow: inset 0 1px 0 rgba(255,255,255,.18);
+  cursor: pointer;
+  transition: transform .32s ease, opacity .32s ease, color .22s ease, background .22s ease, border-color .22s ease;
 }
 .learning-orbit-step.is-active {
-  width: 58px;
-  height: 58px;
+  width: 60px;
+  height: 60px;
   color: #fff;
   background: linear-gradient(135deg, rgba(255,255,255,.2), rgba(255,255,255,.08));
   border-color: rgba(255,255,255,.38);
   box-shadow: 0 18px 38px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.35), 0 0 0 1px rgba(249,66,58,.26);
 }
 .learning-orbit-no { font-size: 12px; font-weight: 800; letter-spacing: .08em; }
+.learning-orbit-no .edit-field { width: 38px; padding: 2px 4px; text-align: center; }
 .learning-orbit-step.is-active .learning-orbit-no { color: var(--accent-2); }
-.learning-orbit-control {
-  right: 76px;
-  width: 38px;
-  height: 38px;
-  color: rgba(255,255,255,.76);
-  background: rgba(255,255,255,.07);
-  border: 1px solid rgba(255,255,255,.14);
-  -webkit-backdrop-filter: blur(14px) saturate(160%);
-  backdrop-filter: blur(14px) saturate(160%);
-}
-.learning-orbit-prev { top: 4px; }
-.learning-orbit-next { bottom: 4px; }
-.learning-orbit-control:hover,
-.learning-orbit-control:focus-visible,
 .learning-orbit-step:hover,
 .learning-orbit-step:focus-visible { color: var(--accent-2); border-color: rgba(255,255,255,.36); outline: 0; }
-html[data-edit="1"] .learning-orbit { width: min(100%, 1180px); min-height: auto; display: block; }
-html[data-edit="1"] .learning-orbit::before,
-html[data-edit="1"] .learning-orbit-nav { display: none; }
-html[data-edit="1"] .learning-stage { width: 100%; min-height: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-html[data-edit="1"] .learning-card { position: relative; inset: auto; min-height: 0; opacity: 1; pointer-events: auto; transform: none; }
-html[data-edit="1"] .learning-card .button { pointer-events: none; }
-html[data-edit="1"] .learning-image-frame { max-height: 160px; aspect-ratio: 16 / 9; }
+html[data-edit="1"] .learning-card { cursor: default; }
+html[data-edit="1"] .learning-card-control,
+html[data-edit="1"] .learning-orbit-step { cursor: pointer; }
+html[data-edit="1"] .learning-card:not(.is-active) { pointer-events: none; }
+html[data-edit="1"] .learning-card.is-active { pointer-events: auto; }
+html[data-edit="1"] .learning-card .card-del-btn { pointer-events: auto; }
+html[data-edit="1"] .learning-image-frame { max-height: 300px; }
 
 /* ===== About (dark) — profile + portrait ===== */
 #about {
@@ -1350,11 +1371,13 @@ html[data-edit="1"] .learning-image-frame { max-height: 160px; aspect-ratio: 16 
   section { padding: 64px 20px; }
   #demo, #projects, #learning, #about, #skills { min-height: 0; display: block; }
   .profile, .stack-row, .skills-grid, .footer-grid { grid-template-columns: 1fr; }
-  .learning-orbit { width: 100%; min-height: auto; display: block; }
+  .learning-orbit { width: 100%; min-height: 520px; grid-template-columns: 1fr; gap: 18px; }
   .learning-orbit::before, .learning-orbit-nav { display: none; }
-  .learning-stage { width: 100%; min-height: 0; display: grid; gap: 16px; }
-  .learning-card { position: relative; inset: auto; opacity: 1; pointer-events: auto; transform: none; }
-  .learning-image-frame { max-height: none; }
+  .learning-stage { width: min(520px, 100%); min-height: 500px; }
+  .learning-card-control { top: auto; bottom: -56px; }
+  .learning-card-prev { left: calc(50% - 56px); }
+  .learning-card-next { right: calc(50% - 56px); }
+  .learning-image-frame { max-height: 260px; }
   .highlight-accordion { min-height: auto; display: grid; grid-template-columns: 1fr; gap: 14px; }
   .highlight-panel, .highlight-panel:first-child, .highlight-accordion:hover .highlight-panel:hover { min-height: 360px; flex: none; }
   .highlight-panel-detail { position: relative; left: auto; right: auto; bottom: auto; margin-top: 80px; opacity: 1; transform: none; }

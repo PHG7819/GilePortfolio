@@ -344,7 +344,7 @@ export function PortfolioClient() {
     /* Learning 캐러셀 — 중앙 단일 카드 + 오른쪽 반원 네비 */
     const learningCarousel = document.querySelector<HTMLElement>("[data-learning-carousel]");
     const learningSlides = Array.from(document.querySelectorAll<HTMLElement>("[data-learning-slide]"));
-    const learningSteps = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-learning-target]"));
+    const learningSteps = Array.from(document.querySelectorAll<HTMLElement>("[data-learning-target]"));
     const learningControls = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-learning-dir]"));
     let learningIndex = 0;
     function wrapLearningIndex(index: number) {
@@ -365,8 +365,8 @@ export function PortfolioClient() {
         if (offset > total / 2) offset -= total;
         if (offset < -total / 2) offset += total;
         const distance = Math.min(Math.abs(offset), 2);
-        const y = offset * 92;
-        const x = -34 + distance * -28;
+        const y = offset * 100;
+        const x = -42 - distance * 32;
         const scale = index === learningIndex ? 1 : Math.max(.76, 1 - distance * .13);
         step.classList.toggle("is-active", index === learningIndex);
         step.setAttribute("aria-current", index === learningIndex ? "true" : "false");
@@ -376,20 +376,43 @@ export function PortfolioClient() {
       });
     }
     const learningStepHandlers = learningSteps.map((step) => {
-      const onClick = () => {
-        if (isEditing()) return;
+      const onClick = (event: MouseEvent) => {
+        const target = event.target as Element | null;
+        if (isEditing() && target?.closest(".edit-field")) return;
         syncLearningCarousel(Number(step.dataset.learningTarget || 0));
       };
+      const onKey = (event: KeyboardEvent) => {
+        const target = event.target as Element | null;
+        if (isEditing() && target?.closest(".edit-field")) return;
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          syncLearningCarousel(Number(step.dataset.learningTarget || 0));
+        }
+      };
       step.addEventListener("click", onClick);
-      return { step, onClick };
+      step.addEventListener("keydown", onKey as EventListener);
+      return { step, onClick, onKey };
     });
     const learningControlHandlers = learningControls.map((button) => {
       const onClick = () => {
-        if (isEditing()) return;
         syncLearningCarousel(learningIndex + Number(button.dataset.learningDir || 0));
       };
       button.addEventListener("click", onClick);
       return { button, onClick };
+    });
+    const learningSlideHandlers = learningSlides.map((slide) => {
+      const openLink = (event: MouseEvent | KeyboardEvent) => {
+        if (isEditing()) return;
+        const target = event.target as Element | null;
+        if (target?.closest("a, button, input, textarea, [contenteditable='true']")) return;
+        if (event instanceof KeyboardEvent && event.key !== "Enter" && event.key !== " ") return;
+        if (event instanceof KeyboardEvent) event.preventDefault();
+        const link = slide.dataset.learningLink;
+        if (link && link !== "#") window.open(link, "_blank", "noopener,noreferrer");
+      };
+      slide.addEventListener("click", openLink as EventListener);
+      slide.addEventListener("keydown", openLink as EventListener);
+      return { slide, openLink };
     });
     syncLearningCarousel();
 
@@ -536,8 +559,15 @@ export function PortfolioClient() {
       projectGalleryClose?.removeEventListener("click", closeProjectGallery);
       projectGalleryPrev?.removeEventListener("click", onProjectGalleryPrev);
       projectGalleryNext?.removeEventListener("click", onProjectGalleryNext);
-      learningStepHandlers.forEach(({ step, onClick }) => step.removeEventListener("click", onClick));
+      learningStepHandlers.forEach(({ step, onClick, onKey }) => {
+        step.removeEventListener("click", onClick);
+        step.removeEventListener("keydown", onKey as EventListener);
+      });
       learningControlHandlers.forEach(({ button, onClick }) => button.removeEventListener("click", onClick));
+      learningSlideHandlers.forEach(({ slide, openLink }) => {
+        slide.removeEventListener("click", openLink as EventListener);
+        slide.removeEventListener("keydown", openLink as EventListener);
+      });
       cardHandlers.forEach(({ card, ch, kh }) => {
         card.removeEventListener("click", ch);
         card.removeEventListener("keydown", kh as EventListener);

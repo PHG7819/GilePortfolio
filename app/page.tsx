@@ -372,45 +372,55 @@ export default async function Page() {
               </div>
             </div>
             <div className="learning-orbit" data-learning-carousel data-active-index="0">
-              <div className="learning-stage" aria-live="polite">
-                {learnOrder.map((id, idx) => {
-                  const title = c(map, `learning.card${id}.title`, ["[회고] 쌩신입 개발 PM 도전기 : 넥토리얼", "[업무 일지] 스트림(브랜치)의 개념과 전략", "하네스 엔지니어링 (Harness Engineering)", "빌드 과정 실무 가이드 (Web)"][idx] ?? `연구 주제 0${idx + 1}`);
-                  const desc = c(map, `learning.card${id}.desc`, [
-                    "신입 개발 PM으로 입사해 겪은 첫 도전과 배움을 기록한 회고. 직무를 어떻게 이해하고 적응해 갔는지 정리했습니다.",
-                    "Perforce 스트림(브랜치)의 개념과, 코드 마감·빌드 안정성을 위해 스트림을 어떻게 분리·운용하는지 정리한 업무 일지.",
-                    "AI 에이전트가 실수를 반복하지 않도록 '환경 자체를 설계'하는 하네스 엔지니어링 개념을 정리해 웹으로 배포한 학습 자료.",
-                    "게임 개발 빌드 프로세스(D-14~D+7)를 6단계 타임라인·체크리스트·템플릿으로 정리해 배포한 스튜디오 실무 가이드 웹.",
-                  ][idx] ?? "학습/연구 주제에 대한 요약을 적으세요.");
-                  return (
-                    <article className={`learning-card learning-slide${idx === 0 ? " is-active" : ""}`} data-learning-slide data-learning-index={idx} key={id}>
-                      <div className="learning-image-frame">
-                        <EditableImage k={`learning.card${id}.img`} value={c(map, `learning.card${id}.img`, IMG_LEARN)} className="learning-image" alt="" />
-                      </div>
-                      <span className="learning-card-index">Archive {String(idx + 1).padStart(2, "0")}</span>
-                      <strong><EditableText k={`learning.card${id}.title`} value={title} inline /></strong>
-                      <p><EditableText k={`learning.card${id}.desc`} value={desc} multiline /></p>
-                      <a className="button" href={c(map, `learning.card${id}.link`, ["https://imgile.tistory.com/1", "https://imgile.tistory.com/5", "https://harness-engineering-ashy.vercel.app", "https://build-guide-txiz.vercel.app"][idx] ?? "#")} target="_blank" rel="noopener noreferrer"><span className="btn-label">Read More</span></a>
-                      <DeleteItemButton list="learning.cards" id={id} label="이 카드 삭제" />
-                    </article>
-                  );
-                })}
+              <div className="learning-stage-shell">
+                <button className="learning-card-control learning-card-prev" type="button" data-learning-dir="-1" aria-label="이전 Learning 카드"><span>‹</span></button>
+                <div className="learning-stage" aria-live="polite">
+                  {learnOrder.map((id, idx) => {
+                    const title = c(map, `learning.card${id}.title`, ["[회고] 쌩신입 개발 PM 도전기 : 넥토리얼", "[업무 일지] 스트림(브랜치)의 개념과 전략", "하네스 엔지니어링 (Harness Engineering)", "빌드 과정 실무 가이드 (Web)"][idx] ?? `연구 주제 0${idx + 1}`);
+                    const desc = c(map, `learning.card${id}.desc`, [
+                      "신입 개발 PM으로 입사해 겪은 첫 도전과 배움을 기록한 회고. 직무를 어떻게 이해하고 적응해 갔는지 정리했습니다.",
+                      "Perforce 스트림(브랜치)의 개념과, 코드 마감·빌드 안정성을 위해 스트림을 어떻게 분리·운용하는지 정리한 업무 일지.",
+                      "AI 에이전트가 실수를 반복하지 않도록 '환경 자체를 설계'하는 하네스 엔지니어링 개념을 정리해 웹으로 배포한 학습 자료.",
+                      "게임 개발 빌드 프로세스(D-14~D+7)를 6단계 타임라인·체크리스트·템플릿으로 정리해 배포한 스튜디오 실무 가이드 웹.",
+                    ][idx] ?? "학습/연구 주제에 대한 요약을 적으세요.");
+                    return (
+                      <article
+                        className={`learning-card learning-slide${idx === 0 ? " is-active" : ""}`}
+                        data-learning-slide
+                        data-learning-index={idx}
+                        data-learning-link={c(map, `learning.card${id}.link`, ["https://imgile.tistory.com/1", "https://imgile.tistory.com/5", "https://harness-engineering-ashy.vercel.app", "https://build-guide-txiz.vercel.app"][idx] ?? "#")}
+                        tabIndex={0}
+                        role="link"
+                        key={id}
+                      >
+                        <div className="learning-image-frame">
+                          <EditableImage k={`learning.card${id}.img`} value={c(map, `learning.card${id}.img`, IMG_LEARN)} className="learning-image" alt="" />
+                        </div>
+                        <span className="learning-card-index">Archive {String(idx + 1).padStart(2, "0")}</span>
+                        <strong><EditableText k={`learning.card${id}.title`} value={title} inline /></strong>
+                        <p><EditableText k={`learning.card${id}.desc`} value={desc} multiline /></p>
+                        <DeleteItemButton list="learning.cards" id={id} label="이 카드 삭제" />
+                      </article>
+                    );
+                  })}
+                </div>
+                <button className="learning-card-control learning-card-next" type="button" data-learning-dir="1" aria-label="다음 Learning 카드"><span>›</span></button>
               </div>
               <aside className="learning-orbit-nav" aria-label="Learning 카드 선택">
-                <button className="learning-orbit-control learning-orbit-prev" type="button" data-learning-dir="-1" aria-label="이전 Learning 카드"><span>⌃</span></button>
                 <div className="learning-orbit-track" aria-hidden="true" />
                 {learnOrder.map((id, idx) => (
-                  <button
+                  <div
                     className={`learning-orbit-step${idx === 0 ? " is-active" : ""}`}
-                    type="button"
+                    role="button"
+                    tabIndex={0}
                     data-learning-target={idx}
                     key={id}
                     aria-label={`Learning ${idx + 1}번 카드 보기`}
                     aria-current={idx === 0 ? "true" : undefined}
                   >
-                    <span className="learning-orbit-no">{String(idx + 1).padStart(2, "0")}</span>
-                  </button>
+                    <span className="learning-orbit-no"><EditableText k={`learning.card${id}.nav`} value={c(map, `learning.card${id}.nav`, String(idx + 1).padStart(2, "0"))} inline /></span>
+                  </div>
                 ))}
-                <button className="learning-orbit-control learning-orbit-next" type="button" data-learning-dir="1" aria-label="다음 Learning 카드"><span>⌄</span></button>
               </aside>
             </div>
             <AddItemButton list="learning.cards" label="+ 러닝 카드 추가" />
