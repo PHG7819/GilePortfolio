@@ -367,11 +367,14 @@ export function PortfolioClient() {
         if (offset < -total / 2) offset += total;
         const visible = Math.abs(offset) <= 1;
         const isActive = index === learningIndex;
-        const y = -offset * 82;
-        const x = isActive ? 0 : -54;
+        const angle = offset * 34; // 가운데 0도, 위/아래는 원호를 따라 ±34도
+        const radius = 142;
+        const rad = angle * Math.PI / 180;
+        const x = Math.cos(rad) * radius - radius;
+        const y = -Math.sin(rad) * radius;
         step.classList.toggle("is-active", isActive);
         step.setAttribute("aria-current", isActive ? "true" : "false");
-        step.style.transform = `translate(${x}px, calc(-50% + ${y}px)) scale(${isActive ? 1 : .82})`;
+        step.style.transform = `translate(${Math.round(x)}px, calc(-50% + ${Math.round(y)}px)) scale(${isActive ? 1 : .82})`;
         step.style.opacity = String(isActive ? 1 : visible ? .5 : 0);
         step.style.pointerEvents = visible ? "auto" : "none";
         step.style.zIndex = String(isActive ? 10 : 5);

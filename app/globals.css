@@ -1228,7 +1228,7 @@ html[data-edit="1"] .pb-gallery-edit {
   pointer-events: auto;
   position: absolute;
   top: 50%;
-  right: 54px;
+  right: 12px;
   width: 48px;
   height: 48px;
   display: grid;
