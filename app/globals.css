@@ -1201,27 +1201,29 @@ html[data-edit="1"] .pb-gallery-edit {
 }
 .learning-orbit-track {
   position: absolute;
-  top: 34px;
-  bottom: 34px;
-  left: 42px;
-  width: 150px;
+  top: 88px;
+  left: 38px;
+  width: 132px;
+  height: 184px;
   border-right: 2px solid rgba(255,255,255,.26);
   border-radius: 0 999px 999px 0;
-  opacity: .78;
+  opacity: .82;
   filter: drop-shadow(0 0 12px rgba(255,255,255,.08));
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
-  mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 18%, #000 82%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 18%, #000 82%, transparent 100%);
 }
+.learning-orbit-track::before,
 .learning-orbit-track::after {
   content: "";
   position: absolute;
-  top: -1px;
-  bottom: -1px;
   right: -2px;
-  width: 2px;
-  border-radius: 999px;
-  background: linear-gradient(to bottom, transparent, rgba(255,255,255,.34) 22%, rgba(255,255,255,.18) 50%, rgba(255,255,255,.34) 78%, transparent);
+  width: 92px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.22));
+  transform-origin: right center;
 }
+.learning-orbit-track::before { top: 0; transform: rotate(28deg); }
+.learning-orbit-track::after { bottom: 0; transform: rotate(-28deg); }
 .learning-orbit-step {
   pointer-events: auto;
   position: absolute;
