@@ -1191,26 +1191,26 @@ html[data-edit="1"] .pb-gallery-edit {
 .learning-card-control:focus-visible { color: var(--accent-2); border-color: rgba(255,255,255,.38); background: rgba(255,255,255,.13); outline: 0; }
 .learning-orbit-nav {
   position: absolute;
-  left: calc(50% + 388px);
+  left: calc(50% + 382px);
   top: 50%;
   z-index: 3;
-  width: 260px;
-  height: 360px;
+  width: 340px;
+  height: 480px;
   transform: translateY(-50%);
   pointer-events: none;
 }
 .learning-orbit-track {
   position: absolute;
-  top: 88px;
-  left: 38px;
-  width: 132px;
-  height: 184px;
+  top: 72px;
+  right: 30px;
+  width: 196px;
+  height: 336px;
   border-right: 2px solid rgba(255,255,255,.26);
   border-radius: 0 999px 999px 0;
   opacity: .82;
   filter: drop-shadow(0 0 12px rgba(255,255,255,.08));
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 18%, #000 82%, transparent 100%);
-  mask-image: linear-gradient(to bottom, transparent 0%, #000 18%, #000 82%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 14%, #000 86%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 14%, #000 86%, transparent 100%);
 }
 .learning-orbit-track::before,
 .learning-orbit-track::after {
@@ -1228,9 +1228,9 @@ html[data-edit="1"] .pb-gallery-edit {
   pointer-events: auto;
   position: absolute;
   top: 50%;
-  right: 12px;
-  width: 48px;
-  height: 48px;
+  right: 31px;
+  width: 54px;
+  height: 54px;
   display: grid;
   place-items: center;
   color: rgba(255,255,255,.56);
@@ -1244,8 +1244,8 @@ html[data-edit="1"] .pb-gallery-edit {
   transition: transform .38s cubic-bezier(.2,.8,.2,1), opacity .32s ease, color .22s ease, background .22s ease, border-color .22s ease;
 }
 .learning-orbit-step.is-active {
-  width: 60px;
-  height: 60px;
+  width: 72px;
+  height: 72px;
   color: #fff;
   background: linear-gradient(135deg, rgba(255,255,255,.92), rgba(255,255,255,.72));
   border-color: rgba(255,255,255,.95);

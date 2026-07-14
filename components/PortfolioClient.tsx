@@ -367,8 +367,8 @@ export function PortfolioClient() {
         if (offset < -total / 2) offset += total;
         const visible = Math.abs(offset) <= 1;
         const isActive = index === learningIndex;
-        const angle = offset * 34; // 가운데 0도, 위/아래는 원호를 따라 ±34도
-        const radius = 142;
+        const angle = offset * 36; // 가운데 0도, 위/아래는 원호를 따라 ±36도
+        const radius = 198;
         const rad = angle * Math.PI / 180;
         const x = Math.cos(rad) * radius - radius;
         const y = -Math.sin(rad) * radius;
