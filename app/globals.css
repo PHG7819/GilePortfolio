@@ -736,16 +736,16 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
 
 /* ===== Projects (paper) ===== */
 /* ===== Projects — Bento 성과 보드 ===== */
-#projects .wrap { max-width: 1320px; width: min(1320px, calc(100vw - 230px)); }
+#projects .wrap { max-width: 1260px; width: min(1260px, calc(100vw - 280px)); }
 .project-bento {
   display: grid;
-  grid-template-columns: repeat(8, minmax(0, 1fr));
+  grid-template-columns: repeat(10, minmax(0, 1fr));
   grid-template-rows: repeat(3, minmax(92px, auto));
   gap: 12px;
   grid-template-areas:
-    "summary summary summary summary ai    ai    ai    mWeek"
-    "feat1   feat1   feat2   feat2   ai    ai    ai    mMeet"
-    "feat1   feat1   feat2   feat2   ai    ai    ai    career";
+    "summary summary summary summary summary summary ai    ai    ai    mWeek"
+    "feat1   feat1   feat1   feat2   feat2   feat2   ai    ai    ai    mMeet"
+    "feat1   feat1   feat1   feat2   feat2   feat2   ai    ai    ai    career";
 }
 .pb-a-summary { grid-area: summary; }
 .pb-a-ai      { grid-area: ai; }
