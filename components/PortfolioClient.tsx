@@ -361,19 +361,20 @@ export function PortfolioClient() {
         slide.setAttribute("aria-hidden", index === learningIndex ? "false" : "true");
       });
       learningSteps.forEach((step, index) => {
-        const positions = [
-          { x: -112, y: 154 },
-          { x: -46, y: 52 },
-          { x: -46, y: -52 },
-          { x: -112, y: -154 },
-        ];
-        const pos = positions[index] ?? { x: -80, y: 0 };
+        const total = learningSteps.length;
+        let offset = index - learningIndex;
+        if (offset > total / 2) offset -= total;
+        if (offset < -total / 2) offset += total;
+        const visible = Math.abs(offset) <= 1;
         const isActive = index === learningIndex;
+        const y = offset * 86;
+        const x = isActive ? -86 : -42;
         step.classList.toggle("is-active", isActive);
         step.setAttribute("aria-current", isActive ? "true" : "false");
-        step.style.transform = `translate(${pos.x}px, calc(-50% + ${pos.y}px)) scale(${isActive ? 1 : .84})`;
-        step.style.opacity = String(isActive ? 1 : .58);
-        step.style.zIndex = String(isActive ? 10 : 6 + index);
+        step.style.transform = `translate(${x}px, calc(-50% + ${y}px)) scale(${isActive ? 1 : .82})`;
+        step.style.opacity = String(isActive ? 1 : visible ? .5 : 0);
+        step.style.pointerEvents = visible ? "auto" : "none";
+        step.style.zIndex = String(isActive ? 10 : 5);
       });
     }
     const learningStepHandlers = learningSteps.map((step) => {
