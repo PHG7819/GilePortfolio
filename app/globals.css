@@ -1072,42 +1072,22 @@ html[data-edit="1"] .pb-gallery-edit {
 .learning-title h2 { margin-bottom: 0; }
 .learning-orbit {
   position: relative;
-  width: min(100%, 1120px);
+  width: min(100%, 1180px);
   min-height: 560px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 250px;
-  align-items: center;
-  justify-content: center;
-  gap: 64px;
+  grid-template-columns: 1fr;
+  place-items: center;
   isolation: isolate;
 }
-.learning-orbit::before {
-  content: "";
-  position: absolute;
-  top: 42px;
-  right: 0;
-  bottom: 42px;
-  width: 250px;
-  border-radius: 0 999px 999px 0;
-  background:
-    linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.07)),
-    radial-gradient(76% 48% at 100% 50%, rgba(255,255,255,.12), rgba(255,255,255,.025) 58%, rgba(255,255,255,0) 72%);
-  -webkit-backdrop-filter: blur(18px) saturate(160%);
-  backdrop-filter: blur(18px) saturate(160%);
-  border: 1px solid rgba(255,255,255,.13);
-  border-left: 0;
-  box-shadow: inset -1px 0 0 rgba(255,255,255,.12), inset 0 1px 0 rgba(255,255,255,.08), 0 24px 58px rgba(0,0,0,.24);
-  opacity: .82;
-  pointer-events: none;
-}
+.learning-orbit::before { content: none; }
 .learning-stage-shell {
   position: relative;
-  width: 100%;
+  width: min(560px, 100%);
   display: grid;
   place-items: center;
   justify-self: center;
-  transform: translateX(157px);
+  transform: none;
 }
 .learning-stage {
   position: relative;
@@ -1204,16 +1184,19 @@ html[data-edit="1"] .pb-gallery-edit {
   transform: translateY(-50%);
   transition: color .22s ease, transform .22s ease, border-color .22s ease, background .22s ease;
 }
-.learning-card-prev { left: -68px; }
-.learning-card-next { right: -68px; }
+.learning-card-prev { left: -78px; }
+.learning-card-next { right: -78px; }
 .learning-card-control span { font-size: 34px; line-height: 1; transform: translateY(-2px); }
 .learning-card-control:hover,
 .learning-card-control:focus-visible { color: var(--accent-2); border-color: rgba(255,255,255,.38); background: rgba(255,255,255,.13); outline: 0; }
 .learning-orbit-nav {
-  position: relative;
+  position: absolute;
+  left: calc(50% + 400px);
+  top: 50%;
   z-index: 3;
   width: 250px;
   height: 460px;
+  transform: translateY(-50%);
   pointer-events: none;
 }
 .learning-orbit-track {
@@ -1222,11 +1205,13 @@ html[data-edit="1"] .pb-gallery-edit {
   width: 250px;
   border-radius: 0 999px 999px 0;
   background:
-    linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.045)),
-    radial-gradient(80% 46% at 100% 50%, rgba(255,255,255,.09), rgba(255,255,255,0) 68%);
-  border: 1px solid rgba(255,255,255,.12);
+    linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.07)),
+    radial-gradient(76% 48% at 100% 50%, rgba(255,255,255,.12), rgba(255,255,255,.025) 58%, rgba(255,255,255,0) 72%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  backdrop-filter: blur(18px) saturate(160%);
+  border: 1px solid rgba(255,255,255,.13);
   border-left: 0;
-  box-shadow: inset -1px 0 0 rgba(255,255,255,.1), inset 0 1px 0 rgba(255,255,255,.06);
+  box-shadow: inset -1px 0 0 rgba(255,255,255,.12), inset 0 1px 0 rgba(255,255,255,.08), 0 24px 58px rgba(0,0,0,.24);
 }
 .learning-orbit-step {
   pointer-events: auto;
@@ -1260,13 +1245,18 @@ html[data-edit="1"] .pb-gallery-edit {
 .learning-orbit-step.is-active .learning-orbit-no { color: var(--accent-2); }
 .learning-orbit-step:hover,
 .learning-orbit-step:focus-visible { color: var(--accent-2); border-color: rgba(255,255,255,.36); outline: 0; }
-.learning-card:hover strong,
-.learning-card:focus-visible strong,
+.learning-card:hover > strong,
+.learning-card:focus-visible > strong,
+.learning-card:hover > strong .editable-text,
+.learning-card:focus-visible > strong .editable-text,
 .learning-card-control:hover span,
 .learning-card-control:focus-visible span,
 .learning-orbit-step:hover .learning-orbit-no,
 .learning-orbit-step:focus-visible .learning-orbit-no,
-.learning-orbit-step.is-active .learning-orbit-no {
+.learning-orbit-step:hover .learning-orbit-no .editable-text,
+.learning-orbit-step:focus-visible .learning-orbit-no .editable-text,
+.learning-orbit-step.is-active .learning-orbit-no,
+.learning-orbit-step.is-active .learning-orbit-no .editable-text {
   background-image: var(--rainbow);
   background-size: 200% auto;
   -webkit-background-clip: text;
