@@ -368,7 +368,7 @@ export function PortfolioClient() {
         const visible = Math.abs(offset) <= 1;
         const isActive = index === learningIndex;
         const y = -offset * 82;
-        const x = -54;
+        const x = isActive ? 0 : -54;
         step.classList.toggle("is-active", isActive);
         step.setAttribute("aria-current", isActive ? "true" : "false");
         step.style.transform = `translate(${x}px, calc(-50% + ${y}px)) scale(${isActive ? 1 : .82})`;
