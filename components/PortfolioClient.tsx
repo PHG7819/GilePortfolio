@@ -341,6 +341,58 @@ export function PortfolioClient() {
     projectGalleryPrev?.addEventListener("click", onProjectGalleryPrev);
     projectGalleryNext?.addEventListener("click", onProjectGalleryNext);
 
+    /* Learning 캐러셀 — 중앙 단일 카드 + 오른쪽 반원 네비 */
+    const learningCarousel = document.querySelector<HTMLElement>("[data-learning-carousel]");
+    const learningSlides = Array.from(document.querySelectorAll<HTMLElement>("[data-learning-slide]"));
+    const learningSteps = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-learning-target]"));
+    const learningControls = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-learning-dir]"));
+    let learningIndex = 0;
+    function wrapLearningIndex(index: number) {
+      const total = learningSlides.length;
+      return total ? (index + total) % total : 0;
+    }
+    function syncLearningCarousel(nextIndex = learningIndex) {
+      if (!learningCarousel || !learningSlides.length) return;
+      const total = learningSlides.length;
+      learningIndex = wrapLearningIndex(nextIndex);
+      learningCarousel.dataset.activeIndex = String(learningIndex);
+      learningSlides.forEach((slide, index) => {
+        slide.classList.toggle("is-active", index === learningIndex);
+        slide.setAttribute("aria-hidden", index === learningIndex ? "false" : "true");
+      });
+      learningSteps.forEach((step, index) => {
+        let offset = index - learningIndex;
+        if (offset > total / 2) offset -= total;
+        if (offset < -total / 2) offset += total;
+        const distance = Math.min(Math.abs(offset), 2);
+        const y = offset * 92;
+        const x = -34 + distance * -28;
+        const scale = index === learningIndex ? 1 : Math.max(.76, 1 - distance * .13);
+        step.classList.toggle("is-active", index === learningIndex);
+        step.setAttribute("aria-current", index === learningIndex ? "true" : "false");
+        step.style.transform = `translate(${x}px, calc(-50% + ${y}px)) scale(${scale})`;
+        step.style.opacity = String(index === learningIndex ? 1 : Math.max(.38, 1 - distance * .26));
+        step.style.zIndex = String(10 - distance);
+      });
+    }
+    const learningStepHandlers = learningSteps.map((step) => {
+      const onClick = () => {
+        if (isEditing()) return;
+        syncLearningCarousel(Number(step.dataset.learningTarget || 0));
+      };
+      step.addEventListener("click", onClick);
+      return { step, onClick };
+    });
+    const learningControlHandlers = learningControls.map((button) => {
+      const onClick = () => {
+        if (isEditing()) return;
+        syncLearningCarousel(learningIndex + Number(button.dataset.learningDir || 0));
+      };
+      button.addEventListener("click", onClick);
+      return { button, onClick };
+    });
+    syncLearningCarousel();
+
     /* 경력 팝업 */
     const careerShowcase = document.querySelector<HTMLElement>("#career-showcase");
     const careerTriggers = Array.from(document.querySelectorAll<HTMLElement>(".career-trigger"));
@@ -484,6 +536,8 @@ export function PortfolioClient() {
       projectGalleryClose?.removeEventListener("click", closeProjectGallery);
       projectGalleryPrev?.removeEventListener("click", onProjectGalleryPrev);
       projectGalleryNext?.removeEventListener("click", onProjectGalleryNext);
+      learningStepHandlers.forEach(({ step, onClick }) => step.removeEventListener("click", onClick));
+      learningControlHandlers.forEach(({ button, onClick }) => button.removeEventListener("click", onClick));
       cardHandlers.forEach(({ card, ch, kh }) => {
         card.removeEventListener("click", ch);
         card.removeEventListener("keydown", kh as EventListener);
