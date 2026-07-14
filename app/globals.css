@@ -736,10 +736,10 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
 
 /* ===== Projects (paper) ===== */
 /* ===== Projects — Bento 성과 보드 ===== */
-#projects .wrap { max-width: 1260px; width: min(1260px, calc(100vw - 280px)); }
+#projects .wrap { max-width: 1320px; width: min(1320px, calc(100vw - 260px)); }
 .project-bento {
   display: grid;
-  grid-template-columns: repeat(10, minmax(0, 1fr));
+  grid-template-columns: repeat(9, minmax(0, 1fr)) minmax(168px, 1.5fr);
   grid-template-rows: repeat(3, minmax(92px, auto));
   gap: 12px;
   grid-template-areas:
@@ -832,13 +832,13 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
 .pb-tag { align-self: flex-start; margin-bottom: 12px; padding: 4px 13px; border-radius: 999px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 800; letter-spacing: .12em; }
 
 /* 지표 타일 */
-.pb-metric { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 7px; padding: 14px 10px 14px 12px; }
+.pb-metric { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 7px; padding: 14px 14px 14px 16px; }
 .pb-metric-value {
   color: #1b232e;
-  font-size: clamp(16px, 1.18vw, 20px);
+  font-size: clamp(16px, 1.05vw, 19px);
   line-height: 1.02;
   font-weight: 800;
-  letter-spacing: -.055em;
+  letter-spacing: -.06em;
   white-space: nowrap;
   word-break: keep-all;
   transition: color .22s ease;
@@ -858,12 +858,12 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
 /* 경력 기술서 타일 */
 .pb-career {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 26px;
+  grid-template-columns: minmax(0, 1fr) 28px;
   grid-template-rows: auto auto;
   align-content: center;
   align-items: center;
-  gap: 2px 6px;
-  padding: 14px 12px;
+  gap: 2px 8px;
+  padding: 14px 14px 14px 16px;
 }
 .pb-career-kicker {
   grid-column: 1 / -1;
@@ -876,15 +876,17 @@ h2 { margin-bottom: 34px; text-align: center; font-size: 38px; line-height: 1.12
 }
 .pb-career strong {
   min-width: 0;
+  overflow: hidden;
   color: #1b232e;
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1.2;
   font-weight: 800;
   white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .pb-career-arrow {
-  width: 26px;
-  height: 26px;
+  width: 28px;
+  height: 28px;
   display: grid;
   place-items: center;
   overflow: hidden;
